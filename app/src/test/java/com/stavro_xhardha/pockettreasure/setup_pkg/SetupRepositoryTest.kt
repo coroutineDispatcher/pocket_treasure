@@ -9,15 +9,12 @@ import com.stavro_xhardha.pockettreasure.ui.setup.SetupRepository
 import com.stavro_xhardha.rocket.Rocket
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
-import okhttp3.MediaType
-import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.`when`
-import retrofit2.Response
 
 @RunWith(JUnit4::class)
 class SetupRepositoryTest {
