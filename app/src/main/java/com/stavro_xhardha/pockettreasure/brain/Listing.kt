@@ -8,7 +8,8 @@ data class Listing<T>(
     val networkState: LiveData<NetworkState>,
     val refreshState: LiveData<NetworkState>,
     val refresh: () -> Unit,
-    val retry: () -> Unit
+    val retry: () -> Unit,
+    val clearCoroutineJobs: () -> Unit
 )
 
 enum class Status {
@@ -27,6 +28,7 @@ data class NetworkState private constructor(
             NetworkState(Status.SUCCESS)
         val LOADING =
             NetworkState(Status.RUNNING)
+
         fun error(msg: String?) = NetworkState(
             Status.FAILED,
             msg

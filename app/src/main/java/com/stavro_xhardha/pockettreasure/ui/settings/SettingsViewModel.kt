@@ -22,12 +22,10 @@ class SettingsViewModel @Inject constructor(private val settingsRepository: Sett
     private val _ishaCheck: MutableLiveData<Boolean> = MutableLiveData()
     private val _countryAndCapital: MutableLiveData<String> = MutableLiveData()
     private val _workManagerReadyToStart = MutableLiveData<Boolean>()
-    private val _locationSettingsRequest = MutableLiveData<Boolean>()
     private val _locationRequestTurnOff = MutableLiveData<Boolean>()
     private val _serviceNotAvailableVisibility = MutableLiveData<Boolean>()
     private val _locationErrorVisibility = MutableLiveData<Boolean>()
 
-    val locationSettingsRequest: LiveData<Boolean> = _locationSettingsRequest
     val locationRequestTurnOff: LiveData<Boolean> = _locationRequestTurnOff
     val serviceNotAvailableVisibility: LiveData<Boolean> = _serviceNotAvailableVisibility
     val locationerrorVisibility: LiveData<Boolean> = _locationErrorVisibility
