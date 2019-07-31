@@ -1,6 +1,7 @@
 package com.stavro_xhardha.pockettreasure
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_CHECK_LOCATION_SETTINGS
+import com.stavro_xhardha.pockettreasure.brain.REQUEST_LOCATION_PERMISSION
 import com.stavro_xhardha.pockettreasure.brain.isDebugMode
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -61,12 +63,36 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
                     }
                     RESULT_CANCELED -> {
                         if (findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.settingsFragment) {
-                            Toast.makeText(this, R.string.values_cannot_be_updated, Toast.LENGTH_LONG).show()
+                            locationErrorToast()
                         } else {
+                            locationErrorToast()
                             finish()
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun locationErrorToast() {
+        Toast.makeText(this, R.string.values_cannot_be_updated, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_LOCATION_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    sharedViewModel.onLocationPermissionGranted()
+                } else {
+                    if (findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.settingsFragment) {
+                        locationErrorToast()
+                    } else {
+                        locationErrorToast()
+                        finish()
+                    }
+                }
+                return
             }
         }
     }
