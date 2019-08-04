@@ -6,10 +6,7 @@ import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.UnsplashResponse
 import com.stavro_xhardha.pockettreasure.model.UnsplashResult
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -19,6 +16,9 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
     private var retry: (() -> Any)? = null
     val networkState = MutableLiveData<NetworkState>()
     val initialLoad = MutableLiveData<NetworkState>()
+
+    private val completableJob = Job()
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + completableJob)
 
     fun retryAllFailed() {
         val prevRetry = retry
@@ -30,7 +30,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, UnsplashResult>) {
-        GlobalScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(Dispatchers.IO) {
             try {
                 incrementIdlingResource()
                 networkState.postValue(NetworkState.LOADING)
@@ -39,7 +39,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
                     retry = null
                     callback.onResult(primaryUnsplashResponse.body()!!.results, params.key.inc())
                     networkState.postValue(NetworkState.LOADED)
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         decrementIdlingResource()
                     }
                 } else {
@@ -47,7 +47,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
                         loadAfter(params, callback)
                     }
                     networkState.postValue(NetworkState.error("Network Error"))
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         decrementIdlingResource()
                     }
                 }
@@ -57,7 +57,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
                     loadAfter(params, callback)
                 }
                 networkState.postValue(NetworkState.error("Network Error"))
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     decrementIdlingResource()
                 }
             }
@@ -65,7 +65,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
     }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, UnsplashResult>) {
-        GlobalScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(Dispatchers.IO) {
             try {
                 incrementIdlingResource()
                 initialLoad.postValue(NetworkState.LOADING)
@@ -73,7 +73,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
                 if (primaryUnsplashResponse.code() == 200) {
                     initialLoad.postValue(NetworkState.LOADED)
                     callback.onResult(primaryUnsplashResponse.body()!!.results, null, 2)
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         decrementIdlingResource()
                     }
                 } else {
@@ -82,7 +82,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
                     }
                     val error = NetworkState.error("Network error")
                     initialLoad.postValue(error)
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         decrementIdlingResource()
                     }
                 }
@@ -93,7 +93,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
                 }
                 val error = NetworkState.error("Network error")
                 initialLoad.postValue(error)
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     decrementIdlingResource()
                 }
             }
@@ -105,4 +105,8 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
             UNSPLASH_BASE_URL, UNPLASH_QUERY_VALUE, pageNumber, INITIAL_PAGE_SIZE,
             CLIENT_ID, CLIENT_SECRET
         )
+
+    fun clearCoroutineJobs() {
+        completableJob.cancel()
+    }
 }

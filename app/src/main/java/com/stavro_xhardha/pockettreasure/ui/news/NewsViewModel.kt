@@ -43,7 +43,10 @@ class NewsViewModel @Inject constructor(
             refresh = {
                 dataSourceFactory.mutableDataSource.value?.invalidate()
             },
-            refreshState = refreshStateListener
+            refreshState = refreshStateListener,
+            clearCoroutineJobs = {
+                dataSourceFactory.mutableDataSource.value?.clearCoroutineJobs()
+            }
         )
 
         newsData = listing.pagedList
@@ -66,6 +69,11 @@ class NewsViewModel @Inject constructor(
         if (isDebugMode)
             Log.d(APPLICATION_TAG, "RETRYING")
         listing.retry.invoke()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        listing.clearCoroutineJobs.invoke()
     }
 
     fun newsDataList(): LiveData<PagedList<News>> = newsData

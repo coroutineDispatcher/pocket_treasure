@@ -6,14 +6,14 @@ import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.News
 import com.stavro_xhardha.pockettreasure.model.NewsResponse
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Response
 import javax.inject.Inject
 
-class NewsDataSource @Inject constructor(val treasureApi: TreasureApi) :
-    PageKeyedDataSource<Int, News>() {
+class NewsDataSource @Inject constructor(val treasureApi: TreasureApi) : PageKeyedDataSource<Int, News>() {
+
+    private val completableJob = Job()
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + completableJob)
 
     private var retry: (() -> Any)? = null
     val networkState = MutableLiveData<NetworkState>()
@@ -26,7 +26,7 @@ class NewsDataSource @Inject constructor(val treasureApi: TreasureApi) :
     }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, News>) {
-        GlobalScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(Dispatchers.IO) {
             try {
                 initialLoad.postValue(NetworkState.LOADING)
                 val primaryNewsResponse = callLatestNewsAsync(1)
@@ -52,7 +52,7 @@ class NewsDataSource @Inject constructor(val treasureApi: TreasureApi) :
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, News>) {
-        GlobalScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(Dispatchers.IO) {
             try {
                 networkState.postValue(NetworkState.LOADING)
                 val primaryNewsResponse = callLatestNewsAsync(params.key)
@@ -82,4 +82,8 @@ class NewsDataSource @Inject constructor(val treasureApi: TreasureApi) :
     private suspend fun callLatestNewsAsync(pageNumber: Int): Response<NewsResponse> = treasureApi.getLatestNewsAsync(
         NEWS_BASE_URL, SEARCH_KEY_WORD, SEARCH_NEWS_API_KEY, pageNumber, INITIAL_PAGE_SIZE
     )
+
+    fun clearCoroutineJobs() {
+        completableJob.cancel()
+    }
 }

@@ -107,9 +107,7 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         settingsViewModel.countryAndCapital.observe(this, Observer {
             tvCountryAndCapital.text = it
         })
-        settingsViewModel.locationSettingsRequest.observe(this, Observer {
-            if (it) locationTracker.startLocationRequestProcess()
-        })
+
         settingsViewModel.locationRequestTurnOff.observe(this, Observer {
             if (it) locationTracker.removeLocationRequest()
         })

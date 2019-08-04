@@ -40,7 +40,10 @@ class GalleryViewModel @Inject constructor(
             refresh = {
                 galleryDataSourceFactory.sourceLiveData.value?.invalidate()
             },
-            refreshState = refreshStateListener
+            refreshState = refreshStateListener,
+            clearCoroutineJobs = {
+                galleryDataSourceFactory.sourceLiveData.value?.clearCoroutineJobs()
+            }
         )
 
         galleryData = listing.pagedList
@@ -59,4 +62,9 @@ class GalleryViewModel @Inject constructor(
     fun getCurrentState(): LiveData<NetworkState> = networkStateLiveData
 
     fun getInitialState(): LiveData<NetworkState> = refreshState
+
+    override fun onCleared() {
+        super.onCleared()
+        listing.clearCoroutineJobs.invoke()
+    }
 }
