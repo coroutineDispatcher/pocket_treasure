@@ -9,7 +9,7 @@ import com.stavro_xhardha.pockettreasure.model.Surah
 
 @Database(
     entities = [Name::class, Surah::class, Aya::class, PrayerTiming::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class TreasureDatabase : RoomDatabase() {
