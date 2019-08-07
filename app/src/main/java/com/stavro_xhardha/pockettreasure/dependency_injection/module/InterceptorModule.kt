@@ -8,8 +8,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
 @Module
-class InterceptorModule {
+object InterceptorModule {
 
+    @JvmStatic
     @Provides
     @ApplicationScope
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
@@ -20,6 +21,7 @@ class InterceptorModule {
             .build()
     }
 
+    @JvmStatic
     @Provides
     @ApplicationScope
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {

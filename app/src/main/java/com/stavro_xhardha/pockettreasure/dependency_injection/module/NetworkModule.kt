@@ -10,12 +10,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module(includes = [InterceptorModule::class])
-class NetworkModule {
+object NetworkModule {
 
+    @JvmStatic
     @Provides
     @ApplicationScope
     fun provideTreasureApi(retrofit: Retrofit): TreasureApi = retrofit.create(TreasureApi::class.java)
 
+    @JvmStatic
     @Provides
     @ApplicationScope
     fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()

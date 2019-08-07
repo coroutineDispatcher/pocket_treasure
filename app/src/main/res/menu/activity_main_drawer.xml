@@ -27,10 +27,10 @@
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="@string/gallery"/>
 
-        <item
-                android:id="@+id/newsFragment"
-                android:icon="@drawable/ic_news"
-                android:title="@string/news"/>
+        <!--<item-->
+                <!--android:id="@+id/newsFragment"-->
+                <!--android:icon="@drawable/ic_news"-->
+                <!--android:title="@string/news"/>-->
 
         <item
                 android:id="@+id/compassFragment"

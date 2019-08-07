@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -16,14 +17,13 @@ import com.squareup.picasso.Picasso
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.Status
-import com.stavro_xhardha.pockettreasure.dependency_injection.PocketTreasureViewModelFactory
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import javax.inject.Inject
 
 class GalleryFragment : BaseFragment(), GalleryContract {
     @Inject
-    lateinit var factory: PocketTreasureViewModelFactory
+    lateinit var factory: ViewModelProvider.Factory
     @Inject
     lateinit var picasso: Picasso
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
@@ -16,7 +17,6 @@ import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
-import com.stavro_xhardha.pockettreasure.dependency_injection.PocketTreasureViewModelFactory
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import java.util.*
 import javax.inject.Inject
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class SetupFragment : BaseFragment(), LocationTrackerListener {
 
     @Inject
-    lateinit var factory: PocketTreasureViewModelFactory
+    lateinit var factory: ViewModelProvider.Factory
 
     private lateinit var setupViewModel: SetupViewModel
     private lateinit var sharedViewModel: SharedViewModel

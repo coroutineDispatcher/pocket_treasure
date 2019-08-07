@@ -9,15 +9,18 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class MediaModule {
+object MediaModule {
 
+    @JvmStatic
     @Provides
     @ApplicationScope
     fun providePicasso(): Picasso = Picasso.get()
 
+    @JvmStatic
     @Provides
     fun provideWallpaperManager(application: Application): WallpaperManager = WallpaperManager.getInstance(application)
 
+    @JvmStatic
     @Provides
     fun provideMediaPlayer(): MediaPlayer = MediaPlayer()
 }

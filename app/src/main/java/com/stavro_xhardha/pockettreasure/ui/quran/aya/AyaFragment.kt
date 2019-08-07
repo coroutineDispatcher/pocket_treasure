@@ -7,19 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.dependency_injection.PocketTreasureViewModelFactory
 import kotlinx.android.synthetic.main.fragment_aya.*
 import javax.inject.Inject
 
 class AyaFragment : BaseFragment() , AyaContract{
 
     @Inject
-    lateinit var factory: PocketTreasureViewModelFactory
+    lateinit var factory: ViewModelProvider.Factory
     @Inject
     lateinit var mediaPlayer: MediaPlayer
 
