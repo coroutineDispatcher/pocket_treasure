@@ -5,12 +5,14 @@ import androidx.room.Room
 import com.stavro_xhardha.pockettreasure.brain.MIGRATION_1_2
 import com.stavro_xhardha.pockettreasure.brain.TREASURE_DATABASE_NAME
 import com.stavro_xhardha.pockettreasure.dependency_injection.ApplicationScope
-import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase
+import com.stavro_xhardha.pockettreasure.room_db.*
 import dagger.Module
 import dagger.Provides
 
 @Module
-class DatabaseModule {
+object DatabaseModule {
+
+    @JvmStatic
     @Provides
     @ApplicationScope
     fun provideRoomDatabase(context: Application): TreasureDatabase = Room.databaseBuilder(
@@ -18,19 +20,23 @@ class DatabaseModule {
         TreasureDatabase::class.java, TREASURE_DATABASE_NAME
     ).addMigrations(MIGRATION_1_2).build()
 
+    @JvmStatic
     @Provides
     @ApplicationScope
-    fun providesNamesDao(database: TreasureDatabase) = database.namesDao()
+    fun providesNamesDao(database: TreasureDatabase): NamesDao = database.namesDao()
 
+    @JvmStatic
     @Provides
     @ApplicationScope
-    fun providesSurahsDao(database: TreasureDatabase) = database.surahsDao()
+    fun providesSurahsDao(database: TreasureDatabase): SurahsDao = database.surahsDao()
 
+    @JvmStatic
     @Provides
     @ApplicationScope
-    fun providesAyahDao(database: TreasureDatabase) = database.ayasDao()
+    fun providesAyahDao(database: TreasureDatabase): AyasDao = database.ayasDao()
 
+    @JvmStatic
     @Provides
     @ApplicationScope
-    fun providesPrayerTimesDao(database: TreasureDatabase) = database.prayerTimesDao()
+    fun providesPrayerTimesDao(database: TreasureDatabase): PrayerTimesDao = database.prayerTimesDao()
 }

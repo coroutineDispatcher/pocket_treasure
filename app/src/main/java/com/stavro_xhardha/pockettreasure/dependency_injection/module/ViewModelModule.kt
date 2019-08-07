@@ -9,7 +9,6 @@ import com.stavro_xhardha.pockettreasure.ui.gallery.GalleryViewModel
 import com.stavro_xhardha.pockettreasure.ui.home.HomeViewModel
 import com.stavro_xhardha.pockettreasure.ui.map.MapViewModel
 import com.stavro_xhardha.pockettreasure.ui.names.NamesViewModel
-import com.stavro_xhardha.pockettreasure.ui.news.NewsViewModel
 import com.stavro_xhardha.pockettreasure.ui.quran.QuranViewModel
 import com.stavro_xhardha.pockettreasure.ui.quran.aya.AyaViewModel
 import com.stavro_xhardha.pockettreasure.ui.settings.SettingsViewModel
@@ -21,6 +20,9 @@ import dagger.multibindings.IntoMap
 @Suppress("unused")
 @Module
 abstract class ViewModelModule {
+    @Binds
+    abstract fun bindsViewModelFactory(factory: PocketTreasureViewModelFactory): ViewModelProvider.Factory
+
     @Binds
     @IntoMap
     @ViewModelKey(GalleryViewModel::class)
@@ -41,10 +43,10 @@ abstract class ViewModelModule {
     @ViewModelKey(NamesViewModel::class)
     abstract fun bindsNamesViewModel(viewModel: NamesViewModel): ViewModel
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(NewsViewModel::class)
-    abstract fun bindsNewsViewModel(viewModel: NewsViewModel): ViewModel
+//    @Binds
+//    @IntoMap
+//    @ViewModelKey(NewsViewModel::class)
+//    abstract fun bindsNewsViewModel(viewModel: NewsViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -70,7 +72,4 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SetupViewModel::class)
     abstract fun bindsSetupViewModel(viewModel: SetupViewModel): ViewModel
-
-    @Binds
-    abstract fun bindsViewModelFactory(factory: PocketTreasureViewModelFactory): ViewModelProvider.Factory
 }

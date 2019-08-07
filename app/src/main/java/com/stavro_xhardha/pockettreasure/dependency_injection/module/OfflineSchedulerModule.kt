@@ -9,8 +9,9 @@ import dagger.Module
 import dagger.Provides
 
 @Module(includes = [PreferencesModule::class, DatabaseModule::class])
-class OfflineSchedulerModule {
+object OfflineSchedulerModule {
 
+    @JvmStatic
     @Provides
     @ApplicationScope
     fun provideOfflineScheduler(

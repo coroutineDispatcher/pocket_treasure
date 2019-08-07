@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.google.android.gms.location.LocationResult
@@ -17,7 +18,6 @@ import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
 import com.stavro_xhardha.pockettreasure.brain.startWorkManager
-import com.stavro_xhardha.pockettreasure.dependency_injection.PocketTreasureViewModelFactory
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), LocationTrackerListener {
     @Inject
-    lateinit var factory: PocketTreasureViewModelFactory
+    lateinit var factory: ViewModelProvider.Factory
 
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var sharedViewModel: SharedViewModel

@@ -8,8 +8,9 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class PreferencesModule {
+object PreferencesModule {
 
+    @JvmStatic
     @Provides
     @ApplicationScope
     fun provideRocket(context: Application): Rocket =
