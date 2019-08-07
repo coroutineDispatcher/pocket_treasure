@@ -143,22 +143,14 @@ class HomeViewModel @Inject constructor(
         maghribTime: LocalTime,
         ishaTime: LocalTime
     ) {
-        if (currentTime.isAfter(fajrTime))
-            if (currentTime.isAfter(dhuhrTime))
-                if (currentTime.isAfter(asrTime))
-                    if (currentTime.isAfter(maghribTime))
-                        if (currentTime.isAfter(ishaTime))
-                            switchFajrOn()
-                        else
-                            switchIshaOn()
-                    else
-                        switchMaghribOn()
-                else
-                    switchAsrOn()
-            else
-                switchDhuhrOn()
-        else
-            switchFajrOn()
+        when {
+            currentTime.isBefore(fajrTime) -> switchFajrOn()
+            currentTime.isBefore(dhuhrTime) -> switchDhuhrOn()
+            currentTime.isBefore(asrTime) -> switchAsrOn()
+            currentTime.isBefore(maghribTime) -> switchMaghribOn()
+            currentTime.isBefore(ishaTime) -> switchIshaOn()
+            else -> switchFajrOn()
+        }
     }
 
     private suspend fun dateHasPassed(): Boolean {
