@@ -60,6 +60,7 @@ class FullImageFragment : Fragment() {
                     override fun onSuccess() {
                         onSuccessFulImageLoad()
                     }
+
                     override fun onError(e: Exception?) {
                         loadErrorImage()
                     }

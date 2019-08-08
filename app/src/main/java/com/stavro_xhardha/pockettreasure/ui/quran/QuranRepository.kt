@@ -27,7 +27,7 @@ class QuranRepository @Inject constructor(
         quranResponse?.data?.surahs?.forEach { surah ->
             surahsDao.insertSurah(surah)
             surah.ayas.forEach { aya ->
-                val ayaHelper = Aya(0,aya.audioUrl, aya.ayatText, aya.ayatNumber, aya.juz, surah.surahNumber)
+                val ayaHelper = Aya(0, aya.audioUrl, aya.ayatText, aya.ayatNumber, aya.juz, surah.surahNumber)
                 ayasDao.insertAya(ayaHelper)
             }
         }

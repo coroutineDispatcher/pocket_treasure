@@ -8,21 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.dependency_injection.PocketTreasureViewModelFactory
+import dagger.Lazy
 import edu.arbelkilani.compass.CompassListener
 import kotlinx.android.synthetic.main.fragment_compass.*
 import javax.inject.Inject
 
 class CompassFragment : BaseFragment(), CompassListener {
     @Inject
-    lateinit var viewModelFactory: PocketTreasureViewModelFactory
+    lateinit var viewModelFactory: Lazy<ViewModelProvider.Factory>
 
-    private lateinit var compassViewModel: CompassViewModel
+    private val compassViewModel by viewModels<CompassViewModel> { viewModelFactory.get() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +43,6 @@ class CompassFragment : BaseFragment(), CompassListener {
 
     override fun initializeComponents() {
         qibla_compass.setListener(this)
-    }
-
-    override fun initViewModel() {
-        compassViewModel = ViewModelProviders.of(this, viewModelFactory).get(CompassViewModel::class.java)
     }
 
     override fun performDi() {

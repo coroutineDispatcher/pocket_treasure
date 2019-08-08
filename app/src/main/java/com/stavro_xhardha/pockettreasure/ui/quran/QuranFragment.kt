@@ -6,23 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
+import dagger.Lazy
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_quran.*
 import javax.inject.Inject
 
 class QuranFragment : BaseFragment(), QuranAdapterContract {
     @Inject
-    lateinit var factory: ViewModelProvider.Factory
+    lateinit var factory: Lazy<ViewModelProvider.Factory>
 
-    private lateinit var quranViewModel: QuranViewModel
-    private lateinit var quranAdapter: QuranAdapter
+    private val quranViewModel by viewModels<QuranViewModel> { factory.get() }
+    private val quranAdapter by lazy {
+        QuranAdapter(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,15 +44,10 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
     }
 
     override fun initializeComponents() {
-        quranAdapter = QuranAdapter(this)
         rvSuras.adapter = quranAdapter
         btnRetry.setOnClickListener {
             quranViewModel.startQuranImplementation()
         }
-    }
-
-    override fun initViewModel() {
-        quranViewModel = ViewModelProviders.of(this, factory).get(QuranViewModel::class.java)
     }
 
     override fun performDi() {
