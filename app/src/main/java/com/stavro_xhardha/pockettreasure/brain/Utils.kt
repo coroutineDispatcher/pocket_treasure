@@ -54,6 +54,17 @@ val DIFF_UTIL_NEWS = object : DiffUtil.ItemCallback<News>() {
     }
 }
 
+val DIFF_UTIL_NAMES = object : DiffUtil.ItemCallback<Name>() {
+    override fun areItemsTheSame(oldItem: Name, newItem: Name): Boolean = oldItem.arabicName == newItem.arabicName
+
+    override fun areContentsTheSame(oldItem: Name, newItem: Name): Boolean {
+        return oldItem.arabicName == newItem.arabicName
+                && oldItem.englishNameMeaning == newItem.englishNameMeaning
+                && oldItem.number == newItem.number
+                && oldItem.transliteration == newItem.transliteration
+    }
+}
+
 val DIFF_UTIL_QURAN = object : DiffUtil.ItemCallback<Surah>() {
     override fun areItemsTheSame(oldItem: Surah, newItem: Surah): Boolean = oldItem.surahNumber == newItem.surahNumber
 
@@ -103,7 +114,7 @@ fun startWorkManager(context: Context) {
     WorkManager.getInstance(context).enqueue(compressionWork)
 }
 
-val MIGRATION_1_2 = object : Migration(1, 2){
+val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("DROP TABLE IF EXISTS countries")
     }

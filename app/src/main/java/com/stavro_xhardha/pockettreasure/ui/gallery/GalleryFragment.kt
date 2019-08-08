@@ -1,14 +1,13 @@
 package com.stavro_xhardha.pockettreasure.ui.gallery
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,18 +16,22 @@ import com.squareup.picasso.Picasso
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.Status
+import dagger.Lazy
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import javax.inject.Inject
 
 class GalleryFragment : BaseFragment(), GalleryContract {
     @Inject
-    lateinit var factory: ViewModelProvider.Factory
+    lateinit var factory: Lazy<ViewModelProvider.Factory>
     @Inject
-    lateinit var picasso: Picasso
+    lateinit var picasso: Lazy<Picasso>
 
-    private lateinit var galleryViewModel: GalleryViewModel
-    private lateinit var galleryAdapter: GalleryAdapter
+    private val galleryViewModel by viewModels<GalleryViewModel> { factory.get() }
+
+    private val galleryAdapter by lazy {
+        GalleryAdapter(this, picasso.get())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,16 +50,11 @@ class GalleryFragment : BaseFragment(), GalleryContract {
     }
 
     override fun initializeComponents() {
-        galleryAdapter = GalleryAdapter(this, picasso)
         rvGallery.layoutManager = GridLayoutManager(activity, 3)
         rvGallery.adapter = galleryAdapter
         btnRetry.setOnClickListener {
             galleryViewModel.retry()
         }
-    }
-
-    override fun initViewModel() {
-        galleryViewModel = ViewModelProviders.of(this, factory).get(GalleryViewModel::class.java)
     }
 
     override fun performDi() {

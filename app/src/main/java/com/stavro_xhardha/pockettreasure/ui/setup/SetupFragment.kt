@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -18,15 +19,16 @@ import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
+import dagger.Lazy
 import java.util.*
 import javax.inject.Inject
 
 class SetupFragment : BaseFragment(), LocationTrackerListener {
 
     @Inject
-    lateinit var factory: ViewModelProvider.Factory
+    lateinit var factory: Lazy<ViewModelProvider.Factory>
 
-    private lateinit var setupViewModel: SetupViewModel
+    private val setupViewModel by viewModels<SetupViewModel> { factory.get() }
     private lateinit var sharedViewModel: SharedViewModel
 
     private val locationTracker by lazy {
@@ -42,13 +44,6 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
 
     override fun performDi() {
         component.inject(this)
-    }
-
-    override fun initViewModel() {
-        setupViewModel = ViewModelProviders.of(this, factory).get(SetupViewModel::class.java)
-        sharedViewModel = requireActivity().run {
-            ViewModelProviders.of(this).get(SharedViewModel::class.java)
-        }
     }
 
     private fun askForNotifyingUser() {
@@ -71,6 +66,9 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
     }
 
     override fun initializeComponents() {
+        sharedViewModel = requireActivity().run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }
     }
 
     override fun observeTheLiveData() {
@@ -102,7 +100,7 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
         sharedViewModel.onGpsOpened.observe(this, Observer {
             if (it) locationTracker.updateLocation()
         })
-        sharedViewModel.onLocationPermissiongranted.observe(this , Observer{
+        sharedViewModel.onLocationPermissiongranted.observe(this, Observer {
             if (it) locationTracker.getUserLocation()
         })
     }

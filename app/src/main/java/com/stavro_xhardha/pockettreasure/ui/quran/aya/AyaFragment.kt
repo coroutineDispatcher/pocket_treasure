@@ -6,25 +6,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
+import dagger.Lazy
 import kotlinx.android.synthetic.main.fragment_aya.*
 import javax.inject.Inject
 
-class AyaFragment : BaseFragment() , AyaContract{
+class AyaFragment : BaseFragment(), AyaContract {
 
     @Inject
-    lateinit var factory: ViewModelProvider.Factory
+    lateinit var factory: Lazy<ViewModelProvider.Factory>
     @Inject
     lateinit var mediaPlayer: MediaPlayer
 
-    private lateinit var ayaViewModel: AyaViewModel
-    private lateinit var ayasAdapter: AyasAdapter
+    private val ayaViewModel by viewModels<AyaViewModel> { factory.get() }
+    private val ayasAdapter by lazy {
+        AyasAdapter(mediaPlayer, this)
+    }
 
     private val args: AyaFragmentArgs by navArgs()
 
@@ -42,15 +45,10 @@ class AyaFragment : BaseFragment() , AyaContract{
     }
 
     override fun initializeComponents() {
-        ayasAdapter = AyasAdapter(mediaPlayer, this)
-        rvAya.adapter = ayasAdapter
-        pbAya.visibility = View.VISIBLE
-    }
-
-    override fun initViewModel() {
-        ayaViewModel = ViewModelProviders.of(this, factory).get(AyaViewModel::class.java)
         val surahsNumber = args.surahsNumber
         ayaViewModel.startSuraDataBaseCall(surahsNumber)
+        rvAya.adapter = ayasAdapter
+        pbAya.visibility = View.VISIBLE
     }
 
     override fun performDi() {
@@ -72,6 +70,6 @@ class AyaFragment : BaseFragment() , AyaContract{
     }
 
     override fun onMediaPlayerError() {
-      Snackbar.make(view!!, R.string.cannot_play_sound_check_connection, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(view!!, R.string.cannot_play_sound_check_connection, Snackbar.LENGTH_LONG).show()
     }
 }

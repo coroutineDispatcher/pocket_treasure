@@ -6,23 +6,23 @@ import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
 import com.stavro_xhardha.pockettreasure.brain.PLAY_STORE_URL
 import com.stavro_xhardha.pockettreasure.brain.startWorkManager
+import dagger.Lazy
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment() {
 
     @Inject
-    lateinit var factory: ViewModelProvider.Factory
-
-    private lateinit var homeViewModel: HomeViewModel
+    lateinit var factory: Lazy<ViewModelProvider.Factory>
+    private val homeViewModel by viewModels<HomeViewModel> { factory.get() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,12 +69,8 @@ class HomeFragment : BaseFragment() {
         component.inject(this)
     }
 
-    override fun initViewModel() {
-        homeViewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
-        homeViewModel.initWorker()
-    }
-
     override fun initializeComponents() {
+        homeViewModel.initWorker()
     }
 
     override fun observeTheLiveData() {

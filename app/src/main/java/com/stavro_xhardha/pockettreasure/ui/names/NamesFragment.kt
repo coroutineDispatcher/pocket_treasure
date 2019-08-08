@@ -6,23 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
+import dagger.Lazy
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_names.*
 import javax.inject.Inject
 
 class NamesFragment : BaseFragment() {
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
 
-    private lateinit var namesViewModel: NamesViewModel
-    private lateinit var namesAdapter: NamesAdapter
+    @Inject
+    lateinit var factory: Lazy<ViewModelProvider.Factory>
+    private val namesViewModel by viewModels<NamesViewModel> { factory.get() }
+
+    private val namesAdapter by lazy {
+        NamesAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,15 +38,10 @@ class NamesFragment : BaseFragment() {
         component.inject(this)
     }
 
-    override fun initViewModel() {
-        namesViewModel = ViewModelProviders.of(this, factory)
-            .get(NamesViewModel::class.java)
-    }
-
     override fun observeTheLiveData() {
         namesViewModel.allNamesList.observe(this, Observer {
-            namesAdapter = NamesAdapter(it)
             rvNames.adapter = namesAdapter
+            namesAdapter.submitList(it)
         })
         namesViewModel.progressBarVisibility.observe(this, Observer {
             pbNames.visibility = it
@@ -54,10 +52,10 @@ class NamesFragment : BaseFragment() {
     }
 
     override fun initializeComponents() {
-        rvNames.layoutManager = LinearLayoutManager(activity)
         btnRetry.setOnClickListener {
             namesViewModel.retryConnection()
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

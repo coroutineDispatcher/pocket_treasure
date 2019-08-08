@@ -11,13 +11,10 @@ abstract class BaseFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         performDi()
         initializeComponents()
-        initViewModel()
         observeTheLiveData()
     }
 
     abstract fun initializeComponents()
-
-    abstract fun initViewModel()
 
     abstract fun performDi()
 

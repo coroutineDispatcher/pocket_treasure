@@ -117,11 +117,11 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    debugImplementation("androidx.fragment:fragment-testing:1.2.0-alpha01", {
+    debugImplementation("androidx.fragment:fragment-testing:1.2.0-alpha02", {
         exclude group: 'androidx.test', module: 'core'
     })
-    implementation 'androidx.fragment:fragment:1.2.0-alpha01'
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha01'
+    implementation 'androidx.fragment:fragment:1.2.0-alpha02'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha02'
     androidTestImplementation 'org.mockito:mockito-android:2.24.5'
 
     testImplementation("com.squareup.okhttp3:mockwebserver:3.14.2")

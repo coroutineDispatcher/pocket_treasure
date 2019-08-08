@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -19,15 +20,16 @@ import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
 import com.stavro_xhardha.pockettreasure.brain.startWorkManager
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
+import dagger.Lazy
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), LocationTrackerListener {
     @Inject
-    lateinit var factory: ViewModelProvider.Factory
+    lateinit var factory: Lazy<ViewModelProvider.Factory>
 
-    private lateinit var settingsViewModel: SettingsViewModel
+    private val settingsViewModel by viewModels<SettingsViewModel> { factory.get() }
     private lateinit var sharedViewModel: SharedViewModel
 
     private val locationTracker by lazy {
@@ -74,10 +76,6 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         llLocation.setOnClickListener {
             locationTracker.startLocationRequestProcess()
         }
-    }
-
-    override fun initViewModel() {
-        settingsViewModel = ViewModelProviders.of(this, factory).get(SettingsViewModel::class.java)
 
         sharedViewModel = requireActivity().run {
             ViewModelProviders.of(requireActivity()).get(SharedViewModel::class.java)

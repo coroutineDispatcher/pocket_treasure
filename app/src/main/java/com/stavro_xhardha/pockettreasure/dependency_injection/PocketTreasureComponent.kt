@@ -43,8 +43,9 @@ interface PocketTreasureComponent {
     fun inject(fragment: GalleryFragment)
     fun inject(fragment: HomeFragment)
     fun inject(fragment: NamesFragment)
-//    fun inject(fragment: NewsFragment)
+    //    fun inject(fragment: NewsFragment)
     fun inject(fragment: AyaFragment)
+
     fun inject(fragment: QuranFragment)
     fun inject(fragment: CompassFragment)
     fun inject(fragment: SettingsFragment)

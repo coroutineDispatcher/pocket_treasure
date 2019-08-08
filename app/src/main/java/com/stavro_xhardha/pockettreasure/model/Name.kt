@@ -27,6 +27,6 @@ data class Name(
 
     @ColumnInfo(name = "name_meaning")
     var meaning: String
-){
-    public constructor(): this("" , "", 0, null, "")
+) {
+    constructor() : this("", "", 0, null, "")
 }

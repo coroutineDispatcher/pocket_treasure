@@ -13,16 +13,14 @@ import kotlinx.android.synthetic.main.fragment_tasbeeh.*
 
 class TasbeehFragment : BaseFragment() {
 
-    private lateinit var tasbeehViewModel: TasbeehViewModel
+    private val tasbeehViewModel by lazy {
+        ViewModelProviders.of(this).get(TasbeehViewModel::class.java)
+    }
     private lateinit var adapter: TasbeehAdapter
 
     override fun initializeComponents() {
         adapter = TasbeehAdapter()
         rvTasbeeh.adapter = adapter
-    }
-
-    override fun initViewModel() {
-        tasbeehViewModel = ViewModelProviders.of(this).get(TasbeehViewModel::class.java)
     }
 
     override fun performDi() {
