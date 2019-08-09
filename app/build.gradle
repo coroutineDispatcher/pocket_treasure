@@ -73,6 +73,8 @@ dependencies {
     //dagger
     implementation 'com.google.dagger:dagger:2.22'
     kapt 'com.google.dagger:dagger-compiler:2.22'
+    compileOnly 'com.squareup.inject:assisted-inject-annotations-dagger2:0.5.0'
+    kapt 'com.squareup.inject:assisted-inject-processor-dagger2:0.5.0'
 
     //coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2'
@@ -85,9 +87,9 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:input:3.0.0-rc2'
 
     //room
-    implementation "androidx.room:room-runtime:2.2.0-alpha01"
-    kapt "androidx.room:room-compiler:2.2.0-alpha01"
-    implementation "androidx.room:room-ktx:2.2.0-alpha01"
+    implementation "androidx.room:room-runtime:2.2.0-alpha02"
+    kapt "androidx.room:room-compiler:2.2.0-alpha02"
+    implementation "androidx.room:room-ktx:2.2.0-alpha02"
 
     //Joda time
     implementation 'net.danlew:android.joda:2.10.1.2'
@@ -96,7 +98,7 @@ dependencies {
     implementation 'com.github.stavro96:Rocket:1.2.0'
 
     //ViewModel scope for coroutines
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha03'
 
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.12'
@@ -144,7 +146,7 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     //new viewmodel saved instance state
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha03'
 
     testImplementation 'joda-time:joda-time:2.10.1'
 

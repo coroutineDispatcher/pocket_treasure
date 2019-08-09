@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.Dispatchers
@@ -14,12 +15,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
-import javax.inject.Inject
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-class CompassViewModel @Inject constructor(private val rocket: Rocket) : ViewModel() {
+class CompassViewModel @AssistedInject constructor(private val rocket: Rocket) : ViewModel() {
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(): CompassViewModel
+    }
+
     private val _rotateAnimation = MutableLiveData<RotateAnimation>()
     private val _qiblaFound = MutableLiveData<Boolean>()
 

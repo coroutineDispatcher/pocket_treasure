@@ -4,15 +4,20 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.model.Name
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class NamesViewModel @Inject constructor(
+class NamesViewModel @AssistedInject constructor(
     private val repository: NamesRepository
 ) : ViewModel() {
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(): NamesViewModel
+    }
 
     val allNamesList: MutableLiveData<List<Name>> = MutableLiveData()
     val progressBarVisibility: MutableLiveData<Int> = MutableLiveData()

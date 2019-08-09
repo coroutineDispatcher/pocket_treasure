@@ -6,25 +6,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
-import dagger.Lazy
+import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.fragment_aya.*
-import javax.inject.Inject
 
 class AyaFragment : BaseFragment(), AyaContract {
 
-    @Inject
-    lateinit var factory: Lazy<ViewModelProvider.Factory>
-    @Inject
-    lateinit var mediaPlayer: MediaPlayer
+    private val mediaPlayer: MediaPlayer by lazy {
+        component.mediaPlayer
+    }
 
-    private val ayaViewModel by viewModels<AyaViewModel> { factory.get() }
+    private val ayaViewModel by viewModel { component.ayaViewModelFactory.create() }
+
     private val ayasAdapter by lazy {
         AyasAdapter(mediaPlayer, this)
     }
@@ -52,7 +49,7 @@ class AyaFragment : BaseFragment(), AyaContract {
     }
 
     override fun performDi() {
-        component.inject(this)
+
     }
 
     override fun observeTheLiveData() {

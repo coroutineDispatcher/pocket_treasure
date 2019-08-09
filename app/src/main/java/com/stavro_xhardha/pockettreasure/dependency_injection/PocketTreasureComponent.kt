@@ -8,14 +8,14 @@ import com.stavro_xhardha.pockettreasure.background.OfflinePrayerScheduler
 import com.stavro_xhardha.pockettreasure.dependency_injection.module.*
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
 import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase
-import com.stavro_xhardha.pockettreasure.ui.compass.CompassFragment
-import com.stavro_xhardha.pockettreasure.ui.gallery.GalleryFragment
-import com.stavro_xhardha.pockettreasure.ui.home.HomeFragment
-import com.stavro_xhardha.pockettreasure.ui.names.NamesFragment
-import com.stavro_xhardha.pockettreasure.ui.quran.QuranFragment
-import com.stavro_xhardha.pockettreasure.ui.quran.aya.AyaFragment
-import com.stavro_xhardha.pockettreasure.ui.settings.SettingsFragment
-import com.stavro_xhardha.pockettreasure.ui.setup.SetupFragment
+import com.stavro_xhardha.pockettreasure.ui.compass.CompassViewModel
+import com.stavro_xhardha.pockettreasure.ui.gallery.GalleryViewModel
+import com.stavro_xhardha.pockettreasure.ui.home.HomeViewModel
+import com.stavro_xhardha.pockettreasure.ui.names.NamesViewModel
+import com.stavro_xhardha.pockettreasure.ui.quran.QuranViewModel
+import com.stavro_xhardha.pockettreasure.ui.quran.aya.AyaViewModel
+import com.stavro_xhardha.pockettreasure.ui.settings.SettingsViewModel
+import com.stavro_xhardha.pockettreasure.ui.setup.SetupViewModel
 import com.stavro_xhardha.rocket.Rocket
 import dagger.BindsInstance
 import dagger.Component
@@ -26,30 +26,36 @@ import dagger.Component
         OfflineSchedulerModule::class, ViewModelModule::class]
 )
 interface PocketTreasureComponent {
-    fun getTreasureApi(): TreasureApi
 
-    fun getSharedPreferences(): Rocket
+    val galleryViewModelFactory: GalleryViewModel.Factory
 
-    fun treasureDatabase(): TreasureDatabase
+    val compassViewModelFactory: CompassViewModel.Factory
 
-    fun picasso(): Picasso
+    val homeViewModelFactory: HomeViewModel.Factory
 
-    fun wallpaperManager(): WallpaperManager
+    val namesViewModelFactory: NamesViewModel.Factory
 
-    fun offlineScheduler(): OfflinePrayerScheduler
+    val ayaViewModelFactory: AyaViewModel.Factory
 
-    fun mediaPlayer(): MediaPlayer
+    val quranViewModelFactory: QuranViewModel.Factory
 
-    fun inject(fragment: GalleryFragment)
-    fun inject(fragment: HomeFragment)
-    fun inject(fragment: NamesFragment)
-    //    fun inject(fragment: NewsFragment)
-    fun inject(fragment: AyaFragment)
+    val settingsViewModelFactory: SettingsViewModel.Factory
 
-    fun inject(fragment: QuranFragment)
-    fun inject(fragment: CompassFragment)
-    fun inject(fragment: SettingsFragment)
-    fun inject(fragment: SetupFragment)
+    val setupViewModelFactory: SetupViewModel.Factory
+
+    val getTreasureApi: TreasureApi
+
+    val getSharedPreferences: Rocket
+
+    val treasureDatabase: TreasureDatabase
+
+    val picasso: Picasso
+
+    val wallpaperManager: WallpaperManager
+
+    val offlineScheduler: OfflinePrayerScheduler
+
+    val mediaPlayer: MediaPlayer
 
     @Component.Factory
     interface Factory {

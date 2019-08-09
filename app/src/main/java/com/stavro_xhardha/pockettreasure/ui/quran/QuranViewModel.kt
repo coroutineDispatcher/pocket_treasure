@@ -5,14 +5,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.model.QuranResponse
 import com.stavro_xhardha.pockettreasure.model.Surah
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class QuranViewModel @Inject constructor(private val repository: QuranRepository) : ViewModel() {
+class QuranViewModel @AssistedInject constructor(private val repository: QuranRepository) : ViewModel() {
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(): QuranViewModel
+    }
 
     private val _surahs: MutableLiveData<List<Surah>> = MutableLiveData()
     private val _errorVisibility: MutableLiveData<Int> = MutableLiveData()

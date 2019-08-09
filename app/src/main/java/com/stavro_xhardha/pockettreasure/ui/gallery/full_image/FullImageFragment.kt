@@ -20,6 +20,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.pockettreasure.brain.FULL_IMAGE_SAVED_STATE
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_STORAGE_PERMISSION
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
@@ -46,16 +47,35 @@ class FullImageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_full_image, container, false)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(FULL_IMAGE_SAVED_STATE, expetedUrl)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso()
-        wallpaperManager = PocketTreasureApplication.getPocketTreasureComponent().wallpaperManager()
+        picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso
+        wallpaperManager = PocketTreasureApplication.getPocketTreasureComponent().wallpaperManager
 
-        expetedUrl = args.imageUrl
+        if (savedInstanceState == null) {
 
-        if (expetedUrl.isNotEmpty()) {
-            picasso.load(expetedUrl)
+            expetedUrl = args.imageUrl
+
+            if (expetedUrl.isNotEmpty()) {
+                picasso.load(expetedUrl)
+                    .into(ivFullImage, object : Callback {
+                        override fun onSuccess() {
+                            onSuccessFulImageLoad()
+                        }
+
+                        override fun onError(e: Exception?) {
+                            loadErrorImage()
+                        }
+                    })
+            }
+        } else {
+            picasso.load(savedInstanceState.getString(FULL_IMAGE_SAVED_STATE))
                 .into(ivFullImage, object : Callback {
                     override fun onSuccess() {
                         onSuccessFulImageLoad()

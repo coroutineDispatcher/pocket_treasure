@@ -6,13 +6,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import javax.inject.Inject
 
-class SetupViewModel @Inject constructor(private val setupRepository: SetupRepository) : ViewModel() {
+class SetupViewModel @AssistedInject constructor(private val setupRepository: SetupRepository) : ViewModel() {
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(): SetupViewModel
+    }
 
     val pbVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorVisibility: MutableLiveData<Int> = MutableLiveData()

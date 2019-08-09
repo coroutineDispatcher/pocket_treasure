@@ -16,8 +16,8 @@ class AlarmRebootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action.equals("android.intent.action.BOOT_COMPLETED")) {
-            val offlinePrayerScheduler = PocketTreasureApplication.getPocketTreasureComponent().offlineScheduler()
-            val rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences()
+            val offlinePrayerScheduler = PocketTreasureApplication.getPocketTreasureComponent().offlineScheduler
+            val rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences
             GlobalScope.launch(Dispatchers.IO) {
                 if (rocket.readBoolean(DATA_ARE_READY)) {
                     offlinePrayerScheduler.initScheduler()

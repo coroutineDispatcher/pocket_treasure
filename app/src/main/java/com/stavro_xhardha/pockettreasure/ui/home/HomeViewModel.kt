@@ -1,10 +1,9 @@
 package com.stavro_xhardha.pockettreasure.ui.home
 
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.ACCENT_BACKGROUND
 import com.stavro_xhardha.pockettreasure.brain.WHITE_BACKGROUND
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
@@ -15,11 +14,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 import org.joda.time.LocalTime
-import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository
+class HomeViewModel @AssistedInject constructor(
+    private val homeRepository: HomeRepository,
+    @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(savedStateHandle: SavedStateHandle): HomeViewModel
+    }
 
     val monthSection = MutableLiveData<String>()
     val locationSecton = MutableLiveData<String>()

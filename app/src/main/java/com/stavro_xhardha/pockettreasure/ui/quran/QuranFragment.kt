@@ -13,16 +13,17 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.pockettreasure.brain.viewModel
 import dagger.Lazy
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_quran.*
 import javax.inject.Inject
 
 class QuranFragment : BaseFragment(), QuranAdapterContract {
-    @Inject
-    lateinit var factory: Lazy<ViewModelProvider.Factory>
 
-    private val quranViewModel by viewModels<QuranViewModel> { factory.get() }
+
+    private val quranViewModel by viewModel { component.quranViewModelFactory.create() }
+
     private val quranAdapter by lazy {
         QuranAdapter(this)
     }
@@ -51,7 +52,7 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
     }
 
     override fun performDi() {
-        component.inject(this)
+
     }
 
     override fun observeTheLiveData() {

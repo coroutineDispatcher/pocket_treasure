@@ -29,8 +29,8 @@ class PrayerTimeNotificationReceiver : BroadcastReceiver() {
     private lateinit var picasso: Picasso
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences()
-        picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso()
+        rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences
+        picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso
         val title = intent?.getStringExtra(PRAYER_TITLE)
         val description = intent?.getStringExtra(PRAYER_DESCRIPTION)
         GlobalScope.launch {

@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
@@ -18,17 +16,15 @@ import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
+import com.stavro_xhardha.pockettreasure.brain.viewModel
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
-import dagger.Lazy
 import java.util.*
-import javax.inject.Inject
 
 class SetupFragment : BaseFragment(), LocationTrackerListener {
 
-    @Inject
-    lateinit var factory: Lazy<ViewModelProvider.Factory>
 
-    private val setupViewModel by viewModels<SetupViewModel> { factory.get() }
+    private val setupViewModel by viewModel { component.setupViewModelFactory.create() }
+
     private lateinit var sharedViewModel: SharedViewModel
 
     private val locationTracker by lazy {
@@ -43,7 +39,7 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
     }
 
     override fun performDi() {
-        component.inject(this)
+
     }
 
     private fun askForNotifyingUser() {

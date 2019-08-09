@@ -12,7 +12,7 @@ class MidnightScheduler : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         //it's midnight
-        val offlinePrayerScheduler = PocketTreasureApplication.getPocketTreasureComponent().offlineScheduler()
+        val offlinePrayerScheduler = PocketTreasureApplication.getPocketTreasureComponent().offlineScheduler
         GlobalScope.launch(Dispatchers.IO) {
             offlinePrayerScheduler.initScheduler()
         }

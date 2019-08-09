@@ -1,7 +1,13 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.stavro_xhardha.pockettreasure.brain
 
 import android.content.Context
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.migration.Migration
@@ -119,3 +125,11 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
         database.execSQL("DROP TABLE IF EXISTS countries")
     }
 }
+
+inline fun <reified T : ViewModel> Fragment.viewModel(crossinline provider: () -> T) =
+    viewModels<T> {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+                provider() as T
+        }
+    }
