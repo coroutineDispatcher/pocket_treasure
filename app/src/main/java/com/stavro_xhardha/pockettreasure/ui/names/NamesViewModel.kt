@@ -1,27 +1,32 @@
 package com.stavro_xhardha.pockettreasure.ui.names
 
 import android.view.View
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import com.stavro_xhardha.pockettreasure.brain.NAMES_LIST_STATE
 import com.stavro_xhardha.pockettreasure.model.Name
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NamesViewModel @AssistedInject constructor(
-    private val repository: NamesRepository
+    private val repository: NamesRepository,
+    @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     @AssistedInject.Factory
     interface Factory {
-        fun create(): NamesViewModel
+        fun create(savedStateHandle: SavedStateHandle): NamesViewModel
     }
 
-    val allNamesList: MutableLiveData<List<Name>> = MutableLiveData()
-    val progressBarVisibility: MutableLiveData<Int> = MutableLiveData()
-    val errorLayoutVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val _progressBarVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val _errorLayoutVisibility: MutableLiveData<Int> = MutableLiveData()
+    private val _namesList: MutableLiveData<List<Name>> = savedStateHandle.getLiveData(NAMES_LIST_STATE)
+
+    val namesList: LiveData<List<Name>> = _namesList
+    val progressBarVisibility: LiveData<Int> = _progressBarVisibility
+    val errorLayoutVisibility: LiveData<Int> = _errorLayoutVisibility
 
     init {
         loadNamesList()
@@ -31,7 +36,8 @@ class NamesViewModel @AssistedInject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             startProgressBar()
             try {
-                if (dataExistInDatabase()) {
+                val dataIsLocally = dataExistInDatabase()
+                if (dataIsLocally) {
                     makeNamesDatabaseCall()
                 } else {
                     makeNamesApiCall()
@@ -45,17 +51,17 @@ class NamesViewModel @AssistedInject constructor(
 
     private suspend fun startProgressBar() {
         withContext(Dispatchers.Main) {
-            progressBarVisibility.value = View.VISIBLE
-            errorLayoutVisibility.value = View.GONE
+            _progressBarVisibility.value = View.VISIBLE
+            _errorLayoutVisibility.value = View.GONE
         }
     }
 
     private suspend fun makeNamesDatabaseCall() {
         val names = repository.getNamesFromDatabase()
         withContext(Dispatchers.Main) {
-            allNamesList.value = names
-            progressBarVisibility.value = View.GONE
-            errorLayoutVisibility.value = View.GONE
+            savedStateHandle.set(NAMES_LIST_STATE, names)
+            _progressBarVisibility.value = View.GONE
+            _errorLayoutVisibility.value = View.GONE
         }
     }
 
@@ -79,8 +85,8 @@ class NamesViewModel @AssistedInject constructor(
 
     private suspend fun showError() {
         withContext(Dispatchers.Main) {
-            errorLayoutVisibility.value = View.VISIBLE
-            progressBarVisibility.value = View.GONE
+            _errorLayoutVisibility.value = View.VISIBLE
+            _progressBarVisibility.value = View.GONE
         }
     }
 

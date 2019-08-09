@@ -9,14 +9,11 @@ abstract class BaseFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        performDi()
         initializeComponents()
         observeTheLiveData()
     }
 
     abstract fun initializeComponents()
-
-    abstract fun performDi()
 
     abstract fun observeTheLiveData()
 }

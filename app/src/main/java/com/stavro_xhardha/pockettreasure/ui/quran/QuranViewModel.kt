@@ -1,10 +1,8 @@
 package com.stavro_xhardha.pockettreasure.ui.quran
 
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.model.QuranResponse
 import com.stavro_xhardha.pockettreasure.model.Surah
@@ -12,11 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class QuranViewModel @AssistedInject constructor(private val repository: QuranRepository) : ViewModel() {
+class QuranViewModel @AssistedInject constructor(
+    private val repository: QuranRepository,
+    @Assisted val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     @AssistedInject.Factory
     interface Factory {
-        fun create(): QuranViewModel
+        fun create(savedStateHandle: SavedStateHandle): QuranViewModel
     }
 
     private val _surahs: MutableLiveData<List<Surah>> = MutableLiveData()

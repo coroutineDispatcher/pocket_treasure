@@ -23,9 +23,6 @@ class TasbeehFragment : BaseFragment() {
         rvTasbeeh.adapter = adapter
     }
 
-    override fun performDi() {
-    }
-
     override fun observeTheLiveData() {
         tasbeehViewModel.tasbeehList.observe(this, Observer {
             adapter.submitList(it)

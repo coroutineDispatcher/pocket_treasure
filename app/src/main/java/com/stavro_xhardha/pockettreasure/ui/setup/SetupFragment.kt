@@ -23,7 +23,7 @@ import java.util.*
 class SetupFragment : BaseFragment(), LocationTrackerListener {
 
 
-    private val setupViewModel by viewModel { component.setupViewModelFactory.create() }
+    private val setupViewModel by viewModel { component.setupViewModelFactory.create(it) }
 
     private lateinit var sharedViewModel: SharedViewModel
 
@@ -36,10 +36,6 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_setup, container, false)
-    }
-
-    override fun performDi() {
-
     }
 
     private fun askForNotifyingUser() {

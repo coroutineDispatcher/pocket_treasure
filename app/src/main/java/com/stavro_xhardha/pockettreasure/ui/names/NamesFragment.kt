@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_names.*
 
 class NamesFragment : BaseFragment() {
 
-    private val namesViewModel by viewModel { component.namesViewModelFactory.create() }
+    private val namesViewModel by viewModel { component.namesViewModelFactory.create(it) }
 
     private val namesAdapter by lazy {
         NamesAdapter()
@@ -29,11 +29,8 @@ class NamesFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_names, container, false)
     }
 
-    override fun performDi() {
-    }
-
     override fun observeTheLiveData() {
-        namesViewModel.allNamesList.observe(this, Observer {
+        namesViewModel.namesList.observe(this, Observer {
             rvNames.adapter = namesAdapter
             namesAdapter.submitList(it)
         })

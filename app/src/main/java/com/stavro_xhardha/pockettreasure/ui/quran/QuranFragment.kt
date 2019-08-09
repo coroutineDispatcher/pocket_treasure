@@ -22,7 +22,7 @@ import javax.inject.Inject
 class QuranFragment : BaseFragment(), QuranAdapterContract {
 
 
-    private val quranViewModel by viewModel { component.quranViewModelFactory.create() }
+    private val quranViewModel by viewModel { component.quranViewModelFactory.create(it) }
 
     private val quranAdapter by lazy {
         QuranAdapter(this)
@@ -49,10 +49,6 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
         btnRetry.setOnClickListener {
             quranViewModel.startQuranImplementation()
         }
-    }
-
-    override fun performDi() {
-
     }
 
     override fun observeTheLiveData() {

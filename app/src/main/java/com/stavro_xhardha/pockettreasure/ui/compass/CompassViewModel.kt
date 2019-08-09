@@ -3,10 +3,8 @@ package com.stavro_xhardha.pockettreasure.ui.compass
 import android.hardware.SensorEvent
 import android.util.Log
 import android.view.animation.RotateAnimation
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.rocket.Rocket
@@ -19,11 +17,14 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-class CompassViewModel @AssistedInject constructor(private val rocket: Rocket) : ViewModel() {
+class CompassViewModel @AssistedInject constructor(
+    private val rocket: Rocket,
+    @Assisted val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     @AssistedInject.Factory
     interface Factory {
-        fun create(): CompassViewModel
+        fun create(savedStateHandle: SavedStateHandle): CompassViewModel
     }
 
     private val _rotateAnimation = MutableLiveData<RotateAnimation>()

@@ -1,10 +1,8 @@
 package com.stavro_xhardha.pockettreasure.ui.settings
 
 import android.location.Geocoder
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
@@ -13,11 +11,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class SettingsViewModel @AssistedInject constructor(private val settingsRepository: SettingsRepository) : ViewModel() {
+class SettingsViewModel @AssistedInject constructor(
+    private val settingsRepository: SettingsRepository,
+    @Assisted val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     @AssistedInject.Factory
     interface Factory {
-        fun create(): SettingsViewModel
+        fun create(savedStateHandle: SavedStateHandle): SettingsViewModel
     }
 
     private val _fajrCheck: MutableLiveData<Boolean> = MutableLiveData()

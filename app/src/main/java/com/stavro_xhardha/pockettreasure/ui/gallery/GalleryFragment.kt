@@ -26,7 +26,7 @@ class GalleryFragment : BaseFragment(), GalleryContract {
         GalleryAdapter(this, picasso)
     }
 
-    private val galleryViewModel by viewModel { component.galleryViewModelFactory.create() }
+    private val galleryViewModel by viewModel { component.galleryViewModelFactory.create(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,10 +50,6 @@ class GalleryFragment : BaseFragment(), GalleryContract {
         btnRetry.setOnClickListener {
             galleryViewModel.retry()
         }
-    }
-
-    override fun performDi() {
-        val galleryViewModelFactory = component.galleryViewModelFactory
     }
 
     override fun observeTheLiveData() {

@@ -17,7 +17,7 @@ import org.joda.time.LocalTime
 
 class HomeViewModel @AssistedInject constructor(
     private val homeRepository: HomeRepository,
-    @Assisted savedStateHandle: SavedStateHandle
+    @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     @AssistedInject.Factory

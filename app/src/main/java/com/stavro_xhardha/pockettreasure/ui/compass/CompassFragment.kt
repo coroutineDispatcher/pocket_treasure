@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_compass.*
 
 class CompassFragment : BaseFragment(), CompassListener {
 
-    private val compassViewModel by viewModel { component.compassViewModelFactory.create() }
+    private val compassViewModel by viewModel { component.compassViewModelFactory.create(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +38,6 @@ class CompassFragment : BaseFragment(), CompassListener {
 
     override fun initializeComponents() {
         qibla_compass.setListener(this)
-    }
-
-    override fun performDi() {
     }
 
     override fun observeTheLiveData() {

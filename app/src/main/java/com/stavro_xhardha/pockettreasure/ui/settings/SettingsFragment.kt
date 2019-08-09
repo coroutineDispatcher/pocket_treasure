@@ -24,7 +24,7 @@ import java.util.*
 
 class SettingsFragment : BaseFragment(), LocationTrackerListener {
 
-    private val settingsViewModel by viewModel { component.settingsViewModelFactory.create() }
+    private val settingsViewModel by viewModel { component.settingsViewModelFactory.create(it) }
 
     private lateinit var sharedViewModel: SharedViewModel
 
@@ -76,10 +76,6 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         sharedViewModel = requireActivity().run {
             ViewModelProviders.of(requireActivity()).get(SharedViewModel::class.java)
         }
-    }
-
-    override fun performDi() {
-
     }
 
     override fun observeTheLiveData() {

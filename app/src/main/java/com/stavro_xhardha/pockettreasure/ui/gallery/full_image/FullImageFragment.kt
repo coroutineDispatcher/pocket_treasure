@@ -48,8 +48,8 @@ class FullImageFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(FULL_IMAGE_SAVED_STATE, args.imageUrl)
         super.onSaveInstanceState(outState)
-        outState.putString(FULL_IMAGE_SAVED_STATE, expetedUrl)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,33 +59,25 @@ class FullImageFragment : Fragment() {
         wallpaperManager = PocketTreasureApplication.getPocketTreasureComponent().wallpaperManager
 
         if (savedInstanceState == null) {
-
             expetedUrl = args.imageUrl
-
-            if (expetedUrl.isNotEmpty()) {
-                picasso.load(expetedUrl)
-                    .into(ivFullImage, object : Callback {
-                        override fun onSuccess() {
-                            onSuccessFulImageLoad()
-                        }
-
-                        override fun onError(e: Exception?) {
-                            loadErrorImage()
-                        }
-                    })
-            }
+            loadImage(expetedUrl)
         } else {
-            picasso.load(savedInstanceState.getString(FULL_IMAGE_SAVED_STATE))
-                .into(ivFullImage, object : Callback {
-                    override fun onSuccess() {
-                        onSuccessFulImageLoad()
-                    }
-
-                    override fun onError(e: Exception?) {
-                        loadErrorImage()
-                    }
-                })
+            expetedUrl = savedInstanceState.getString(FULL_IMAGE_SAVED_STATE)!!
+            loadImage(expetedUrl)
         }
+    }
+
+    private fun loadImage(url: String) {
+        picasso.load(url)
+            .into(ivFullImage, object : Callback {
+                override fun onSuccess() {
+                    onSuccessFulImageLoad()
+                }
+
+                override fun onError(e: Exception?) {
+                    loadErrorImage()
+                }
+            })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

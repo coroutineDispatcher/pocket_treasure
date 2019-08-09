@@ -20,7 +20,7 @@ class AyaFragment : BaseFragment(), AyaContract {
         component.mediaPlayer
     }
 
-    private val ayaViewModel by viewModel { component.ayaViewModelFactory.create() }
+    private val ayaViewModel by viewModel { component.ayaViewModelFactory.create(it) }
 
     private val ayasAdapter by lazy {
         AyasAdapter(mediaPlayer, this)
@@ -46,10 +46,6 @@ class AyaFragment : BaseFragment(), AyaContract {
         ayaViewModel.startSuraDataBaseCall(surahsNumber)
         rvAya.adapter = ayasAdapter
         pbAya.visibility = View.VISIBLE
-    }
-
-    override fun performDi() {
-
     }
 
     override fun observeTheLiveData() {

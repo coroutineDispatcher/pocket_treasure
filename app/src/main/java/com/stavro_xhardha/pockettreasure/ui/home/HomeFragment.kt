@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateHandle
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
@@ -18,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment() {
 
-    private val homeViewModel by viewModel { component.homeViewModelFactory.create(SavedStateHandle()) }
+    private val homeViewModel by viewModel { component.homeViewModelFactory.create(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,10 +58,6 @@ class HomeFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         homeViewModel.loadPrayerTimes()
-    }
-
-    override fun performDi() {
-
     }
 
     override fun initializeComponents() {
