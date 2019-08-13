@@ -1,7 +1,15 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.stavro_xhardha.pockettreasure.brain
 
 import android.content.Context
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.migration.Migration
@@ -117,5 +125,14 @@ fun startWorkManager(context: Context) {
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("DROP TABLE IF EXISTS countries")
+    }
+}
+
+inline fun <reified T : ViewModel> Fragment.viewModel(
+    crossinline provider: (SavedStateHandle) -> T
+) = viewModels<T> {
+    object : AbstractSavedStateViewModelFactory(this, Bundle()) {
+        override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T =
+            provider(handle) as T
     }
 }

@@ -6,23 +6,18 @@ import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
 import com.stavro_xhardha.pockettreasure.brain.PLAY_STORE_URL
 import com.stavro_xhardha.pockettreasure.brain.startWorkManager
-import dagger.Lazy
+import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
-import javax.inject.Inject
 
 class HomeFragment : BaseFragment() {
 
-    @Inject
-    lateinit var factory: Lazy<ViewModelProvider.Factory>
-    private val homeViewModel by viewModels<HomeViewModel> { factory.get() }
+    private val homeViewModel by viewModel { component.homeViewModelFactory.create(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,10 +58,6 @@ class HomeFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         homeViewModel.loadPrayerTimes()
-    }
-
-    override fun performDi() {
-        component.inject(this)
     }
 
     override fun initializeComponents() {

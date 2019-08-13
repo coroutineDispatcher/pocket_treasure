@@ -2,17 +2,26 @@ package com.stavro_xhardha.pockettreasure.ui.gallery
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.UnsplashResult
-import javax.inject.Inject
 
-class GalleryViewModel @Inject constructor(
-    private val galleryDataSourceFactory: GalleryDataSourceFactory
+class GalleryViewModel @AssistedInject constructor(
+    private val galleryDataSourceFactory: GalleryDataSourceFactory,
+    @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(savedStateHandle: SavedStateHandle): GalleryViewModel
+    }
+
     private var listing: Listing<UnsplashResult>
     private var galleryData: LiveData<PagedList<UnsplashResult>>
     private var networkStateLiveData: LiveData<NetworkState>

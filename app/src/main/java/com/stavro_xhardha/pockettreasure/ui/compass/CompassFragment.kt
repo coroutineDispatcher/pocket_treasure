@@ -8,22 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
-import dagger.Lazy
+import com.stavro_xhardha.pockettreasure.brain.viewModel
 import edu.arbelkilani.compass.CompassListener
 import kotlinx.android.synthetic.main.fragment_compass.*
-import javax.inject.Inject
 
 class CompassFragment : BaseFragment(), CompassListener {
-    @Inject
-    lateinit var viewModelFactory: Lazy<ViewModelProvider.Factory>
 
-    private val compassViewModel by viewModels<CompassViewModel> { viewModelFactory.get() }
+    private val compassViewModel by viewModel { component.compassViewModelFactory.create(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,10 +38,6 @@ class CompassFragment : BaseFragment(), CompassListener {
 
     override fun initializeComponents() {
         qibla_compass.setListener(this)
-    }
-
-    override fun performDi() {
-        component.inject(this)
     }
 
     override fun observeTheLiveData() {

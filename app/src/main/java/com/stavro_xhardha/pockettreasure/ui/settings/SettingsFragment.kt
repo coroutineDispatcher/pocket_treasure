@@ -8,9 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.google.android.gms.location.LocationResult
@@ -19,17 +17,15 @@ import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
 import com.stavro_xhardha.pockettreasure.brain.startWorkManager
+import com.stavro_xhardha.pockettreasure.brain.viewModel
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
-import dagger.Lazy
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
-import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), LocationTrackerListener {
-    @Inject
-    lateinit var factory: Lazy<ViewModelProvider.Factory>
 
-    private val settingsViewModel by viewModels<SettingsViewModel> { factory.get() }
+    private val settingsViewModel by viewModel { component.settingsViewModelFactory.create(it) }
+
     private lateinit var sharedViewModel: SharedViewModel
 
     private val locationTracker by lazy {
@@ -80,10 +76,6 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         sharedViewModel = requireActivity().run {
             ViewModelProviders.of(requireActivity()).get(SharedViewModel::class.java)
         }
-    }
-
-    override fun performDi() {
-        component.inject(this)
     }
 
     override fun observeTheLiveData() {

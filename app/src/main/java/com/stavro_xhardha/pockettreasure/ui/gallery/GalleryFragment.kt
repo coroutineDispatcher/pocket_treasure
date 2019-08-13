@@ -5,33 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.Status
-import dagger.Lazy
+import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
-import javax.inject.Inject
 
 class GalleryFragment : BaseFragment(), GalleryContract {
-    @Inject
-    lateinit var factory: Lazy<ViewModelProvider.Factory>
-    @Inject
-    lateinit var picasso: Lazy<Picasso>
-
-    private val galleryViewModel by viewModels<GalleryViewModel> { factory.get() }
+    private val picasso by lazy {
+        component.picasso
+    }
 
     private val galleryAdapter by lazy {
-        GalleryAdapter(this, picasso.get())
+        GalleryAdapter(this, picasso)
     }
+
+    private val galleryViewModel by viewModel { component.galleryViewModelFactory.create(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,10 +50,6 @@ class GalleryFragment : BaseFragment(), GalleryContract {
         btnRetry.setOnClickListener {
             galleryViewModel.retry()
         }
-    }
-
-    override fun performDi() {
-        component.inject(this)
     }
 
     override fun observeTheLiveData() {

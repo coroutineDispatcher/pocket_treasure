@@ -78,3 +78,6 @@ const val DHUHR = "Dhuhr Time"
 const val ASR = "Asr Time"
 const val MAGHRIB = "Maghrib Time"
 const val ISHA = "Isha Time"
+
+const val FULL_IMAGE_SAVED_STATE = "bundle_image"
+const val NAMES_LIST_STATE = "bundle_names"
