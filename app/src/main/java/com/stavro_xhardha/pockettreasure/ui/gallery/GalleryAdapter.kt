@@ -41,6 +41,10 @@ class GalleryAdapter(
                         .error(R.drawable.img_placeholder)
                         .placeholder(R.drawable.img_placeholder)
                         .into(currentImageView)
+//                    currentImageView.load(unsplashResult?.photoUrls?.thumbnailUrl) {
+//                        error(R.drawable.img_placeholder)
+//                        placeholder(R.drawable.img_placeholder)
+//                    }
                     tvImageDescription.text = "By ${unsplashResult?.user?.userFullName ?: "Anonymous"}"
                     flImageHolder.setOnClickListener {
                         contract.onImageHolderClicked(unsplashResult?.photoUrls?.raw!!)

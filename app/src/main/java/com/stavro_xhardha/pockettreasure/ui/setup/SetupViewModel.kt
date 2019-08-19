@@ -5,9 +5,9 @@ import android.view.View
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class SetupViewModel @AssistedInject constructor(
@@ -29,6 +29,9 @@ class SetupViewModel @AssistedInject constructor(
     private val _locationErrorVisibility = MutableLiveData<Boolean>()
     private val _prayerNotificationDialogVisibility = MutableLiveData<Boolean>()
     private val _locationProvided: MutableLiveData<Boolean> = MutableLiveData()
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
+    }
 
     val locationSettingsRequest: LiveData<Boolean> = _locationSettingsRequest
     val locationRequestTurnOff: LiveData<Boolean> = _locationRequestTurnOff
@@ -61,17 +64,15 @@ class SetupViewModel @AssistedInject constructor(
     }
 
     fun updateNotificationFlags() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             setupRepository.switchNotificationFlags()
         }
     }
 
     private fun checkLocationsettings() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             if (setupRepository.isLocationProvided()) {
-                withContext(Dispatchers.IO) {
-                    _locationProvided.postValue(true)
-                }
+                _locationProvided.postValue(true)
             } else {
                 _locationSettingsRequest.postValue(true)
             }
@@ -79,7 +80,7 @@ class SetupViewModel @AssistedInject constructor(
     }
 
     fun convertToAdress(geocoder: Geocoder, latitude: Double, longitude: Double) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val adresses = geocoder.getFromLocation(latitude, longitude, 1)
                 if (adresses.size != 0) {

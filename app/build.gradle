@@ -158,4 +158,6 @@ dependencies {
 
     //compass view
     implementation 'com.github.arbelkilani:Compass-View:v1.1.1'
+
+    implementation 'io.coil-kt:coil:0.6.1'
 }
