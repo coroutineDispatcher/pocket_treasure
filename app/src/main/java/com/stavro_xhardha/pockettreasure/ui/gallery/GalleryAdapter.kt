@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.DIFF_UTIL_GALLERY
@@ -40,8 +41,11 @@ class GalleryAdapter(
                         .error(R.drawable.img_placeholder)
                         .placeholder(R.drawable.img_placeholder)
                         .into(currentImageView)
+//                    currentImageView.load(unsplashResult?.photoUrls?.thumbnailUrl) {
+//                        error(R.drawable.img_placeholder)
+//                        placeholder(R.drawable.img_placeholder)
+//                    }
                     tvImageDescription.text = "By ${unsplashResult?.user?.userFullName ?: "Anonymous"}"
-
                     flImageHolder.setOnClickListener {
                         contract.onImageHolderClicked(unsplashResult?.photoUrls?.raw!!)
                     }

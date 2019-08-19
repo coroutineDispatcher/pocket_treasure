@@ -6,6 +6,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.NAMES_LIST_STATE
 import com.stavro_xhardha.pockettreasure.model.Name
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,6 +19,10 @@ class NamesViewModel @AssistedInject constructor(
     @AssistedInject.Factory
     interface Factory {
         fun create(savedStateHandle: SavedStateHandle): NamesViewModel
+    }
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
+        showError()
     }
 
     private val _progressBarVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -33,27 +38,22 @@ class NamesViewModel @AssistedInject constructor(
     }
 
     private fun loadNamesList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main + coroutineExceptionHandler) {
             startProgressBar()
-            try {
+            withContext(Dispatchers.IO) {
                 val dataIsLocally = dataExistInDatabase()
                 if (dataIsLocally) {
                     makeNamesDatabaseCall()
                 } else {
                     makeNamesApiCall()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                showError()
             }
         }
     }
 
-    private suspend fun startProgressBar() {
-        withContext(Dispatchers.Main) {
-            _progressBarVisibility.value = View.VISIBLE
-            _errorLayoutVisibility.value = View.GONE
-        }
+    private fun startProgressBar() {
+        _progressBarVisibility.value = View.VISIBLE
+        _errorLayoutVisibility.value = View.GONE
     }
 
     private suspend fun makeNamesDatabaseCall() {
@@ -71,7 +71,9 @@ class NamesViewModel @AssistedInject constructor(
             saveNameToDatabase(namesResponse.body()?.data)
             makeNamesDatabaseCall()
         } else {
-            showError()
+            withContext(Dispatchers.Main) {
+                showError()
+            }
         }
     }
 
@@ -83,11 +85,9 @@ class NamesViewModel @AssistedInject constructor(
 
     private suspend fun dataExistInDatabase(): Boolean = repository.countNamesInDatabase() > 0
 
-    private suspend fun showError() {
-        withContext(Dispatchers.Main) {
-            _errorLayoutVisibility.value = View.VISIBLE
-            _progressBarVisibility.value = View.GONE
-        }
+    private fun showError() {
+        _errorLayoutVisibility.value = View.VISIBLE
+        _progressBarVisibility.value = View.GONE
     }
 
     fun retryConnection() {

@@ -37,6 +37,6 @@ data class Aya(
     @ColumnInfo(name = "juz_number")
     val juz: Int,
 
-    @ColumnInfo(name = "surahs_number")
+    @ColumnInfo(name = "surahs_number", index = true)
     val surahNumber: Int
 )

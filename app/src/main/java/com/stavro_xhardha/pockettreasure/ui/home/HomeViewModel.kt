@@ -9,6 +9,7 @@ import com.stavro_xhardha.pockettreasure.brain.WHITE_BACKGROUND
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,6 +24,11 @@ class HomeViewModel @AssistedInject constructor(
     @AssistedInject.Factory
     interface Factory {
         fun create(savedStateHandle: SavedStateHandle): HomeViewModel
+    }
+
+    private val exceptionHandle = CoroutineExceptionHandler { _, _ ->
+        decrementIdlingResource()
+        showError()
     }
 
     val monthSection = MutableLiveData<String>()
@@ -45,7 +51,7 @@ class HomeViewModel @AssistedInject constructor(
     val workManagerHasBeenFired: LiveData<Boolean> = _workManagerHasBeenFired
 
     fun loadPrayerTimes() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
             if (dateHasPassed() || homeRepository.countryHasBeenUpdated()) {
                 makePrayerApiCall()
             } else {
@@ -57,11 +63,9 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private suspend fun makePrayerApiCall() {
-        withContext(Dispatchers.Main) {
-            switchProgressBarOn()
-        }
-        try {
-            incrementIdlingResource()
+        switchProgressBarOn()
+        incrementIdlingResource()
+        withContext(Dispatchers.IO) {
             val todaysPrayerTime = homeRepository.makePrayerCallAsync()
             if (todaysPrayerTime.isSuccessful) {
                 decrementIdlingResource()
@@ -75,12 +79,6 @@ class HomeViewModel @AssistedInject constructor(
                     showError()
                 }
             }
-        } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                decrementIdlingResource()
-                showError()
-            }
-            e.printStackTrace()
         }
     }
 

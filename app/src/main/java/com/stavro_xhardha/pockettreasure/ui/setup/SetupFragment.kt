@@ -23,7 +23,9 @@ import java.util.*
 class SetupFragment : BaseFragment(), LocationTrackerListener {
 
 
-    private val setupViewModel by viewModel { component.setupViewModelFactory.create(it) }
+    private val setupViewModel by viewModel {
+        component.setupViewModelFactory.create(it)
+    }
 
     private lateinit var sharedViewModel: SharedViewModel
 

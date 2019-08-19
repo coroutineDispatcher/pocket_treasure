@@ -1,5 +1,7 @@
 package com.stavro_xhardha.pockettreasure.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -23,10 +25,39 @@ data class Name(
 
     @SerializedName("en")
     @Ignore
-    val englishNameMeaning: EnglishNameMeaning?,
+    var englishNameMeaning: EnglishNameMeaning?,
 
     @ColumnInfo(name = "name_meaning")
     var meaning: String
-) {
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readInt(),
+        null,
+        parcel.readString()!!
+    )
+
     constructor() : this("", "", 0, null, "")
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(arabicName)
+        parcel.writeString(transliteration)
+        parcel.writeInt(number)
+        parcel.writeString(meaning)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Name> {
+        override fun createFromParcel(parcel: Parcel): Name {
+            return Name(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Name?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
