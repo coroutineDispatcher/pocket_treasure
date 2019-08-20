@@ -16,7 +16,7 @@ import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
-import com.stavro_xhardha.pockettreasure.brain.startWorkManager
+import com.stavro_xhardha.pockettreasure.brain.startPrayerTimesWorkManager
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
@@ -119,7 +119,7 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         })
         settingsViewModel.workManagerReadyToStart.observe(this, Observer {
             if (it) {
-                startWorkManager(requireActivity())
+                startPrayerTimesWorkManager(requireActivity())
                 Toast.makeText(requireActivity(), R.string.location_updated_successfully, Toast.LENGTH_LONG).show()
             }
         })

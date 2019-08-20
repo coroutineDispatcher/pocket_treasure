@@ -21,7 +21,8 @@ class NamesViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): NamesViewModel
     }
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
         showError()
     }
 
@@ -79,7 +80,14 @@ class NamesViewModel @AssistedInject constructor(
 
     private suspend fun saveNameToDatabase(data: ArrayList<Name>?) {
         data?.forEach {
-            repository.saveToDatabase(it)
+            repository.saveToDatabase(
+                Name(
+                    arabicName = it.arabicName,
+                    number = it.number,
+                    transliteration = it.transliteration,
+                    meaning = it.englishNameMeaning?.meaning ?: ""
+                )
+            )
         }
     }
 

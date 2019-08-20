@@ -133,7 +133,7 @@ class SettingsViewModel @AssistedInject constructor(
         }
     }
 
-    fun resetDataForWorker() {
+    private fun resetDataForWorker() {
         viewModelScope.launch {
             settingsRepository.deleteAllDataInside()
             _workManagerReadyToStart.postValue(true)

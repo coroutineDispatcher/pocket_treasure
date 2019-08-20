@@ -11,7 +11,7 @@ import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
 import com.stavro_xhardha.pockettreasure.brain.PLAY_STORE_URL
-import com.stavro_xhardha.pockettreasure.brain.startWorkManager
+import com.stavro_xhardha.pockettreasure.brain.startPrayerTimesWorkManager
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -98,7 +98,7 @@ class HomeFragment : BaseFragment() {
 
         homeViewModel.workManagerHasBeenFired.observe(this, Observer {
             if (!it) {
-                startWorkManager(requireActivity())
+                startPrayerTimesWorkManager(requireActivity())
                 homeViewModel.updateWorkManagerFiredState()
             }
         })
