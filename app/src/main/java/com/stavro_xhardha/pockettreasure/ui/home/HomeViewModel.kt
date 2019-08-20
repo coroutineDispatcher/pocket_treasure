@@ -233,7 +233,9 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     fun initWorker() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
             val isWorkerFired = homeRepository.isWorkerFired()
             _workManagerHasBeenFired.postValue(isWorkerFired)
         }

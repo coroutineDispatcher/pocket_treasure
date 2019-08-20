@@ -7,57 +7,29 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Entity(tableName = "names_of_creator")
-data class Name(
+@Parcelize
+data class Name @JvmOverloads constructor(
     @SerializedName("name")
     @ColumnInfo(name = "arabic_name")
-    var arabicName: String,
+    val arabicName: String,
 
     @SerializedName("transliteration")
     @ColumnInfo(name = "transliteration")
-    var transliteration: String,
+    val transliteration: String,
 
     @SerializedName("number")
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var number: Int,
+    val number: Int,
 
     @SerializedName("en")
     @Ignore
-    var englishNameMeaning: EnglishNameMeaning?,
+    val englishNameMeaning: @RawValue EnglishNameMeaning? = null,
 
     @ColumnInfo(name = "name_meaning")
-    var meaning: String
-) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readInt(),
-        null,
-        parcel.readString()!!
-    )
-
-    constructor() : this("", "", 0, null, "")
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(arabicName)
-        parcel.writeString(transliteration)
-        parcel.writeInt(number)
-        parcel.writeString(meaning)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Name> {
-        override fun createFromParcel(parcel: Parcel): Name {
-            return Name(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Name?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+    val meaning: String
+) : Parcelable

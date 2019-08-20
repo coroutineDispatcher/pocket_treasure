@@ -7,31 +7,29 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "surahs")
-data class Surah(
+data class Surah @JvmOverloads constructor(
     @SerializedName("number")
     @PrimaryKey
     @ColumnInfo(name = "surah_number")
-    var surahNumber: Int,
+    val surahNumber: Int,
 
     @SerializedName("name")
     @ColumnInfo(name = "surah_arabic_name")
-    var surahArabicName: String,
+    val surahArabicName: String,
 
     @SerializedName("englishName")
     @ColumnInfo(name = "surah_english_name")
-    var englishName: String,
+    val englishName: String,
 
     @SerializedName("englishNameTranslation")
     @ColumnInfo(name = "surah_english_translation")
-    var englishTranslation: String,
+    val englishTranslation: String,
 
     @SerializedName("revelationType")
     @ColumnInfo(name = "surah_relevation_type")
-    var revelationType: String,
+    val revelationType: String,
 
     @SerializedName("ayahs")
     @Ignore
-    var ayas: List<Aya>
-) {
-    constructor() : this(0, "", "", "", "", listOf())
-}
+    val ayas: List<Aya> = listOf()
+)

@@ -3,13 +3,15 @@ package com.stavro_xhardha.pockettreasure.ui.home
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
+import com.stavro_xhardha.pockettreasure.room_db.PrayerTimesDao
 import com.stavro_xhardha.rocket.Rocket
 import retrofit2.Response
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
     private val treasureApi: TreasureApi,
-    private val mSharedPreferences: Rocket
+    private val mSharedPreferences: Rocket,
+    private val prayerTimesDao: PrayerTimesDao
 ) {
     suspend fun makePrayerCallAsync(): Response<PrayerTimeResponse> = treasureApi.getPrayerTimesTodayAsync(
         mSharedPreferences.readString(CAPITAL_SHARED_PREFERENCES_KEY),
@@ -126,7 +128,11 @@ class HomeRepository @Inject constructor(
         mSharedPreferences.writeBoolean(COUNTRY_UPDATED, false)
     }
 
-    suspend fun isWorkerFired(): Boolean = mSharedPreferences.readBoolean(WORKER_FIRED_KEY)
+    suspend fun isWorkerFired(): Boolean {
+        val prayerTimesBackgroundData = prayerTimesDao.selectAll()
+        val workerHasBeenFired = mSharedPreferences.readBoolean(WORKER_FIRED_KEY)
+        return prayerTimesBackgroundData.isNotEmpty() && workerHasBeenFired
+    }
 
     suspend fun updateWorkerFired() {
         mSharedPreferences.writeBoolean(WORKER_FIRED_KEY, true)

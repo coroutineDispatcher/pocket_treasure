@@ -111,7 +111,7 @@ fun decrementIdlingResource() {
         Smoothie.endProcess()
 }
 
-fun startWorkManager(context: Context) {
+fun startPrayerTimesWorkManager(context: Context) {
     val constraints = Constraints.Builder()
         .setRequiredNetworkType(NetworkType.CONNECTED)
         .build()
