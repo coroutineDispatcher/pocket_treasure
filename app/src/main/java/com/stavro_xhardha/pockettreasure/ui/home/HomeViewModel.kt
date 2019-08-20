@@ -31,6 +31,10 @@ class HomeViewModel @AssistedInject constructor(
         showError()
     }
 
+    private val workerExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
+    }
+
     val monthSection = MutableLiveData<String>()
     val locationSecton = MutableLiveData<String>()
     val fajrTime = MutableLiveData<String>()
@@ -233,9 +237,7 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     fun initWorker() {
-        viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
-            throwable.printStackTrace()
-        }) {
+        viewModelScope.launch(Dispatchers.IO + workerExceptionHandler) {
             val isWorkerFired = homeRepository.isWorkerFired()
             _workManagerHasBeenFired.postValue(isWorkerFired)
         }
