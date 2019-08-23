@@ -19,8 +19,8 @@ android {
         applicationId "com.stavro_xhardha.pockettreasure"
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 24
-        versionName "1.4.9"
+        versionCode 25
+        versionName "1.4.9.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -64,15 +64,15 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
 
     //netork
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 
     //dagger
-    implementation 'com.google.dagger:dagger:2.22'
-    kapt 'com.google.dagger:dagger-compiler:2.22'
+    implementation 'com.google.dagger:dagger:2.24'
+    kapt 'com.google.dagger:dagger-compiler:2.24'
     compileOnly 'com.squareup.inject:assisted-inject-annotations-dagger2:0.5.0'
     kapt 'com.squareup.inject:assisted-inject-processor-dagger2:0.5.0'
 
@@ -92,7 +92,7 @@ dependencies {
     implementation "androidx.room:room-ktx:2.2.0-alpha02"
 
     //Joda time
-    implementation 'net.danlew:android.joda:2.10.1.2'
+    implementation 'net.danlew:android.joda:2.10.2'
 
     //rocket
     implementation 'com.github.stavro96:Rocket:1.2.0'
@@ -126,7 +126,7 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha02'
     androidTestImplementation 'org.mockito:mockito-android:2.24.5'
 
-    testImplementation("com.squareup.okhttp3:mockwebserver:3.14.2")
+    testImplementation('com.squareup.okhttp3:mockwebserver:4.1.0')
 
     //mockito kotlin
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
@@ -148,7 +148,7 @@ dependencies {
     //new viewmodel saved instance state
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha03'
 
-    testImplementation 'joda-time:joda-time:2.10.1'
+    testImplementation 'joda-time:joda-time:2.10.2'
 
     //lottie
     implementation 'com.airbnb.android:lottie:3.0.7'
