@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:background="@color/md_grey_300"
-                                                   tools:context=".ui.compass.CompassFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_white_1000"
+        tools:context=".ui.compass.CompassFragment">
+
     <edu.arbelkilani.compass.Compass
             android:id="@+id/qibla_compass"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="265dp"
+            android:layout_marginEnd="105dp"
+            android:layout_marginBottom="266dp"
+            app:border_color="@color/md_red_400"
             app:degree_color="@color/colorPrimaryLight"
             app:degrees_step="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:needle="@drawable/ic_small_needle"
-            app:show_degree_value="false"
-            app:show_orientation_labels="false"
             app:show_border="false"
-            app:border_color="@color/md_red_400"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="105dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="105dp" android:layout_marginTop="265dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="266dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:show_degree_value="false"
+            app:show_orientation_labels="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

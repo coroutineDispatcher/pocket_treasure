@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 class QuranFragment : BaseFragment(), QuranAdapterContract {
 
-
     private val quranViewModel by viewModel { component.quranViewModelFactory.create(it) }
 
     private val quranAdapter by lazy {

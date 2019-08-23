@@ -1,252 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/md_white_1000">
 
-    <include layout="@layout/single_item_progress"
-             android:visibility="gone"
-             android:id="@+id/pbHome"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
-             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-             app:layout_constraintBottom_toBottomOf="parent"/>
+    <include
+            android:id="@+id/pbHome"
+            layout="@layout/single_item_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-            android:textColor="@color/md_black_1000"
-            android:text="@string/dateTimeTitle"
-            android:textSize="@dimen/text_global_unit_bigger_x"
+            android:id="@+id/tvDateTimeTitle"
             android:layout_width="336dp"
             android:layout_height="36dp"
-            android:id="@+id/tvDateTimeTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.135"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"/>
-    <TextView
-            android:textColor="@color/md_grey_600"
-            android:layout_width="330dp"
-            android:id="@+id/tvCurrentLocation"
-            android:layout_height="25dp"
-            android:textSize="@dimen/text_global_unit_bigger"
-            android:layout_marginStart="24dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.069"/>
+            android:text="@string/dateTimeTitle"
+            android:textColor="@color/md_black_1000"
+            android:textSize="@dimen/text_global_unit_bigger_x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.135"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+            android:id="@+id/tvCurrentLocation"
+            android:layout_width="330dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/md_grey_600"
+            android:textSize="@dimen/text_global_unit_bigger"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.069" />
+
     <androidx.cardview.widget.CardView
             android:id="@+id/cvFajr"
             android:layout_width="300dp"
             android:layout_height="85dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.19999999">
+
         <LinearLayout
-                android:weightSum="100"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
             <LinearLayout
-                    android:padding="@dimen/global_unit_bigger"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:padding="@dimen/global_unit_bigger">
+
                 <TextView
-                        android:textSize="@dimen/text_global_unit_bigger_x"
-                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/fajr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="@dimen/text_global_unit_bigger_x"
+                        android:textStyle="bold" />
+
                 <TextView
-                        android:textColor="@color/md_grey_600"
                         android:id="@+id/tvFajrTime"
-                        android:textSize="@dimen/text_global_unit_bigger"
-                        android:text="@string/test_time"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/test_time"
+                        android:textColor="@color/md_grey_600"
+                        android:textSize="@dimen/text_global_unit_bigger" />
             </LinearLayout>
+
             <ImageView
-                    android:padding="@dimen/global_unit_bigger_x"
-                    android:src="@drawable/ic_fajr_sun"
-                    android:layout_weight="70"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:padding="@dimen/global_unit_bigger_x"
+                    android:src="@drawable/ic_fajr_sun" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
 
             android:id="@+id/cvDhuhr"
             android:layout_width="300dp"
             android:layout_height="85dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.40">
+
         <LinearLayout
-                android:weightSum="100"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
             <LinearLayout
-                    android:padding="@dimen/global_unit_bigger"
-                    android:orientation="vertical"
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:id="@+id/linearLayout">
+                    android:orientation="vertical"
+                    android:padding="@dimen/global_unit_bigger">
+
                 <TextView
-                        android:textSize="@dimen/text_global_unit_bigger_x"
-                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/dhuhr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="@dimen/text_global_unit_bigger_x"
+                        android:textStyle="bold" />
+
                 <TextView
-                        android:textColor="@color/md_grey_600"
                         android:id="@+id/tvDhuhrTime"
-                        android:textSize="@dimen/text_global_unit_bigger"
-                        android:text="@string/test_time"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/test_time"
+                        android:textColor="@color/md_grey_600"
+                        android:textSize="@dimen/text_global_unit_bigger" />
             </LinearLayout>
+
             <ImageView
-                    android:padding="@dimen/global_unit_bigger_x"
-                    android:src="@drawable/ic_asr_sun"
-                    android:layout_weight="70"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:padding="@dimen/global_unit_bigger_x"
+                    android:src="@drawable/ic_asr_sun" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
 
             android:id="@+id/cvAsr"
             android:layout_width="300dp"
             android:layout_height="85dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.6">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6">
+
         <LinearLayout
-                android:weightSum="100"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
             <LinearLayout
-                    android:padding="@dimen/global_unit_bigger"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:padding="@dimen/global_unit_bigger">
+
                 <TextView
-                        android:textSize="@dimen/text_global_unit_bigger_x"
-                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/asr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="@dimen/text_global_unit_bigger_x"
+                        android:textStyle="bold" />
+
                 <TextView
-                        android:textColor="@color/md_grey_600"
                         android:id="@+id/tvAsrTime"
-                        android:textSize="@dimen/text_global_unit_bigger"
-                        android:text="@string/test_time"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/test_time"
+                        android:textColor="@color/md_grey_600"
+                        android:textSize="@dimen/text_global_unit_bigger" />
             </LinearLayout>
+
             <ImageView
-                    android:padding="@dimen/global_unit_bigger_x"
-                    android:src="@drawable/ic_dhuhr_sun"
-                    android:layout_weight="70"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:padding="@dimen/global_unit_bigger_x"
+                    android:src="@drawable/ic_dhuhr_sun" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
 
             android:id="@+id/cvMaghrib"
             android:layout_width="300dp"
             android:layout_height="85dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.8">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.8">
+
         <LinearLayout
-                android:weightSum="100"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
             <LinearLayout
-                    android:padding="@dimen/global_unit_bigger"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:padding="@dimen/global_unit_bigger">
+
                 <TextView
-                        android:textSize="@dimen/text_global_unit_bigger_x"
-                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/maghrib"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="@dimen/text_global_unit_bigger_x"
+                        android:textStyle="bold" />
+
                 <TextView
-                        android:textColor="@color/md_grey_600"
                         android:id="@+id/tvMagribTime"
-                        android:textSize="@dimen/text_global_unit_bigger"
-                        android:text="@string/test_time"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/test_time"
+                        android:textColor="@color/md_grey_600"
+                        android:textSize="@dimen/text_global_unit_bigger" />
             </LinearLayout>
+
             <ImageView
-                    android:padding="@dimen/global_unit_bigger_x"
-                    android:src="@drawable/ic_magrib_sun"
-                    android:layout_weight="70"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:padding="@dimen/global_unit_bigger_x"
+                    android:src="@drawable/ic_magrib_sun" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
             android:id="@+id/cvIsha"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             android:layout_width="300dp"
             android:layout_height="85dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="1.0">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
         <LinearLayout
-                android:weightSum="100"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
             <LinearLayout
-                    android:padding="@dimen/global_unit_bigger"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:padding="@dimen/global_unit_bigger">
+
                 <TextView
-                        android:textSize="@dimen/text_global_unit_bigger_x"
-                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/isha"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="@dimen/text_global_unit_bigger_x"
+                        android:textStyle="bold" />
+
                 <TextView
-                        android:textColor="@color/md_grey_600"
                         android:id="@+id/tvIshaTime"
-                        android:textSize="@dimen/text_global_unit_bigger"
-                        android:text="@string/test_time"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/test_time"
+                        android:textColor="@color/md_grey_600"
+                        android:textSize="@dimen/text_global_unit_bigger" />
             </LinearLayout>
+
             <ImageView
-                    android:padding="@dimen/global_unit_bigger_x"
-                    android:src="@drawable/ic_isha_sun"
-                    android:layout_weight="70"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:padding="@dimen/global_unit_bigger_x"
+                    android:src="@drawable/ic_isha_sun" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

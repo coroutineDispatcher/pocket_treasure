@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:showIn="navigation_view">
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/homeFragment"
                 android:icon="@drawable/ic_home_grey_24dp"
-                android:title="@string/home"/>
+                android:title="@string/home" />
         <item
                 android:id="@+id/namesFragment"
                 android:icon="@drawable/ic_names_of_god"
-                android:title="@string/names_of_god"/>
+                android:title="@string/names_of_god" />
         <item
                 android:id="@+id/quranFragment"
                 android:icon="@drawable/ic_quran"
-                android:title="@string/quran"/>
+                android:title="@string/quran" />
 
         <item
                 android:id="@+id/tasbeehFragment"
                 android:icon="@drawable/ic_tasbeeh"
-                android:title="@string/tasbeeh"/>
+                android:title="@string/tasbeeh" />
 
         <item
                 android:id="@+id/galleryFragment"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="@string/gallery"/>
+                android:title="@string/gallery" />
 
         <!--<item-->
-                <!--android:id="@+id/newsFragment"-->
-                <!--android:icon="@drawable/ic_news"-->
-                <!--android:title="@string/news"/>-->
+        <!--android:id="@+id/newsFragment"-->
+        <!--android:icon="@drawable/ic_news"-->
+        <!--android:title="@string/news"/>-->
 
         <item
                 android:id="@+id/compassFragment"
                 android:icon="@drawable/ic_compass"
-                android:title="@string/compass"/>
+                android:title="@string/compass" />
 
         <!--<item-->
-                <!--android:id="@+id/mapFragment"-->
-                <!--android:icon="@drawable/ic_local_library_black_24dp"-->
-                <!--android:title="@string/map"/>-->
+        <!--android:id="@+id/mapFragment"-->
+        <!--android:icon="@drawable/ic_local_library_black_24dp"-->
+        <!--android:title="@string/map"/>-->
     </group>
 
     <item android:title="@string/more">
@@ -48,7 +48,7 @@
             <item
                     android:id="@+id/settingsFragment"
                     android:icon="@drawable/ic_settings_dark_grey_24dp"
-                    android:title="@string/action_settings"/>
+                    android:title="@string/action_settings" />
         </menu>
     </item>
 

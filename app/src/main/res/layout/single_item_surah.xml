@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cvSurah"
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:id="@+id/cvSurah"
         android:layout_marginLeft="@dimen/mtrl_card_spacing"
         android:layout_marginTop="@dimen/mtrl_card_spacing"
         android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:clickable="true"
+        android:focusable="true"
         android:minHeight="@dimen/global_unit_bigger_xxxxxxxxxxxxxxxx">
 
     <LinearLayout
-            android:padding="@dimen/text_global_unit_bigger"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_height="match_parent">
-
-        <TextView android:layout_width="wrap_content"
-                  android:textSize="@dimen/text_global_unit_bigger_xx"
-                  android:textStyle="bold"
-                  android:textColor="@color/md_grey_700"
-                  android:text="@string/some_english_name"
-                  android:id="@+id/tvSurahTitle"
-                  android:layout_height="wrap_content"/>
+            android:padding="@dimen/text_global_unit_bigger">
 
         <TextView
-                android:textStyle="bold"
-                android:textColor="@color/md_grey_500"
+                android:id="@+id/tvSurahTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/some_english_name"
+                android:textColor="@color/md_grey_700"
                 android:textSize="@dimen/text_global_unit_bigger_xx"
-                android:text="@string/test_arabic"
+                android:textStyle="bold" />
+
+        <TextView
                 android:id="@+id/tvarabicSurahName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/test_arabic"
+                android:textColor="@color/md_grey_500"
+                android:textSize="@dimen/text_global_unit_bigger_xx"
+                android:textStyle="bold" />
 
         <TextView
-                android:textColor="@color/md_grey_500"
-                android:textSize="@dimen/text_global_unit_bigger"
-                android:text="@string/some_relevation"
                 android:id="@+id/tvRelevation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/some_relevation"
+                android:textColor="@color/md_grey_500"
+                android:textSize="@dimen/text_global_unit_bigger" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

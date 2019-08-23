@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -8,44 +7,48 @@
         android:layout_marginTop="@dimen/mtrl_card_spacing"
         android:layout_marginRight="@dimen/mtrl_card_spacing"
         android:minHeight="@dimen/global_unit_bigger_xxxxxxxxxxxxxxxx">
+
     <LinearLayout
-            android:weightSum="100"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
         <LinearLayout
-                android:padding="@dimen/global_unit_bigger"
-                android:orientation="vertical"
-                android:layout_weight="30"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <TextView
-                    android:paddingBottom="@dimen/global_unit_smaller"
-                    android:paddingTop="@dimen/global_unit_normal"
-                    android:paddingEnd="@dimen/global_unit_normal"
-                    android:paddingStart="@dimen/global_unit_normal"
-                    android:id="@+id/tvArabicName"
-                    android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
-                    android:textStyle="bold"
-                    android:textColor="@color/md_grey_900"
-                    android:text="@string/test_arabic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:textColor="@color/md_grey_700"
-                    android:id="@+id/tvTransliteration"
-                    android:textSize="@dimen/text_global_unit_bigger"
-                    android:text="@string/test_transliteration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:orientation="vertical"
+                android:padding="@dimen/global_unit_bigger">
 
             <TextView
-                    android:textColor="@color/md_grey_500"
-                    android:id="@+id/tvMeaning"
-                    android:textSize="@dimen/text_global_unit_bigger"
-                    android:text="@string/test_meaning"
+                    android:id="@+id/tvArabicName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/global_unit_normal"
+                    android:paddingTop="@dimen/global_unit_normal"
+                    android:paddingEnd="@dimen/global_unit_normal"
+                    android:paddingBottom="@dimen/global_unit_smaller"
+                    android:text="@string/test_arabic"
+                    android:textColor="@color/md_grey_900"
+                    android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:id="@+id/tvTransliteration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test_transliteration"
+                    android:textColor="@color/md_grey_700"
+                    android:textSize="@dimen/text_global_unit_bigger" />
+
+            <TextView
+                    android:id="@+id/tvMeaning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test_meaning"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/text_global_unit_bigger" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

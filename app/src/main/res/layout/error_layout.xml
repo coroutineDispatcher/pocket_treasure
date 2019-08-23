@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <ImageView
-            android:layout_gravity="center"
-            android:src="@drawable/ic_error_in_connection"
             android:id="@+id/ivErrorIcon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_error_in_connection" />
+
     <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="@dimen/global_unit_smaller"
-            android:textStyle="bold"
+            android:text="@string/error_retry"
+            android:textAlignment="center"
             android:textColor="@color/md_grey_600"
             android:textSize="@dimen/text_global_unit_normal"
-            android:textAlignment="center"
-            android:text="@string/error_retry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
 
     <Button
-            android:layout_gravity="center"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:text="@string/retry_connection"
             android:id="@+id/btnRetry"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/retry_connection" />
 </LinearLayout>

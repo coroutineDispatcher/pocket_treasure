@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/llCountryHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
         android:clickable="true"
-        android:id="@+id/llCountryHolder"
         android:focusable="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <TextView android:layout_width="match_parent"
-              android:textSize="@dimen/text_global_unit_bigger_x"
-              android:textStyle="bold"
-              android:paddingTop="@dimen/global_unit_smaller"
-              android:paddingEnd="@dimen/global_unit_smaller"
-              android:paddingStart="@dimen/global_unit_smaller" android:id="@+id/tvCountryName"
-              android:text="@string/country"
-              android:layout_height="wrap_content"/>
+        android:orientation="vertical">
+
     <TextView
-            android:paddingEnd="@dimen/global_unit_smaller"
+            android:id="@+id/tvCountryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:paddingStart="@dimen/global_unit_smaller"
-            android:layout_width="match_parent"
-            android:textSize="@dimen/text_global_unit_bigger"
-            android:id="@+id/tvCapital"
+            android:paddingTop="@dimen/global_unit_smaller"
+            android:paddingEnd="@dimen/global_unit_smaller"
             android:text="@string/country"
-            android:layout_height="wrap_content"/>
-    <View
-            android:layout_marginTop="@dimen/global_unit_smaller"
+            android:textSize="@dimen/text_global_unit_bigger_x"
+            android:textStyle="bold" />
+
+    <TextView
+            android:id="@+id/tvCapital"
             android:layout_width="match_parent"
-            android:background="@color/md_grey_300"
-            android:layout_height="1dp"/>
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/global_unit_smaller"
+            android:paddingEnd="@dimen/global_unit_smaller"
+            android:text="@string/country"
+            android:textSize="@dimen/text_global_unit_bigger" />
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/global_unit_smaller"
+            android:background="@color/md_grey_300" />
 </LinearLayout>
