@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:maxWidth="@dimen/image_max_width"
-             android:maxHeight="@dimen/image_max_height"
-             android:padding="@dimen/global_unit_smaller_xxxxx"
-             android:clickable="true"
-             android:focusable="true"
-             android:id="@+id/flImageHolder"
-             android:layout_height="wrap_content">
+        android:id="@+id/flImageHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:maxWidth="@dimen/image_max_width"
+        android:maxHeight="@dimen/image_max_height"
+        android:padding="@dimen/global_unit_smaller_xxxxx">
 
     <ImageView
-            android:adjustViewBounds="true"
             android:id="@+id/ivUnsplashImage"
-            android:src="@drawable/some_unsplash_img"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/some_unsplash_img" />
+
     <View
-            android:layout_gravity="bottom"
             android:layout_width="wrap_content"
-            android:background="@color/md_black_1000_87_percent"
-            android:layout_height="@dimen/global_unit_bigger_xxxxxxxxxxx"/>
-    <TextView
+            android:layout_height="@dimen/global_unit_bigger_xxxxxxxxxxx"
             android:layout_gravity="bottom"
-            android:textSize="@dimen/text_global_unit_bigger"
-            android:padding="@dimen/global_unit_smaller_xxx"
-            android:maxLines="1"
-            android:text="@string/some_description"
-            android:textColor="@color/md_white_1000"
+            android:background="@color/md_black_1000_87_percent" />
+
+    <TextView
             android:id="@+id/tvImageDescription"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:maxLines="1"
+            android:padding="@dimen/global_unit_smaller_xxx"
+            android:text="@string/some_description"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/text_global_unit_bigger" />
 </FrameLayout>

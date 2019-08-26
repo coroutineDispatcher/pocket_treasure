@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:background="@color/md_black_1000"
-                android:layout_height="match_parent"
-                android:id="@+id/rlFullImageHolder"
-                tools:context=".ui.gallery.full_image.FullImageFragment">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rlFullImageHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_white_1000"
+        tools:context=".ui.gallery.full_image.FullImageFragment">
+
     <ImageView
-            android:layout_gravity="center"
-            android:foregroundGravity="center"
-            android:src="@drawable/some_unsplash_img"
             android:id="@+id/ivFullImage"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content"/>
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:src="@drawable/some_unsplash_img" />
 
-    <include layout="@layout/single_item_progress"
-             android:id="@+id/pbFullImage"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerInParent="true"/>
+    <include
+            android:id="@+id/pbFullImage"
+            layout="@layout/single_item_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
 </RelativeLayout>

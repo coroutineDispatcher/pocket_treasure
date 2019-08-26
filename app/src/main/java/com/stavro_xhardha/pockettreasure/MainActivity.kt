@@ -78,7 +78,11 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         Toast.makeText(this, R.string.values_cannot_be_updated, Toast.LENGTH_LONG).show()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_LOCATION_PERMISSION -> {
@@ -101,6 +105,8 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.setupFragment) {
                 toolbar.visibility = View.GONE
+                drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            } else if (destination.id == R.id.fullImageFragment || destination.id == R.id.ayaFragment) {
                 drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             } else {
                 toolbar.visibility = View.VISIBLE
@@ -137,7 +143,6 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
                 R.id.quranFragment,
                 R.id.tasbeehFragment,
                 R.id.galleryFragment,
-//                R.id.newsFragment,
                 R.id.settingsFragment,
                 R.id.setupFragment,
                 R.id.compassFragment

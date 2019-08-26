@@ -1,89 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <androidx.cardview.widget.CardView
-            android:clickable="true"
-            android:focusable="true"
             android:id="@+id/cvCurrentNews"
-            android:background="@color/md_white_1000"
             style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/mtrl_card_spacing"
             android:layout_marginTop="@dimen/mtrl_card_spacing"
-            android:layout_marginRight="@dimen/mtrl_card_spacing">
+            android:layout_marginRight="@dimen/mtrl_card_spacing"
+            android:background="@color/md_white_1000"
+            android:clickable="true"
+            android:focusable="true">
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:orientation="vertical" android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
             <TextView
-                    android:textColor="@color/md_grey_700"
                     android:id="@+id/tvTitle"
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
                     android:paddingStart="@dimen/global_unit_bigger"
                     android:paddingEnd="@dimen/global_unit_bigger"
-                    android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
-                    android:maxLines="2"
                     android:text="@string/article_title"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                    android:textColor="@color/md_grey_700"
+                    android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
+                    android:textStyle="bold" />
+
             <TextView
                     android:id="@+id/tvAuthor"
-                    android:textColor="@color/md_grey_500"
-                    android:textSize="@dimen/text_global_unit_bigger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingStart="@dimen/global_unit_bigger"
                     android:paddingEnd="@dimen/global_unit_bigger"
                     android:text="@string/by_author"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/text_global_unit_bigger" />
+
             <ImageView
-                    android:layout_marginTop="@dimen/global_unit_bigger"
                     android:id="@+id/ivPostImage"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:maxHeight="@dimen/hundred_fifty_height"
-                    android:src="@drawable/no_img_available"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/some_date"/>
-            <TextView
                     android:layout_marginTop="@dimen/global_unit_bigger"
-                    android:textColor="@color/md_grey_500"
-                    android:textSize="@dimen/text_global_unit_bigger"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/some_date"
+                    android:maxHeight="@dimen/hundred_fifty_height"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/no_img_available" />
+
+            <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/global_unit_bigger"
+                    android:maxLines="3"
                     android:paddingStart="@dimen/global_unit_bigger"
                     android:paddingEnd="@dimen/global_unit_bigger"
                     android:text="@string/some_description"
-                    android:maxLines="3"
-                    android:id="@+id/tvDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/text_global_unit_bigger" />
+
             <LinearLayout
-                    android:layout_marginTop="@dimen/global_unit_bigger"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/global_unit_bigger"
                     android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_height="wrap_content">
+                    android:weightSum="100">
+
                 <TextView
                         android:id="@+id/tvSource"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="20"
+                        android:maxLines="1"
                         android:paddingLeft="@dimen/global_unit_bigger"
                         android:paddingRight="@dimen/global_unit_bigger"
-                        android:textColor="@color/md_grey_500"
-                        android:textSize="@dimen/text_global_unit_bigger"
                         android:text="@string/some_description"
-                        android:maxLines="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textColor="@color/md_grey_500"
+                        android:textSize="@dimen/text_global_unit_bigger" />
+
                 <ImageView
+                        android:id="@+id/ivShare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="80"
+                        android:background="?selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?selectableItemBackground"                        android:id="@+id/ivShare"
                         android:padding="@dimen/global_unit_bigger"
-                        android:layout_weight="80"
-                        android:src="@drawable/ic_share_black_24dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:src="@drawable/ic_share_black_24dp" />
             </LinearLayout>
         </LinearLayout>
 

@@ -1,202 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:orientation="vertical"
-              android:layout_height="match_parent"
-              tools:context=".ui.settings.SettingsFragment">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_white_1000"
+        android:orientation="vertical"
+        tools:context=".ui.settings.SettingsFragment">
 
     <LinearLayout
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/global_unit_bigger"
+            android:weightSum="100">
+
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="30"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:orientation="vertical">
+
             <TextView
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/fajr"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textColor="@color/md_grey_700"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="@dimen/text_global_unit_bigger_x"
+                    android:textStyle="bold" />
+
             <TextView
-                    android:text="@string/wake_up_fajr"
-                    android:textSize="@dimen/text_global_unit_normal"
-                    android:textColor="@color/md_grey_500"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/wake_up_fajr"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
+
         <Switch
                 android:id="@+id/swFajr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_weight="70"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:gravity="center" />
     </LinearLayout>
+
     <LinearLayout
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/global_unit_bigger"
+            android:weightSum="100">
+
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="30"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:orientation="vertical">
+
             <TextView
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/dhuhr"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textColor="@color/md_grey_700"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="@dimen/text_global_unit_bigger_x"
+                    android:textStyle="bold" />
+
             <TextView
-                    android:text="@string/wake_up_dhuhr"
-                    android:textSize="@dimen/text_global_unit_normal"
-                    android:textColor="@color/md_grey_500"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/wake_up_dhuhr"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
+
         <Switch
                 android:id="@+id/swDhuhr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_weight="70"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:gravity="center" />
     </LinearLayout>
+
     <LinearLayout
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/global_unit_bigger"
+            android:weightSum="100">
+
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="30"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:orientation="vertical">
+
             <TextView
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/asr"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textColor="@color/md_grey_700"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="@dimen/text_global_unit_bigger_x"
+                    android:textStyle="bold" />
+
             <TextView
-                    android:text="@string/wake_up_asr"
-                    android:textSize="@dimen/text_global_unit_normal"
-                    android:textColor="@color/md_grey_500"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/wake_up_asr"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
+
         <Switch
                 android:id="@+id/swAsr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_weight="70"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:gravity="center" />
     </LinearLayout>
+
     <LinearLayout
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/global_unit_bigger"
+            android:weightSum="100">
+
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="30"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:orientation="vertical">
+
             <TextView
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/maghrib"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textColor="@color/md_grey_700"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="@dimen/text_global_unit_bigger_x"
+                    android:textStyle="bold" />
+
             <TextView
-                    android:text="@string/wake_up_maghrib"
-                    android:textSize="@dimen/text_global_unit_normal"
-                    android:textColor="@color/md_grey_500"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/wake_up_maghrib"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
+
         <Switch
                 android:id="@+id/swMaghrib"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_weight="70"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:gravity="center" />
     </LinearLayout>
+
     <LinearLayout
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/global_unit_bigger"
+            android:weightSum="100">
+
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="30"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:orientation="vertical">
+
             <TextView
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/isha"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textColor="@color/md_grey_700"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="@dimen/text_global_unit_bigger_x"
+                    android:textStyle="bold" />
+
             <TextView
-                    android:text="@string/wake_up_isha"
-                    android:textSize="@dimen/text_global_unit_normal"
-                    android:textColor="@color/md_grey_500"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@string/wake_up_isha"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
+
         <Switch
                 android:id="@+id/swIsha"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="70"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="70"
+                android:gravity="center" />
     </LinearLayout>
-    <View android:layout_width="match_parent"
-          android:background="@color/md_grey_300"
-          android:layout_height="@dimen/global_unit_smaller_xxxxxx"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/global_unit_smaller_xxxxxx"
+            android:background="@color/md_grey_300" />
+
     <LinearLayout
             android:id="@+id/llLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:padding="@dimen/global_unit_bigger"
+            android:weightSum="100">
+
         <TextView
-                android:textStyle="bold"
-                android:text="@string/location"
-                android:textSize="@dimen/text_global_unit_bigger_x"
-                android:textColor="@color/md_grey_700"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textColor="@color/md_grey_700"
+                android:textSize="@dimen/text_global_unit_bigger_x"
+                android:textStyle="bold" />
+
         <TextView
                 android:id="@+id/tvCountryAndCapital"
-                android:text="@string/click_to_change_location"
-                android:textSize="@dimen/text_global_unit_normal"
-                android:textColor="@color/md_grey_500"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/click_to_change_location"
+                android:textColor="@color/md_grey_500"
+                android:textSize="@dimen/text_global_unit_normal" />
     </LinearLayout>
 
 </LinearLayout>

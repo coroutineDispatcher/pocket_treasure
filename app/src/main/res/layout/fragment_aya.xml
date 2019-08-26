@@ -1,46 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@color/md_grey_100"
-                android:layout_width="match_parent" android:layout_height="match_parent"
-                tools:context=".ui.quran.aya.AyaFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_white_1000"
+        tools:context=".ui.quran.aya.AyaFragment">
 
-    <include layout="@layout/single_item_progress"
-             android:visibility="gone"
-             android:id="@+id/pbAya"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerInParent="true"/>
+    <include
+            android:id="@+id/pbAya"
+            layout="@layout/single_item_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAya"
             android:layout_width="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <LinearLayout
             android:id="@+id/llError"
-            android:visibility="gone"
-            android:orientation="vertical"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
         <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/ic_error_in_connection"
                 android:id="@+id/ivErrorIcon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_error_in_connection" />
+
         <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/global_unit_smaller"
-                android:textStyle="bold"
+                android:text="@string/error_occured"
+                android:textAlignment="center"
                 android:textColor="@color/md_grey_600"
                 android:textSize="@dimen/text_global_unit_normal"
-                android:textAlignment="center"
-                android:text="@string/error_occured"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
     </LinearLayout>
 
 
