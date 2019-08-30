@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
@@ -18,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment() {
 
     private val homeViewModel by viewModel { component.homeViewModelFactory.create(it) }
+    private val picasso = component.picasso
+    private var homeAdapter: HomeAdapter = HomeAdapter(picasso)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +29,13 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                activity?.finish()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    activity?.finish()
+                }
+            })
         setHasOptionsMenu(true)
     }
 
@@ -65,12 +68,18 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun observeTheLiveData() {
+        homeViewModel.homeData.observe(this, Observer {
+            homeAdapter.submitList(it)
+            rvHomePrayerTimes.adapter = homeAdapter
+        })
 
-        observeTiming()
+        homeViewModel.contentVisibility.observe(this, Observer {
+            rvHomePrayerTimes.visibility = it
+            tvDateTimeTitle.visibility = it
+            tvCurrentLocation.visibility = it
+        })
 
-        observeColors()
-
-        homeViewModel.locationSecton.observe(this, Observer {
+        homeViewModel.locationSection.observe(this, Observer {
             tvCurrentLocation.text = it
         })
 
@@ -78,7 +87,7 @@ class HomeFragment : BaseFragment() {
             tvDateTimeTitle.text = it
         })
 
-        homeViewModel.showErroToast.observe(this, Observer {
+        homeViewModel.showErrorToast.observe(this, Observer {
             if (it) Toast.makeText(activity!!, R.string.error_occured, Toast.LENGTH_LONG).show()
         })
 
@@ -86,65 +95,11 @@ class HomeFragment : BaseFragment() {
             pbHome.visibility = it
         })
 
-        homeViewModel.contentVisibility.observe(this, Observer {
-            cvFajr.visibility = it
-            cvDhuhr.visibility = it
-            cvAsr.visibility = it
-            cvMaghrib.visibility = it
-            cvIsha.visibility = it
-            tvDateTimeTitle.visibility = it
-            tvCurrentLocation.visibility = it
-        })
-
         homeViewModel.workManagerHasBeenFired.observe(this, Observer {
             if (!it) {
                 startPrayerTimesWorkManager(requireActivity())
                 homeViewModel.updateWorkManagerFiredState()
             }
-        })
-    }
-
-    private fun observeColors() {
-        homeViewModel.fajrColor.observe(this, Observer {
-            cvFajr.setBackgroundColor(ContextCompat.getColor(context!!, it))
-        })
-
-        homeViewModel.dhuhrColor.observe(this, Observer {
-            cvDhuhr.setBackgroundColor(ContextCompat.getColor(context!!, it))
-        })
-
-        homeViewModel.asrColor.observe(this, Observer {
-            cvAsr.setBackgroundColor(ContextCompat.getColor(context!!, it))
-        })
-
-        homeViewModel.maghribColor.observe(this, Observer {
-            cvMaghrib.setBackgroundColor(ContextCompat.getColor(context!!, it))
-        })
-
-        homeViewModel.ishaColor.observe(this, Observer {
-            cvIsha.setBackgroundColor(ContextCompat.getColor(context!!, it))
-        })
-    }
-
-    private fun observeTiming() {
-        homeViewModel.fajrTime.observe(this, Observer {
-            tvFajrTime.text = it
-        })
-
-        homeViewModel.dhuhrtime.observe(this, Observer {
-            tvDhuhrTime.text = it
-        })
-
-        homeViewModel.asrTime.observe(this, Observer {
-            tvAsrTime.text = it
-        })
-
-        homeViewModel.maghribTime.observe(this, Observer {
-            tvMagribTime.text = it
-        })
-
-        homeViewModel.ishaTime.observe(this, Observer {
-            tvIshaTime.text = it
         })
     }
 }

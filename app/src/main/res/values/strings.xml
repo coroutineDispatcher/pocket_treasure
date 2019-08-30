@@ -55,6 +55,7 @@
     <string name="can_not_save_image_need_permission">Can\'t save image, need permission</string>
     <string name="wallpaper_saved">Wallpaper saved</string>
     <string name="image_saved">Image Saved</string>
+    <string name="image_error_saved">Error saving image</string>
     <string name="wake_up_fajr">Notified on Fajr time</string>
     <string name="wake_up_dhuhr">Notified on Dhuhr time</string>
     <string name="wake_up_asr">Notified on Asr timea</string>

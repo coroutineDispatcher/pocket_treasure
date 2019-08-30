@@ -87,9 +87,9 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:input:3.0.0-rc2'
 
     //room
-    implementation "androidx.room:room-runtime:2.2.0-alpha02"
-    kapt "androidx.room:room-compiler:2.2.0-alpha02"
-    implementation "androidx.room:room-ktx:2.2.0-alpha02"
+    implementation "androidx.room:room-runtime:2.2.0-beta01"
+    kapt "androidx.room:room-compiler:2.2.0-beta01"
+    implementation "androidx.room:room-ktx:2.2.0-beta01"
 
     //Joda time
     implementation 'net.danlew:android.joda:2.10.2'
@@ -140,7 +140,7 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:2.2.0"
 
     // Check for v11.4.2 or higher
-    implementation 'com.google.firebase:firebase-core:17.1.0'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
 
     // Add dependency
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
@@ -159,5 +159,8 @@ dependencies {
     //compass view
     implementation 'com.github.arbelkilani:Compass-View:v1.1.1'
 
-    implementation 'io.coil-kt:coil:0.6.1'
+   // implementation 'io.coil-kt:coil:0.6.1'
+
+    implementation 'com.squareup.okio:okio:2.3.0'
+
 }
