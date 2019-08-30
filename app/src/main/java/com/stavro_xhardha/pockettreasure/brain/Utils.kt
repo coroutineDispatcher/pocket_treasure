@@ -50,8 +50,17 @@ val DIFF_UTIL_GALLERY = object : DiffUtil.ItemCallback<UnsplashResult>() {
                 && oldItem.photoUrls == newItem.photoUrls
 }
 
+val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
+    override fun areItemsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
+        oldItem.name == newItem.name
+
+    override fun areContentsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
+        oldItem.name == newItem.name && oldItem.time == newItem.time
+}
+
 val DIFF_UTIL_NEWS = object : DiffUtil.ItemCallback<News>() {
-    override fun areItemsTheSame(oldItem: News, newItem: News): Boolean = oldItem.title == newItem.title
+    override fun areItemsTheSame(oldItem: News, newItem: News): Boolean =
+        oldItem.title == newItem.title
 
     override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
         return oldItem.title == newItem.title
@@ -63,7 +72,8 @@ val DIFF_UTIL_NEWS = object : DiffUtil.ItemCallback<News>() {
 }
 
 val DIFF_UTIL_NAMES = object : DiffUtil.ItemCallback<Name>() {
-    override fun areItemsTheSame(oldItem: Name, newItem: Name): Boolean = oldItem.arabicName == newItem.arabicName
+    override fun areItemsTheSame(oldItem: Name, newItem: Name): Boolean =
+        oldItem.arabicName == newItem.arabicName
 
     override fun areContentsTheSame(oldItem: Name, newItem: Name): Boolean {
         return oldItem.arabicName == newItem.arabicName
@@ -74,7 +84,8 @@ val DIFF_UTIL_NAMES = object : DiffUtil.ItemCallback<Name>() {
 }
 
 val DIFF_UTIL_QURAN = object : DiffUtil.ItemCallback<Surah>() {
-    override fun areItemsTheSame(oldItem: Surah, newItem: Surah): Boolean = oldItem.surahNumber == newItem.surahNumber
+    override fun areItemsTheSame(oldItem: Surah, newItem: Surah): Boolean =
+        oldItem.surahNumber == newItem.surahNumber
 
     override fun areContentsTheSame(oldItem: Surah, newItem: Surah): Boolean =
         oldItem.englishName == newItem.englishName
@@ -132,7 +143,11 @@ inline fun <reified T : ViewModel> Fragment.viewModel(
     crossinline provider: (SavedStateHandle) -> T
 ) = viewModels<T> {
     object : AbstractSavedStateViewModelFactory(this, Bundle()) {
-        override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T =
+        override fun <T : ViewModel?> create(
+            key: String,
+            modelClass: Class<T>,
+            handle: SavedStateHandle
+        ): T =
             provider(handle) as T
     }
 }

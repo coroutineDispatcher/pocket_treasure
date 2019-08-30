@@ -4,10 +4,12 @@ import android.view.View
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.ACCENT_BACKGROUND
 import com.stavro_xhardha.pockettreasure.brain.WHITE_BACKGROUND
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
+import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 import org.joda.time.LocalTime
+
 
 class HomeViewModel @AssistedInject constructor(
     private val homeRepository: HomeRepository,
@@ -35,24 +38,22 @@ class HomeViewModel @AssistedInject constructor(
         throwable.printStackTrace()
     }
 
-    val monthSection = MutableLiveData<String>()
-    val locationSecton = MutableLiveData<String>()
-    val fajrTime = MutableLiveData<String>()
-    val dhuhrtime = MutableLiveData<String>()
-    val asrTime = MutableLiveData<String>()
-    val maghribTime = MutableLiveData<String>()
-    val ishaTime = MutableLiveData<String>()
-    val progressBarVisibility = MutableLiveData<Int>()
-    val showErroToast = MutableLiveData<Boolean>()
-    val contentVisibility = MutableLiveData<Int>()
-    val fajrColor = MutableLiveData<Int>()
-    val dhuhrColor = MutableLiveData<Int>()
-    val asrColor = MutableLiveData<Int>()
-    val maghribColor = MutableLiveData<Int>()
-    val ishaColor = MutableLiveData<Int>()
+    private val homePrayerData = ArrayList<HomePrayerTime>()
+    private val _homeData = MutableLiveData<ArrayList<HomePrayerTime>>()
+    private val _monthSection = MutableLiveData<String>()
+    private val _locationSection = MutableLiveData<String>()
     private val _workManagerHasBeenFired = MutableLiveData<Boolean>()
+    private val _progressBarVisibility = MutableLiveData<Int>()
+    private val _showErrorToast = MutableLiveData<Boolean>()
+    private val _contentVisibility = MutableLiveData<Int>()
 
+    val progressBarVisibility: LiveData<Int> = _progressBarVisibility
+    val showErrorToast: LiveData<Boolean> = _showErrorToast
+    val contentVisibility: LiveData<Int> = _contentVisibility
     val workManagerHasBeenFired: LiveData<Boolean> = _workManagerHasBeenFired
+    val monthSection: LiveData<String> = _monthSection
+    val locationSection: LiveData<String> = _locationSection
+    val homeData: LiveData<ArrayList<HomePrayerTime>> = _homeData
 
     fun loadPrayerTimes() {
         viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
@@ -87,52 +88,94 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private fun showError() {
-        showErroToast.value = true
-        progressBarVisibility.value = View.GONE
-        contentVisibility.value = View.VISIBLE
+        _showErrorToast.value = true
+        _progressBarVisibility.value = View.GONE
+        _contentVisibility.value = View.VISIBLE
     }
 
     private fun switchProgressBarOn() {
-        progressBarVisibility.value = View.VISIBLE
-        contentVisibility.value = View.GONE
-        showErroToast.value = false
+        _progressBarVisibility.value = View.VISIBLE
+        _contentVisibility.value = View.GONE
+        _showErrorToast.value = false
     }
 
     private fun switchProgressBarOff() {
-        progressBarVisibility.value = View.GONE
-        contentVisibility.value = View.VISIBLE
-        showErroToast.value = false
+        _progressBarVisibility.value = View.GONE
+        _contentVisibility.value = View.VISIBLE
+        _showErrorToast.value = false
     }
 
     private suspend fun setValuesToLiveData() {
-        putValues()
-        findCurrentTime()
+        _monthSection.postValue(homeRepository.readMonthSection())
+        _locationSection.postValue(homeRepository.readLocationSection())
+
+        addDataToList()
+
         switchProgressBarOff()
     }
 
-    private suspend fun putValues() {
-        monthSection.postValue(homeRepository.readMonthSection())
-        locationSecton.postValue(homeRepository.readLocationSection())
-        fajrTime.postValue("${homeRepository.readFejrtime()} - ${homeRepository.readFinishFajrTime()}")
-        dhuhrtime.postValue(homeRepository.readDhuhrTime())
-        asrTime.postValue(homeRepository.readAsrTime())
-        maghribTime.postValue(homeRepository.readMaghribTime())
-        ishaTime.postValue(homeRepository.readIshaTime())
+    private suspend fun addDataToList() {
+        homePrayerData.add(
+            HomePrayerTime(
+                "Fajr",
+                "${homeRepository.readFejrtime()} - ${homeRepository.readFinishFajrTime()}",
+                WHITE_BACKGROUND,
+                R.drawable.ic_fajr_sun
+            )
+        )
+
+        homePrayerData.add(
+            HomePrayerTime(
+                "Dhuhr",
+                homeRepository.readDhuhrTime() ?: "",
+                WHITE_BACKGROUND,
+                R.drawable.ic_dhuhr_sun
+            )
+        )
+
+        homePrayerData.add(
+            HomePrayerTime(
+                "Asr",
+                homeRepository.readAsrTime() ?: "",
+                WHITE_BACKGROUND,
+                R.drawable.ic_asr_sun
+            )
+        )
+
+        homePrayerData.add(
+            HomePrayerTime(
+                "Maghrib",
+                homeRepository.readMaghribTime() ?: "",
+                WHITE_BACKGROUND,
+                R.drawable.ic_magrib_sun
+            )
+        )
+
+
+        homePrayerData.add(
+            HomePrayerTime(
+                "Isha",
+                homeRepository.readIshaTime() ?: "",
+                WHITE_BACKGROUND,
+                R.drawable.ic_isha_sun
+            )
+        )
+
+        findCurrentTime()
+
+        _homeData.postValue(homePrayerData)
     }
 
-    private suspend fun findCurrentTime() {
+    private fun findCurrentTime() {
         val currentTime = LocalTime()
-        try {
-            compareTiming(
-                currentTime,
-                localTime(homeRepository.readFejrtime()!!),
-                localTime(homeRepository.readDhuhrTime()!!),
-                localTime(homeRepository.readAsrTime()!!),
-                localTime(homeRepository.readMaghribTime()!!),
-                localTime(homeRepository.readIshaTime()!!)
-            )
-        } catch (e: NumberFormatException) {
-            e.printStackTrace()
+        var currentColorNotFound = false
+        homePrayerData.forEach {
+            if (currentTime.isBefore(localTime(it.time)) && !currentColorNotFound) {
+                it.backgroundColor = ACCENT_BACKGROUND
+                currentColorNotFound = true
+            } else {
+                it.backgroundColor = WHITE_BACKGROUND
+            }
         }
     }
 
@@ -140,24 +183,6 @@ class HomeViewModel @AssistedInject constructor(
         (timeOfPrayer.substring(0, 2).toInt()),
         (timeOfPrayer.substring(3, 5)).toInt()
     )
-
-    private fun compareTiming(
-        currentTime: LocalTime,
-        fajrTime: LocalTime,
-        dhuhrTime: LocalTime,
-        asrTime: LocalTime,
-        maghribTime: LocalTime,
-        ishaTime: LocalTime
-    ) {
-        when {
-            currentTime.isBefore(fajrTime) -> switchFajrOn()
-            currentTime.isBefore(dhuhrTime) -> switchDhuhrOn()
-            currentTime.isBefore(asrTime) -> switchAsrOn()
-            currentTime.isBefore(maghribTime) -> switchMaghribOn()
-            currentTime.isBefore(ishaTime) -> switchIshaOn()
-            else -> switchFajrOn()
-        }
-    }
 
     private suspend fun dateHasPassed(): Boolean {
         val date = DateTime()
@@ -194,46 +219,6 @@ class HomeViewModel @AssistedInject constructor(
             homeRepository.saveMidnight(it.data.timings.midnight)
             homeRepository.updateCountryState()
         }
-    }
-
-    private fun switchFajrOn() {
-        fajrColor.value = ACCENT_BACKGROUND
-        dhuhrColor.value = WHITE_BACKGROUND
-        asrColor.value = WHITE_BACKGROUND
-        maghribColor.value = WHITE_BACKGROUND
-        ishaColor.value = WHITE_BACKGROUND
-    }
-
-    private fun switchDhuhrOn() {
-        fajrColor.value = WHITE_BACKGROUND
-        dhuhrColor.value = ACCENT_BACKGROUND
-        asrColor.value = WHITE_BACKGROUND
-        maghribColor.value = WHITE_BACKGROUND
-        ishaColor.value = WHITE_BACKGROUND
-    }
-
-    private fun switchAsrOn() {
-        fajrColor.value = WHITE_BACKGROUND
-        dhuhrColor.value = WHITE_BACKGROUND
-        asrColor.value = ACCENT_BACKGROUND
-        maghribColor.value = WHITE_BACKGROUND
-        ishaColor.value = WHITE_BACKGROUND
-    }
-
-    private fun switchMaghribOn() {
-        fajrColor.value = WHITE_BACKGROUND
-        dhuhrColor.value = WHITE_BACKGROUND
-        asrColor.value = WHITE_BACKGROUND
-        maghribColor.value = ACCENT_BACKGROUND
-        ishaColor.value = WHITE_BACKGROUND
-    }
-
-    private fun switchIshaOn() {
-        fajrColor.value = WHITE_BACKGROUND
-        dhuhrColor.value = WHITE_BACKGROUND
-        asrColor.value = WHITE_BACKGROUND
-        maghribColor.value = WHITE_BACKGROUND
-        ishaColor.value = ACCENT_BACKGROUND
     }
 
     fun initWorker() {

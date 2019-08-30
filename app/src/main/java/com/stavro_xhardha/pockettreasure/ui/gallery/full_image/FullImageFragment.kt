@@ -1,13 +1,15 @@
 package com.stavro_xhardha.pockettreasure.ui.gallery.full_image
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.WallpaperManager
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -20,14 +22,14 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.FULL_IMAGE_SAVED_STATE
-import com.stavro_xhardha.pockettreasure.brain.REQUEST_STORAGE_PERMISSION
-import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
-import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
+import com.stavro_xhardha.pockettreasure.brain.*
 import kotlinx.android.synthetic.main.fragment_full_image.*
 import kotlinx.coroutines.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okio.buffer
+import okio.sink
 import java.io.IOException
-import java.net.URL
 
 
 class FullImageFragment : Fragment() {
@@ -39,6 +41,7 @@ class FullImageFragment : Fragment() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO + completableJob)
     private lateinit var picasso: Picasso
     private lateinit var wallpaperManager: WallpaperManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,14 +83,22 @@ class FullImageFragment : Fragment() {
             })
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_STORAGE_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     writeImageToFile()
                 } else {
-                    Toast.makeText(activity, R.string.can_not_save_image_need_permission, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity,
+                        R.string.can_not_save_image_need_permission,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 return
             }
@@ -150,7 +161,8 @@ class FullImageFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 decrementIdlingResource()
                 pbFullImage.visibility = View.GONE
-                Snackbar.make(rlFullImageHolder, R.string.wallpaper_saved, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(rlFullImageHolder, R.string.wallpaper_saved, Snackbar.LENGTH_LONG)
+                    .show()
             }
         }
     }
@@ -215,21 +227,56 @@ class FullImageFragment : Fragment() {
         }
     }
 
+    @SuppressLint("InlinedApi")
     private fun initImageSaving() {
-        val url = URL(expetedUrl)
-        val image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-        MediaStore.Images.Media.insertImage(
-            activity!!.contentResolver,
-            image,
-            System.currentTimeMillis().toString(),
-            ""
-        )
+        val contentValues = ContentValues().apply {
+            put(
+                MediaStore.Images.Media.TITLE,
+                "PD-${System.currentTimeMillis()}"
+            )
+            put(
+                MediaStore.Images.Media.DISPLAY_NAME,
+                System.currentTimeMillis().toString()
+            )
+            put(MediaStore.Images.Media.BUCKET_ID, "/pocket_deen")
+            put(MediaStore.Images.Media.BUCKET_DISPLAY_NAME, "PocketDeen")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            put(MediaStore.Images.Media.IS_PENDING, 1)
+        }
+
+        val resolver = requireActivity().contentResolver
+        val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        val imageResponse =
+            //todo use singleton OkHttpInstance
+            OkHttpClient().newCall(Request.Builder().url(expetedUrl).build()).execute()
+
+        if (imageResponse.isSuccessful) {
+            uri?.let {
+
+                resolver.openOutputStream(uri)?.use {
+                    val sink = it.sink().buffer()
+                    sink.writeAll(imageResponse.body!!.source())
+                    sink.close()
+                }
+
+                contentValues.clear()
+                contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
+                resolver.update(uri, contentValues, null, null)
+            } ?: Log.d(APPLICATION_TAG, "Sth went wrong")
+        } else {
+            Toast.makeText(requireActivity(), R.string.image_error_saved, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun shareImageUrl() {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, expetedUrl)
-        startActivity(Intent.createChooser(sharingIntent, activity!!.resources.getString(R.string.share_via)))
+        startActivity(
+            Intent.createChooser(
+                sharingIntent,
+                activity!!.resources.getString(R.string.share_via)
+            )
+        )
     }
 }
