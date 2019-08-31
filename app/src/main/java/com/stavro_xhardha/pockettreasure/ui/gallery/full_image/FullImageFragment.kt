@@ -6,10 +6,11 @@ import android.app.WallpaperManager
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -22,13 +23,13 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.*
+import com.stavro_xhardha.pockettreasure.brain.FULL_IMAGE_SAVED_STATE
+import com.stavro_xhardha.pockettreasure.brain.REQUEST_STORAGE_PERMISSION
+import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
+import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
 import kotlinx.android.synthetic.main.fragment_full_image.*
 import kotlinx.coroutines.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okio.buffer
-import okio.sink
+import java.io.File
 import java.io.IOException
 
 
@@ -41,6 +42,10 @@ class FullImageFragment : Fragment() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO + completableJob)
     private lateinit var picasso: Picasso
     private lateinit var wallpaperManager: WallpaperManager
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
+        Snackbar.make(rlFullImageHolder, R.string.error_saving_image, Snackbar.LENGTH_LONG).show()
+    }
 
 
     override fun onCreateView(
@@ -129,12 +134,12 @@ class FullImageFragment : Fragment() {
         when {
             item.itemId == R.id.action_download -> saveImageToUrl()
             item.itemId == R.id.action_share -> shareImageUrl()
-            item.itemId == R.id.action_set_wallpaper -> showWallpapaerDialog()
+            item.itemId == R.id.action_set_wallpaper -> showWallpaperDialog()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showWallpapaerDialog() {
+    private fun showWallpaperDialog() {
         MaterialDialog(activity!!).show {
             title(R.string.set_as_wallpaper)
             listItemsSingleChoice(
@@ -148,7 +153,7 @@ class FullImageFragment : Fragment() {
     }
 
     private fun setWallPaper(index: Int) {
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             incrementIdlingResource()
             withContext(Dispatchers.Main) {
                 pbFullImage.visibility = View.VISIBLE
@@ -227,44 +232,44 @@ class FullImageFragment : Fragment() {
         }
     }
 
-    @SuppressLint("InlinedApi")
+    @SuppressLint("InlinedApi", "ObsoleteSdkInt")
     private fun initImageSaving() {
+        val relativeLocation = Environment.DIRECTORY_PICTURES + File.pathSeparator + "PocketDeen"
         val contentValues = ContentValues().apply {
-            put(
-                MediaStore.Images.Media.TITLE,
-                "PD-${System.currentTimeMillis()}"
-            )
-            put(
-                MediaStore.Images.Media.DISPLAY_NAME,
-                System.currentTimeMillis().toString()
-            )
-            put(MediaStore.Images.Media.BUCKET_ID, "/pocket_deen")
-            put(MediaStore.Images.Media.BUCKET_DISPLAY_NAME, "PocketDeen")
-            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            put(MediaStore.Images.Media.IS_PENDING, 1)
+            put(MediaStore.MediaColumns.DISPLAY_NAME, System.currentTimeMillis().toString())
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.MediaColumns.RELATIVE_PATH, relativeLocation)
+                put(MediaStore.MediaColumns.IS_PENDING, 1)
+            }
         }
 
         val resolver = requireActivity().contentResolver
+        val bitmap = picasso.load(expetedUrl).get()
+
         val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-        val imageResponse =
-            //todo use singleton OkHttpInstance
-            OkHttpClient().newCall(Request.Builder().url(expetedUrl).build()).execute()
 
-        if (imageResponse.isSuccessful) {
-            uri?.let {
+        try {
 
-                resolver.openOutputStream(uri)?.use {
-                    val sink = it.sink().buffer()
-                    sink.writeAll(imageResponse.body!!.source())
-                    sink.close()
-                }
+            uri?.let { uri ->
+                val stream = resolver.openOutputStream(uri)
 
-                contentValues.clear()
-                contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
-                resolver.update(uri, contentValues, null, null)
-            } ?: Log.d(APPLICATION_TAG, "Sth went wrong")
-        } else {
-            Toast.makeText(requireActivity(), R.string.image_error_saved, Toast.LENGTH_LONG).show()
+                stream?.let { stream ->
+                    if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)) {
+                        throw IOException("Failed to save bitmap.")
+                    }
+                } ?: throw IOException("Failed to get output stream.")
+
+            } ?: throw IOException("Failed to create new MediaStore record")
+
+        } catch (e: IOException) {
+            if (uri != null) {
+                resolver.delete(uri, null, null)
+            }
+            throw IOException(e)
+        } finally {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                contentValues.put(MediaStore.MediaColumns.IS_PENDING, 0)
         }
     }
 
