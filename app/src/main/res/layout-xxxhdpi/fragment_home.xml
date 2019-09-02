@@ -44,7 +44,7 @@
             android:layout_height="47dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="704dp"
+            android:layout_marginBottom="584dp"
             android:textColor="@color/md_grey_600"
             android:textSize="@dimen/text_global_unit_bigger"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,17 +54,17 @@
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHomePrayerTimes"
-            android:layout_width="376dp"
-            android:layout_height="650dp"
+            android:layout_width="364dp"
+            android:layout_height="530dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.421"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCurrentLocation"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.166" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
