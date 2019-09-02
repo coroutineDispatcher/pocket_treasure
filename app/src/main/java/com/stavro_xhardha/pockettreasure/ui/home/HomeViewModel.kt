@@ -29,7 +29,8 @@ class HomeViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): HomeViewModel
     }
 
-    private val exceptionHandle = CoroutineExceptionHandler { _, _ ->
+    private val exceptionHandle = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
         decrementIdlingResource()
         showError()
     }
@@ -38,7 +39,7 @@ class HomeViewModel @AssistedInject constructor(
         throwable.printStackTrace()
     }
 
-    private val homePrayerData = ArrayList<HomePrayerTime>()
+    private lateinit var homePrayerData: ArrayList<HomePrayerTime>
     private val _homeData = MutableLiveData<ArrayList<HomePrayerTime>>()
     private val _monthSection = MutableLiveData<String>()
     private val _locationSection = MutableLiveData<String>()
@@ -57,7 +58,9 @@ class HomeViewModel @AssistedInject constructor(
 
     fun loadPrayerTimes() {
         viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
-            if (dateHasPassed() || homeRepository.countryHasBeenUpdated()) {
+            val dateHasPassed = dateHasPassed()
+            val countryHasBeenUpdated = homeRepository.countryHasBeenUpdated()
+            if (dateHasPassed || countryHasBeenUpdated) {
                 makePrayerApiCall()
             } else {
                 withContext(Dispatchers.Main) {
@@ -115,6 +118,8 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private suspend fun addDataToList() {
+        homePrayerData = ArrayList()
+
         homePrayerData.add(
             HomePrayerTime(
                 "Fajr",
@@ -168,13 +173,19 @@ class HomeViewModel @AssistedInject constructor(
 
     private fun findCurrentTime() {
         val currentTime = LocalTime()
-        var currentColorNotFound = false
-        homePrayerData.forEach {
-            if (currentTime.isBefore(localTime(it.time)) && !currentColorNotFound) {
-                it.backgroundColor = ACCENT_BACKGROUND
-                currentColorNotFound = true
-            } else {
-                it.backgroundColor = WHITE_BACKGROUND
+        if (currentTime.isBefore(localTime(homePrayerData[0].time)) ||
+            currentTime.isAfter(localTime(homePrayerData[4].time))
+        ) {
+            homePrayerData[0].backgroundColor = ACCENT_BACKGROUND
+        } else {
+            var currentColorFound = false
+            for (i in 1 until homePrayerData.size) {
+                if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
+                    homePrayerData[i].backgroundColor = ACCENT_BACKGROUND
+                    currentColorFound = true
+                } else {
+                    homePrayerData[i].backgroundColor = WHITE_BACKGROUND
+                }
             }
         }
     }
