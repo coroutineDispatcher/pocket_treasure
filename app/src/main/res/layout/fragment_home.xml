@@ -21,45 +21,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-            android:id="@+id/tvDateTimeTitle"
-            android:layout_width="300dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/dateTimeTitle"
-            android:textColor="@color/md_black_1000"
-            android:textSize="@dimen/text_global_unit_bigger"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-            android:id="@+id/tvCurrentLocation"
-            android:layout_width="300dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textColor="@color/md_grey_600"
-            android:textSize="@dimen/text_global_unit_bigger"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="44dp" />
-
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHomePrayerTimes"
-            android:layout_width="298dp"
-            android:layout_height="393dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintHorizontal_bias="0.074"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCurrentLocation"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
