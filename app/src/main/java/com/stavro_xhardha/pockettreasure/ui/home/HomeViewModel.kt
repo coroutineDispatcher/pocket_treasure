@@ -41,8 +41,6 @@ class HomeViewModel @AssistedInject constructor(
 
     private lateinit var homePrayerData: ArrayList<HomePrayerTime>
     private val _homeData = MutableLiveData<ArrayList<HomePrayerTime>>()
-    private val _monthSection = MutableLiveData<String>()
-    private val _locationSection = MutableLiveData<String>()
     private val _workManagerHasBeenFired = MutableLiveData<Boolean>()
     private val _progressBarVisibility = MutableLiveData<Int>()
     private val _showErrorToast = MutableLiveData<Boolean>()
@@ -52,8 +50,6 @@ class HomeViewModel @AssistedInject constructor(
     val showErrorToast: LiveData<Boolean> = _showErrorToast
     val contentVisibility: LiveData<Int> = _contentVisibility
     val workManagerHasBeenFired: LiveData<Boolean> = _workManagerHasBeenFired
-    val monthSection: LiveData<String> = _monthSection
-    val locationSection: LiveData<String> = _locationSection
     val homeData: LiveData<ArrayList<HomePrayerTime>> = _homeData
 
     fun loadPrayerTimes() {
@@ -109,11 +105,7 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private suspend fun setValuesToLiveData() {
-        _monthSection.postValue(homeRepository.readMonthSection())
-        _locationSection.postValue(homeRepository.readLocationSection())
-
         addDataToList()
-
         switchProgressBarOff()
     }
 

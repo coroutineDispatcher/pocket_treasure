@@ -75,18 +75,7 @@ class HomeFragment : BaseFragment() {
 
         homeViewModel.contentVisibility.observe(this, Observer {
             rvHomePrayerTimes.visibility = it
-            tvDateTimeTitle.visibility = it
-            tvCurrentLocation.visibility = it
         })
-
-        homeViewModel.locationSection.observe(this, Observer {
-            tvCurrentLocation.text = it
-        })
-
-        homeViewModel.monthSection.observe(this, Observer {
-            tvDateTimeTitle.text = it
-        })
-
         homeViewModel.showErrorToast.observe(this, Observer {
             if (it) Toast.makeText(activity!!, R.string.error_occured, Toast.LENGTH_LONG).show()
         })
