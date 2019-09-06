@@ -31,7 +31,7 @@ const val PLAY_STORE_URL =
 const val WHITE_BACKGROUND = R.color.md_white_1000
 const val LIGHT_SELECTOR = R.color.colorAccent
 const val DARK_BACKGROUND = R.color.md_grey_800
-const val DARK_SELECTOR = R.color.colorPrimary
+const val DARK_SELECTOR = R.color.colorAccentDark
 
 //SharedPreferences
 const val COUNTRY_SHARED_PREFERENCE_KEY = "app_country"

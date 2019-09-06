@@ -103,5 +103,6 @@
     <string name="location_updated_successfully">Location Updated Successfully</string>
     <string name="compass">Qibla Compass</string>
     <string name="found">Qibla found</string>
-
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
 </resources>

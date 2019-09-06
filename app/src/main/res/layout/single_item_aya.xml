@@ -20,7 +20,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:padding="@dimen/global_unit_smaller_xxxxx"
-                android:textColor="@color/md_grey_700"
                 android:textDirection="anyRtl"
                 android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
                 android:textStyle="bold" />
@@ -40,7 +39,6 @@
                     android:gravity="bottom"
                     android:padding="@dimen/global_unit_smaller_xxxxx"
                     android:text="@string/some_number"
-                    android:textColor="@color/md_grey_500"
                     android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textStyle="bold" />
 

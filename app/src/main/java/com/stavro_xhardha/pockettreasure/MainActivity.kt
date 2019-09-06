@@ -2,6 +2,7 @@ package com.stavro_xhardha.pockettreasure
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
@@ -24,6 +26,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_CHECK_LOCATION_SETTINGS
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_LOCATION_PERMISSION
+import com.stavro_xhardha.pockettreasure.brain.isDarkMode
 import com.stavro_xhardha.pockettreasure.brain.isDebugMode
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,6 +39,8 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        checkDarkMode()
 
         sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
@@ -51,6 +56,13 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         setupActionBar(navController, appBarConfiguration)
 
         setupNavControllerListener(navController)
+    }
+
+    private fun checkDarkMode() {
+        if (isDarkMode)
+            toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Dark)
+        else
+            toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Light)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -133,6 +145,35 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     private fun setupNavigation(navController: NavController) {
         val sideNavView = findViewById<NavigationView>(R.id.nav_view)
         sideNavView?.setupWithNavController(navController)
+
+        //todo refactor this
+
+        val colorListItems = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_enabled)
+            ),
+            intArrayOf(
+                ContextCompat.getColor(this, R.color.md_black_1000),
+                ContextCompat.getColor(this, R.color.colorAccentDark)
+            )
+        )
+
+        val colorListText = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_enabled)
+            ),
+            intArrayOf(
+                ContextCompat.getColor(this, R.color.md_black_1000),
+                ContextCompat.getColor(this, R.color.md_white_1000)
+            )
+        )
+
+        if (isDarkMode) {
+            sideNavView.itemTextColor = colorListText
+            sideNavView.itemIconTintList = colorListItems
+        }
 
         val drawerLayout: DrawerLayout? = findViewById(R.id.drawer_layout)
 

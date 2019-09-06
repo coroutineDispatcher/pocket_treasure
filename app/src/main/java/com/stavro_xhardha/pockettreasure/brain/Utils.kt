@@ -2,7 +2,9 @@
 
 package com.stavro_xhardha.pockettreasure.brain
 
+import android.R
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment

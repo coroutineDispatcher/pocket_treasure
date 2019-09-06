@@ -25,15 +25,8 @@
                 android:maxLines="3"
                 android:padding="@dimen/global_unit_smaller"
                 android:text="@string/longestSurah"
-                android:textColor="@color/md_grey_700"
                 android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
                 android:textStyle="bold" />
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/global_unit_smaller_xxxxxx"
-                android:background="@color/md_grey_100"
-                android:padding="@dimen/text_global_unit_bigger_xxxxxx" />
 
         <TextView
                 android:id="@+id/tvTransliteration"
@@ -41,8 +34,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="3"
                 android:padding="@dimen/global_unit_smaller"
-                android:text="@string/some_description"
-                android:textColor="@color/md_grey_500" />
+                android:text="@string/some_description" />
 
         <TextView
                 android:id="@+id/tvTranslation"
@@ -50,14 +42,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="3"
                 android:padding="@dimen/global_unit_smaller"
-                android:text="@string/some_description"
-                android:textColor="@color/md_grey_500" />
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/global_unit_smaller_xxxxxx"
-                android:background="@color/md_grey_100"
-                android:padding="@dimen/text_global_unit_bigger_xxxxxx" />
+                android:text="@string/some_description" />
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -73,7 +58,6 @@
                     android:layout_weight="98"
                     android:gravity="bottom"
                     android:text="@string/some_number"
-                    android:textColor="@color/md_grey_700"
                     android:textSize="@dimen/text_global_unit_bigger"
                     android:textStyle="bold" />
 
