@@ -2,6 +2,7 @@ package com.stavro_xhardha.pockettreasure.setup_pkg
 
 import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.SavedStateHandle
 import com.nhaarman.mockitokotlin2.mock
 import com.stavro_xhardha.pockettreasure.brain.observeOnce
 import com.stavro_xhardha.pockettreasure.ui.setup.SetupRepository
@@ -37,7 +38,8 @@ class SetupViewModelTest {
     @Before
     fun setUp() {
         setupRepository = mock()
-        setupViewModel = SetupViewModel(setupRepository)
+        val savedStateHandle = mock<SavedStateHandle>()
+        setupViewModel = SetupViewModel(setupRepository, savedStateHandle)
 
         Dispatchers.setMain(mainThreadSurrogate)
     }

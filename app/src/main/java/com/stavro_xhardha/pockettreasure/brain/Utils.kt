@@ -4,6 +4,7 @@ package com.stavro_xhardha.pockettreasure.brain
 
 import android.content.Context
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
@@ -24,6 +25,8 @@ import com.stavro_xhardha.pockettreasure.model.*
 import com.sxhardha.smoothie.Smoothie
 
 val isDebugMode: Boolean = BuildConfig.DEBUG
+
+val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
 
 fun buildPagedList() = PagedList.Config.Builder()
     .setPageSize(INITIAL_PAGE_SIZE)
@@ -151,3 +154,7 @@ inline fun <reified T : ViewModel> Fragment.viewModel(
             provider(handle) as T
     }
 }
+
+fun getDefaultColor() = if (isDarkMode) DARK_BACKGROUND else WHITE_BACKGROUND
+
+fun getSelectorColor() = if (isDarkMode) DARK_SELECTOR else LIGHT_SELECTOR

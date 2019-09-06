@@ -16,7 +16,6 @@
             android:layout_marginTop="265dp"
             android:layout_marginEnd="105dp"
             android:layout_marginBottom="266dp"
-            app:border_color="@color/md_red_400"
             app:degree_color="@color/colorPrimaryLight"
             app:degrees_step="5"
             app:layout_constraintBottom_toBottomOf="parent"

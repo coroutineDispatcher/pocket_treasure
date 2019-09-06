@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_aya.*
 
 class AyaFragment : BaseFragment(), AyaContract {
@@ -33,6 +34,14 @@ class AyaFragment : BaseFragment(), AyaContract {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_aya, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (args.surahsNumber == 9) {
+            requireActivity().toolbar.title = ""
+        }
     }
 
     override fun onDestroy() {
@@ -63,6 +72,7 @@ class AyaFragment : BaseFragment(), AyaContract {
     }
 
     override fun onMediaPlayerError() {
-        Snackbar.make(view!!, R.string.cannot_play_sound_check_connection, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(view!!, R.string.cannot_play_sound_check_connection, Snackbar.LENGTH_LONG)
+            .show()
     }
 }

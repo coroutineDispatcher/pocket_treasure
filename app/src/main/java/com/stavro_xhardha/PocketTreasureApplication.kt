@@ -16,9 +16,6 @@ class PocketTreasureApplication : Application() {
         super.onCreate()
         JodaTimeAndroid.init(this)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
-            Log.d("YES", "YES")
-        }
         pocketTreasureComponent = DaggerPocketTreasureComponent.factory().create(this)
         INSTANCE = pocketTreasureComponent
     }

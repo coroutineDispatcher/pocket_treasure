@@ -5,10 +5,7 @@ import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.ACCENT_BACKGROUND
-import com.stavro_xhardha.pockettreasure.brain.WHITE_BACKGROUND
-import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
-import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
+import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -116,7 +113,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Fajr",
                 "${homeRepository.readFejrtime()} - ${homeRepository.readFinishFajrTime()}",
-                WHITE_BACKGROUND,
+                getDefaultColor(),
                 R.drawable.ic_fajr_sun
             )
         )
@@ -125,7 +122,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Dhuhr",
                 homeRepository.readDhuhrTime() ?: "",
-                WHITE_BACKGROUND,
+                getDefaultColor(),
                 R.drawable.ic_dhuhr_sun
             )
         )
@@ -134,7 +131,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Asr",
                 homeRepository.readAsrTime() ?: "",
-                WHITE_BACKGROUND,
+                getDefaultColor(),
                 R.drawable.ic_asr_sun
             )
         )
@@ -143,7 +140,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Maghrib",
                 homeRepository.readMaghribTime() ?: "",
-                WHITE_BACKGROUND,
+                getDefaultColor(),
                 R.drawable.ic_magrib_sun
             )
         )
@@ -153,7 +150,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Isha",
                 homeRepository.readIshaTime() ?: "",
-                WHITE_BACKGROUND,
+                getDefaultColor(),
                 R.drawable.ic_isha_sun
             )
         )
@@ -168,15 +165,16 @@ class HomeViewModel @AssistedInject constructor(
         if (currentTime.isBefore(localTime(homePrayerData[0].time)) ||
             currentTime.isAfter(localTime(homePrayerData[4].time))
         ) {
-            homePrayerData[0].backgroundColor = ACCENT_BACKGROUND
+            homePrayerData[0].backgroundColor = getSelectorColor()
         } else {
             var currentColorFound = false
             for (i in 1 until homePrayerData.size) {
                 if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
-                    homePrayerData[i].backgroundColor = ACCENT_BACKGROUND
+                    homePrayerData[i].backgroundColor = getSelectorColor()
                     currentColorFound = true
                 } else {
-                    homePrayerData[i].backgroundColor = WHITE_BACKGROUND
+                    homePrayerData[i].backgroundColor =
+                        if (isDarkMode) DARK_BACKGROUND else WHITE_BACKGROUND
                 }
             }
         }

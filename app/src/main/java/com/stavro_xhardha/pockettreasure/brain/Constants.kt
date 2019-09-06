@@ -17,17 +17,21 @@ const val UNSPLASH_BASE_URL = "https://api.unsplash.com/search/photos"
 const val UNPLASH_QUERY_VALUE = "islam|mosque"
 const val CLIENT_ID = "9c80ea2aa631bda7ec75798cd6f0cfc2008ea6152721d80913464c4fc2f142bc"
 const val CLIENT_SECRET = "a69a283d85e85b8a72309e50c219211ab13284c4e0190ae30199e8e1d0ac3aa3"
-const val GOOGLE_MAP_PLACE_SEARCH = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
+const val GOOGLE_MAP_PLACE_SEARCH =
+    "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
 const val REQUEST_STORAGE_PERMISSION = 355
 const val REQUEST_LOCATION_PERMISSION = 366
 const val REQUEST_CHECK_LOCATION_SETTINGS = 367
 const val QURAN_API_CALL_BASE_URL = "https://api.alquran.cloud/v1/quran/ar.alafasy"
 const val FIRST_SURAH_SENTENCE = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
-const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.stavro_xhardha.pockettreasure"
+const val PLAY_STORE_URL =
+    "https://play.google.com/store/apps/details?id=com.stavro_xhardha.pockettreasure"
 
 //Colors
 const val WHITE_BACKGROUND = R.color.md_white_1000
-const val ACCENT_BACKGROUND = R.color.colorAccent
+const val LIGHT_SELECTOR = R.color.colorAccent
+const val DARK_BACKGROUND = R.color.md_grey_800
+const val DARK_SELECTOR = R.color.colorPrimary
 
 //SharedPreferences
 const val COUNTRY_SHARED_PREFERENCE_KEY = "app_country"
