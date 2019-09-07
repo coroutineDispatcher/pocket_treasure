@@ -42,18 +42,17 @@
             app:menu="@menu/activity_main_drawer">
 
         <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_gravity="bottom|right"
                 android:orientation="vertical"
                 android:padding="16dp">
 
             <ImageView
-                    android:id="@+id/logout"
+                    android:id="@+id/ivDarkMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right|end"
-                    android:src="@drawable/moon_black" />
+                    android:src="@drawable/moon_accent_dark" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 

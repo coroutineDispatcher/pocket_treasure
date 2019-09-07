@@ -11,6 +11,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -24,6 +27,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_CHECK_LOCATION_SETTINGS
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_LOCATION_PERMISSION
 import com.stavro_xhardha.pockettreasure.brain.isDarkMode
@@ -35,6 +39,9 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedViewModel: SharedViewModel
+    private val picasso by lazy {
+        PocketTreasureApplication.getPocketTreasureComponent().picasso
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +66,23 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     }
 
     private fun checkDarkMode() {
-        if (isDarkMode)
+        if (isDarkMode) {
+            picasso.load(R.drawable.sun_accent_dark).fit().into(ivDarkMode)
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Dark)
-        else
+        } else {
+            picasso.load(R.drawable.moon_accent_dark).fit().into(ivDarkMode)
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Light)
+        }
+
+        ivDarkMode.setOnClickListener {
+            if (isDarkMode) {
+                picasso.load(R.drawable.moon_accent_dark).fit().into(ivDarkMode)
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+            } else {
+                picasso.load(R.drawable.sun_accent_dark).fit().into(ivDarkMode)
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
