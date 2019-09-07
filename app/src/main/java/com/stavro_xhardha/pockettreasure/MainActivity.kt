@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedViewModel: SharedViewModel
+    val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,19 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         if (savedInstanceState != null) {
             checkToolbar()
             checkNavView()
+        } else {
+            coroutineScope.launch {
+                val currentTheme =
+                    PocketTreasureApplication.getPocketTreasureComponent()
+                        .getSharedPreferences.readInt(
+                        NIGHT_MODE_KEY
+                    )
+                if (currentTheme != 0) {
+                    withContext(Dispatchers.Main) {
+                        AppCompatDelegate.setDefaultNightMode(currentTheme)
+                    }
+                }
+            }
         }
 
         ivDarkMode.setOnClickListener {
@@ -83,6 +97,13 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
             AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
         } else {
             AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        }
+
+        coroutineScope.launch {
+            val themeToSave = AppCompatDelegate.getDefaultNightMode()
+            PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences.writeInt(
+                NIGHT_MODE_KEY, themeToSave
+            )
         }
     }
 
@@ -226,8 +247,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             android.R.id.home -> {
-                if (findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.articleWebViewFragment
-                    || findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.fullImageFragment
+                if (findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.fullImageFragment
                     || findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.ayaFragment
                 ) {
                     onBackPressed()
@@ -246,5 +266,10 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        coroutineScope.cancel()
+        super.onDestroy()
     }
 }

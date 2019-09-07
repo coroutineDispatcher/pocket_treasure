@@ -30,8 +30,10 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState != null) {
-            homeViewModel.findCurrentTime()
+        if (savedInstanceState == null) {
+            homeViewModel.loadPrayerTimes()
+        } else {
+            homeViewModel.checkCurrentThemeForData()
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -61,11 +63,6 @@ class HomeFragment : BaseFragment() {
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, APPLICATION_TAG)
         sharingIntent.putExtra(Intent.EXTRA_TEXT, PLAY_STORE_URL)
         startActivity(Intent.createChooser(sharingIntent, resources.getString(R.string.share_via)))
-    }
-
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.loadPrayerTimes()
     }
 
     override fun initializeComponents() {

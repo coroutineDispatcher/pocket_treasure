@@ -37,7 +37,7 @@ class HomeViewModel @AssistedInject constructor(
         throwable.printStackTrace()
     }
 
-    private lateinit var homePrayerData: ArrayList<HomePrayerTime>
+    private  var homePrayerData: ArrayList<HomePrayerTime> = ArrayList()
     private val _workManagerHasBeenFired = MutableLiveData<Boolean>()
     private val _progressBarVisibility = MutableLiveData<Int>()
     private val _showErrorToast = MutableLiveData<Boolean>()
@@ -107,8 +107,6 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private suspend fun addDataToList() {
-        homePrayerData = ArrayList()
-
         homePrayerData.add(
             HomePrayerTime(
                 "Fajr",
@@ -179,18 +177,18 @@ class HomeViewModel @AssistedInject constructor(
             }
         }
 
-        checkCurrentThemeForData()
-
         savedStateHandle.set(HOME_DATA_LIST, homePrayerData)
     }
 
-    private fun checkCurrentThemeForData() {
+    fun checkCurrentThemeForData() {
         homePrayerData.forEach {
             if (it.backgroundColor == DARK_BACKGROUND || it.backgroundColor == WHITE_BACKGROUND) {
                 it.backgroundColor =
                     if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND
             }
         }
+
+        savedStateHandle.set(HOME_DATA_LIST, homePrayerData)
     }
 
     private fun localTime(timeOfPrayer: String): LocalTime = LocalTime(
