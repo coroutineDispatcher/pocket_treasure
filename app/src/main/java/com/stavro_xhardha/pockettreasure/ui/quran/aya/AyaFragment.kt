@@ -50,14 +50,20 @@ class AyaFragment : BaseFragment(), AyaContract {
         mediaPlayer.reset()
     }
 
-    override fun initializeComponents() {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initializeComponents()
+        observeTheLiveData()
+    }
+
+    fun initializeComponents() {
         val surahsNumber = args.surahsNumber
         ayaViewModel.startSuraDataBaseCall(surahsNumber)
         rvAya.adapter = ayasAdapter
         pbAya.visibility = View.VISIBLE
     }
 
-    override fun observeTheLiveData() {
+    fun observeTheLiveData() {
         ayaViewModel.ayas.observe(this, Observer {
             if (it.size > 0) {
                 ayasAdapter.submitList(it)

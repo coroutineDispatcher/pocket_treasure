@@ -137,4 +137,10 @@ class HomeRepository @Inject constructor(
     suspend fun updateWorkerFired() {
         mSharedPreferences.writeBoolean(WORKER_FIRED_KEY, true)
     }
+
+    suspend fun isLocationProvided(): Boolean =
+        mSharedPreferences.readFloat(LATITUDE_KEY) != 0.toFloat() && mSharedPreferences.readFloat(LONGITUDE_KEY) != 0.toFloat()
+                && mSharedPreferences.readString(CAPITAL_SHARED_PREFERENCES_KEY)!!.isNotEmpty() && mSharedPreferences.readString(
+            COUNTRY_SHARED_PREFERENCE_KEY
+        )!!.isNotEmpty()
 }

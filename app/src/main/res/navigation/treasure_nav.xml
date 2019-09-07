@@ -4,68 +4,18 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/treasure_nav"
         android:label="Pick a country"
-        app:startDestination="@id/setupFragment">
+        app:startDestination="@id/homeFragment">
     <fragment
             android:id="@+id/homeFragment"
             android:name="com.stavro_xhardha.pockettreasure.ui.home.HomeFragment"
             android:label="Home"
             tools:layout="@layout/fragment_home">
         <action
-                android:id="@+id/action_home_fragment_to_namesFragment2"
-                app:destination="@id/namesFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@id/homeFragment" />
-        <action
-                android:id="@+id/action_home_fragment_to_quranFragment"
-                app:destination="@id/quranFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@id/homeFragment" />
-        <action
-                android:id="@+id/action_homeFragment_to_tasbeehFragment"
-                app:destination="@id/tasbeehFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@id/homeFragment" />
-        <action
-                android:id="@+id/action_homeFragment_to_galleryFragment"
-                app:destination="@id/galleryFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@id/homeFragment" />
-<!--        <action-->
-<!--                android:id="@+id/action_homeFragment_to_newsFragment"-->
-<!--                app:destination="@id/newsFragment"-->
-<!--                app:enterAnim="@anim/nav_default_enter_anim"-->
-<!--                app:exitAnim="@anim/nav_default_exit_anim"-->
-<!--                app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
-<!--                app:popExitAnim="@anim/nav_default_pop_exit_anim"-->
-<!--           />-->
-        <action
-                android:id="@+id/action_homeFragment_to_settingsFragment"
-                app:destination="@id/settingsFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@id/homeFragment" />
-        <action
-                android:id="@+id/action_homeFragment_to_compassFragment"
-                app:destination="@id/compassFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/homeFragment" />
+                app:popUpToInclusive="true"
+                app:launchSingleTop="false"
+                android:id="@+id/action_homeFragment_to_setupFragment"
+                app:destination="@id/setupFragment"
+                app:popUpTo="@+id/treasure_nav" />
     </fragment>
     <fragment
             android:id="@+id/namesFragment"
@@ -125,18 +75,7 @@
             android:id="@+id/setupFragment"
             android:name="com.stavro_xhardha.pockettreasure.ui.setup.SetupFragment"
             android:label="Pick country"
-            tools:layout="@layout/fragment_setup">
-        <action
-                android:id="@+id/action_setupFragment_to_homeFragment3"
-                app:destination="@+id/homeFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:launchSingleTop="true"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/treasure_nav"
-                app:popUpToInclusive="true" />
-    </fragment>
+            tools:layout="@layout/fragment_setup"/>
     <fragment
             android:id="@+id/articleWebViewFragment"
             android:name="com.stavro_xhardha.pockettreasure.ui.news.ArticleWebViewFragment"

@@ -43,14 +43,20 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
         })
     }
 
-    override fun initializeComponents() {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initializeComponents()
+        observeTheLiveData()
+    }
+
+    fun initializeComponents() {
         rvSuras.adapter = quranAdapter
         btnRetry.setOnClickListener {
             quranViewModel.startQuranImplementation()
         }
     }
 
-    override fun observeTheLiveData() {
+    fun observeTheLiveData() {
         quranViewModel.surahs.observe(this, Observer {
             quranAdapter.submitList(it)
         })

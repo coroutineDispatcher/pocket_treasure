@@ -33,12 +33,7 @@ class HomeViewModel @AssistedInject constructor(
         showError()
     }
 
-    private val workerExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        throwable.printStackTrace()
-    }
-
-    private  var homePrayerData: ArrayList<HomePrayerTime> = ArrayList()
-    private val _workManagerHasBeenFired = MutableLiveData<Boolean>()
+    private var homePrayerData: ArrayList<HomePrayerTime> = ArrayList()
     private val _progressBarVisibility = MutableLiveData<Int>()
     private val _showErrorToast = MutableLiveData<Boolean>()
     private val _contentVisibility = MutableLiveData<Int>()
@@ -46,8 +41,21 @@ class HomeViewModel @AssistedInject constructor(
     val progressBarVisibility: LiveData<Int> = _progressBarVisibility
     val showErrorToast: LiveData<Boolean> = _showErrorToast
     val contentVisibility: LiveData<Int> = _contentVisibility
-    val workManagerHasBeenFired: LiveData<Boolean> = _workManagerHasBeenFired
     val homeData: LiveData<ArrayList<HomePrayerTime>> = savedStateHandle.getLiveData(HOME_DATA_LIST)
+
+    val workManagerHasBeenFired: LiveData<Boolean> = liveData {
+        val isWorkerFired = homeRepository.isWorkerFired()
+        emit(isWorkerFired)
+    }
+
+    val isSetupDone: LiveData<ConfigurationState> = liveData {
+        val locationProvided = homeRepository.isLocationProvided()
+        if (locationProvided) {
+            emit(ConfigurationState.CONFIGURED)
+        } else {
+            emit(ConfigurationState.NOT_CONFIGURED)
+        }
+    }
 
     fun loadPrayerTimes() {
         viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
@@ -230,13 +238,6 @@ class HomeViewModel @AssistedInject constructor(
             homeRepository.saveYearHijri(it.data.date.hijriPrayerDate.year)
             homeRepository.saveMidnight(it.data.timings.midnight)
             homeRepository.updateCountryState()
-        }
-    }
-
-    fun initWorker() {
-        viewModelScope.launch(Dispatchers.IO + workerExceptionHandler) {
-            val isWorkerFired = homeRepository.isWorkerFired()
-            _workManagerHasBeenFired.postValue(isWorkerFired)
         }
     }
 

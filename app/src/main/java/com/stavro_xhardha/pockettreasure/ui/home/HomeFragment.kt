@@ -30,12 +30,6 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState == null) {
-            homeViewModel.loadPrayerTimes()
-        } else {
-            homeViewModel.checkCurrentThemeForData()
-        }
-
         requireActivity().onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
@@ -44,6 +38,9 @@ class HomeFragment : BaseFragment() {
                 }
             })
         setHasOptionsMenu(true)
+
+        initializeComponents()
+        observeTheLiveData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -65,11 +62,13 @@ class HomeFragment : BaseFragment() {
         startActivity(Intent.createChooser(sharingIntent, resources.getString(R.string.share_via)))
     }
 
-    override fun initializeComponents() {
-        homeViewModel.initWorker()
+    fun initializeComponents() {
+
     }
 
-    override fun observeTheLiveData() {
+    fun observeTheLiveData() {
+        //todo observe the data changes from viewmodel
+
         homeViewModel.homeData.observe(this, Observer {
             homeAdapter.submitList(it)
             rvHomePrayerTimes.adapter = homeAdapter

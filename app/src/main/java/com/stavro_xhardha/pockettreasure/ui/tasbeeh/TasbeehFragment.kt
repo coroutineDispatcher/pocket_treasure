@@ -18,15 +18,21 @@ class TasbeehFragment : BaseFragment() {
     }
     private lateinit var adapter: TasbeehAdapter
 
-    override fun initializeComponents() {
+    fun initializeComponents() {
         adapter = TasbeehAdapter()
         rvTasbeeh.adapter = adapter
     }
 
-    override fun observeTheLiveData() {
+    fun observeTheLiveData() {
         tasbeehViewModel.tasbeehList.observe(this, Observer {
             adapter.submitList(it)
         })
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initializeComponents()
+        observeTheLiveData()
     }
 
     override fun onCreateView(
@@ -39,11 +45,13 @@ class TasbeehFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                view.findNavController().popBackStack(R.id.homeFragment, false)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    view.findNavController().popBackStack(R.id.homeFragment, false)
+                }
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
