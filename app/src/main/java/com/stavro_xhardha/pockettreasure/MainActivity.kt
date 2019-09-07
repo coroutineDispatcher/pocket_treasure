@@ -28,10 +28,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.stavro_xhardha.PocketTreasureApplication
-import com.stavro_xhardha.pockettreasure.brain.NIGHT_MODE_KEY
-import com.stavro_xhardha.pockettreasure.brain.REQUEST_CHECK_LOCATION_SETTINGS
-import com.stavro_xhardha.pockettreasure.brain.REQUEST_LOCATION_PERMISSION
-import com.stavro_xhardha.pockettreasure.brain.isDebugMode
+import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -41,6 +38,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedViewModel: SharedViewModel
     val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
+    val rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +50,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         } else {
             coroutineScope.launch {
                 val currentTheme =
-                    PocketTreasureApplication.getPocketTreasureComponent()
-                        .getSharedPreferences.readInt(
+                    rocket.readInt(
                         NIGHT_MODE_KEY
                     )
                 if (currentTheme != 0) {
@@ -101,7 +98,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
         coroutineScope.launch {
             val themeToSave = AppCompatDelegate.getDefaultNightMode()
-            PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences.writeInt(
+            rocket.writeInt(
                 NIGHT_MODE_KEY, themeToSave
             )
         }
@@ -194,6 +191,23 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
             } else {
                 toolbar.visibility = View.VISIBLE
                 drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                if (destination.id == R.id.homeFragment) {
+                    coroutineScope.launch {
+                        val isSetupDone =
+                            rocket.readFloat(LATITUDE_KEY) != 0.toFloat() && rocket.readFloat(
+                                LONGITUDE_KEY
+                            ) != 0.toFloat()
+                                    && rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)!!.isNotEmpty() && rocket.readString(
+                                COUNTRY_SHARED_PREFERENCE_KEY
+                            )!!.isNotEmpty()
+
+                        if (!isSetupDone) {
+                            withContext(Dispatchers.Main) {
+                                findNavController(R.id.nav_host_fragment).navigate(R.id.setupFragment)
+                            }
+                        }
+                    }
+                }
             }
             if (isDebugMode) {
                 val dest: String = try {

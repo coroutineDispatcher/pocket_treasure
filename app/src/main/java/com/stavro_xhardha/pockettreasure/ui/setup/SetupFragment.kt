@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.gms.location.LocationResult
 import com.stavro_xhardha.pockettreasure.BaseFragment
@@ -45,12 +46,12 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
             message(R.string.do_you_want_to_get_notified)
             positiveButton(text = activity!!.resources.getString(R.string.yes)) {
                 setupViewModel.updateNotificationFlags()
-                //todo pop the backstack
+                findNavController().popBackStack()
                 it.dismiss()
             }
             cancelable(false)
             negativeButton(text = activity!!.resources.getString(R.string.no)) {
-                //todo pop the backstack
+                findNavController().popBackStack()
                 it.dismiss()
             }
         }
