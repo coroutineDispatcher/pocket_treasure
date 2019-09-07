@@ -28,26 +28,31 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.stavro_xhardha.PocketTreasureApplication
+import com.stavro_xhardha.pockettreasure.brain.NIGHT_MODE_KEY
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_CHECK_LOCATION_SETTINGS
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_LOCATION_PERMISSION
-import com.stavro_xhardha.pockettreasure.brain.isDarkMode
 import com.stavro_xhardha.pockettreasure.brain.isDebugMode
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedViewModel: SharedViewModel
-    private val picasso by lazy {
-        PocketTreasureApplication.getPocketTreasureComponent().picasso
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        checkDarkMode()
+        if (savedInstanceState != null) {
+            checkToolbar()
+            checkNavView()
+        }
+
+        ivDarkMode.setOnClickListener {
+            changeCurrentTheme()
+        }
 
         sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
@@ -65,23 +70,48 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         setupNavControllerListener(navController)
     }
 
-    private fun checkDarkMode() {
-        if (isDarkMode) {
-            picasso.load(R.drawable.sun_accent_dark).fit().into(ivDarkMode)
+    private fun checkToolbar() {
+        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Dark)
         } else {
-            picasso.load(R.drawable.moon_accent_dark).fit().into(ivDarkMode)
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Light)
         }
+    }
 
-        ivDarkMode.setOnClickListener {
-            if (isDarkMode) {
-                picasso.load(R.drawable.moon_accent_dark).fit().into(ivDarkMode)
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-            } else {
-                picasso.load(R.drawable.sun_accent_dark).fit().into(ivDarkMode)
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-            }
+    private fun changeCurrentTheme() {
+        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        }
+    }
+
+    private fun checkNavView() {
+        val colorListItems = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_enabled)
+            ),
+            intArrayOf(
+                ContextCompat.getColor(this, R.color.md_black_1000),
+                ContextCompat.getColor(this, R.color.colorAccentDark)
+            )
+        )
+
+        val colorListText = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_enabled)
+            ),
+            intArrayOf(
+                ContextCompat.getColor(this, R.color.md_black_1000),
+                ContextCompat.getColor(this, R.color.md_white_1000)
+            )
+        )
+
+        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
+            nav_view.itemTextColor = colorListText
+            nav_view.itemIconTintList = colorListItems
         }
     }
 
@@ -165,35 +195,6 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     private fun setupNavigation(navController: NavController) {
         val sideNavView = findViewById<NavigationView>(R.id.nav_view)
         sideNavView?.setupWithNavController(navController)
-
-        //todo refactor this
-
-        val colorListItems = ColorStateList(
-            arrayOf(
-                intArrayOf(-android.R.attr.state_enabled),
-                intArrayOf(android.R.attr.state_enabled)
-            ),
-            intArrayOf(
-                ContextCompat.getColor(this, R.color.md_black_1000),
-                ContextCompat.getColor(this, R.color.colorAccentDark)
-            )
-        )
-
-        val colorListText = ColorStateList(
-            arrayOf(
-                intArrayOf(-android.R.attr.state_enabled),
-                intArrayOf(android.R.attr.state_enabled)
-            ),
-            intArrayOf(
-                ContextCompat.getColor(this, R.color.md_black_1000),
-                ContextCompat.getColor(this, R.color.md_white_1000)
-            )
-        )
-
-        if (isDarkMode) {
-            sideNavView.itemTextColor = colorListText
-            sideNavView.itemIconTintList = colorListItems
-        }
 
         val drawerLayout: DrawerLayout? = findViewById(R.id.drawer_layout)
 

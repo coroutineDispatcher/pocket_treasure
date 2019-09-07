@@ -1,6 +1,7 @@
 package com.stavro_xhardha.pockettreasure.ui.home
 
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -37,7 +38,6 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private lateinit var homePrayerData: ArrayList<HomePrayerTime>
-    private val _homeData = MutableLiveData<ArrayList<HomePrayerTime>>()
     private val _workManagerHasBeenFired = MutableLiveData<Boolean>()
     private val _progressBarVisibility = MutableLiveData<Int>()
     private val _showErrorToast = MutableLiveData<Boolean>()
@@ -47,7 +47,7 @@ class HomeViewModel @AssistedInject constructor(
     val showErrorToast: LiveData<Boolean> = _showErrorToast
     val contentVisibility: LiveData<Int> = _contentVisibility
     val workManagerHasBeenFired: LiveData<Boolean> = _workManagerHasBeenFired
-    val homeData: LiveData<ArrayList<HomePrayerTime>> = _homeData
+    val homeData: LiveData<ArrayList<HomePrayerTime>> = savedStateHandle.getLiveData(HOME_DATA_LIST)
 
     fun loadPrayerTimes() {
         viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
@@ -113,7 +113,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Fajr",
                 "${homeRepository.readFejrtime()} - ${homeRepository.readFinishFajrTime()}",
-                getDefaultColor(),
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
                 R.drawable.ic_fajr_sun
             )
         )
@@ -122,7 +122,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Dhuhr",
                 homeRepository.readDhuhrTime() ?: "",
-                getDefaultColor(),
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
                 R.drawable.ic_dhuhr_sun
             )
         )
@@ -131,7 +131,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Asr",
                 homeRepository.readAsrTime() ?: "",
-                getDefaultColor(),
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
                 R.drawable.ic_asr_sun
             )
         )
@@ -140,7 +140,7 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Maghrib",
                 homeRepository.readMaghribTime() ?: "",
-                getDefaultColor(),
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
                 R.drawable.ic_magrib_sun
             )
         )
@@ -150,32 +150,45 @@ class HomeViewModel @AssistedInject constructor(
             HomePrayerTime(
                 "Isha",
                 homeRepository.readIshaTime() ?: "",
-                getDefaultColor(),
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
                 R.drawable.ic_isha_sun
             )
         )
 
         findCurrentTime()
-
-        _homeData.postValue(homePrayerData)
     }
 
-    private fun findCurrentTime() {
+    fun findCurrentTime() {
         val currentTime = LocalTime()
         if (currentTime.isBefore(localTime(homePrayerData[0].time)) ||
             currentTime.isAfter(localTime(homePrayerData[4].time))
         ) {
-            homePrayerData[0].backgroundColor = getSelectorColor()
+            homePrayerData[0].backgroundColor =
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
         } else {
             var currentColorFound = false
             for (i in 1 until homePrayerData.size) {
                 if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
-                    homePrayerData[i].backgroundColor = getSelectorColor()
+                    homePrayerData[i].backgroundColor =
+                        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
                     currentColorFound = true
                 } else {
                     homePrayerData[i].backgroundColor =
-                        if (isDarkMode) DARK_BACKGROUND else WHITE_BACKGROUND
+                        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND
                 }
+            }
+        }
+
+        checkCurrentThemeForData()
+
+        savedStateHandle.set(HOME_DATA_LIST, homePrayerData)
+    }
+
+    private fun checkCurrentThemeForData() {
+        homePrayerData.forEach {
+            if (it.backgroundColor == DARK_BACKGROUND || it.backgroundColor == WHITE_BACKGROUND) {
+                it.backgroundColor =
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND
             }
         }
     }

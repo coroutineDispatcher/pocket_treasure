@@ -156,7 +156,3 @@ inline fun <reified T : ViewModel> Fragment.viewModel(
             provider(handle) as T
     }
 }
-
-fun getDefaultColor() = if (isDarkMode) DARK_BACKGROUND else WHITE_BACKGROUND
-
-fun getSelectorColor() = if (isDarkMode) DARK_SELECTOR else LIGHT_SELECTOR

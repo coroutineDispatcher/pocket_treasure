@@ -85,3 +85,5 @@ const val ISHA = "Isha Time"
 
 const val FULL_IMAGE_SAVED_STATE = "bundle_image"
 const val NAMES_LIST_STATE = "bundle_names"
+const val HOME_DATA_LIST = "bundle_home_prayers"
+const val NIGHT_MODE_KEY = "bundle_app_theme"
