@@ -4,12 +4,10 @@ package com.stavro_xhardha.pockettreasure.brain
 
 import android.content.Context
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.migration.Migration
@@ -24,6 +22,8 @@ import com.stavro_xhardha.pockettreasure.model.*
 import com.sxhardha.smoothie.Smoothie
 
 val isDebugMode: Boolean = BuildConfig.DEBUG
+
+val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
 
 fun buildPagedList() = PagedList.Config.Builder()
     .setPageSize(INITIAL_PAGE_SIZE)
@@ -150,4 +150,13 @@ inline fun <reified T : ViewModel> Fragment.viewModel(
         ): T =
             provider(handle) as T
     }
+}
+
+fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+    observe(lifecycleOwner, object : Observer<T> {
+        override fun onChanged(t: T?) {
+            observer.onChanged(t)
+            removeObserver(this)
+        }
+    })
 }

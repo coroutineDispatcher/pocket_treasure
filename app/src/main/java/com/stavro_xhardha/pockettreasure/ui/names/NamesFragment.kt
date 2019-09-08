@@ -29,7 +29,13 @@ class NamesFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_names, container, false)
     }
 
-    override fun observeTheLiveData() {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initializeComponents()
+        observeTheLiveData()
+    }
+
+    fun observeTheLiveData() {
         namesViewModel.namesList.observe(this, Observer {
             rvNames.adapter = namesAdapter
             namesAdapter.submitList(it)
@@ -42,7 +48,7 @@ class NamesFragment : BaseFragment() {
         })
     }
 
-    override fun initializeComponents() {
+    fun initializeComponents() {
         btnRetry.setOnClickListener {
             namesViewModel.retryConnection()
         }
@@ -51,10 +57,12 @@ class NamesFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                view.findNavController().popBackStack(R.id.homeFragment, false)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    view.findNavController().popBackStack(R.id.homeFragment, false)
+                }
+            })
     }
 }

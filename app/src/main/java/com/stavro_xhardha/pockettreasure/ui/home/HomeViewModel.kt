@@ -1,14 +1,11 @@
 package com.stavro_xhardha.pockettreasure.ui.home
 
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.ACCENT_BACKGROUND
-import com.stavro_xhardha.pockettreasure.brain.WHITE_BACKGROUND
-import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
-import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
+import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -35,13 +32,6 @@ class HomeViewModel @AssistedInject constructor(
         showError()
     }
 
-    private val workerExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        throwable.printStackTrace()
-    }
-
-    private lateinit var homePrayerData: ArrayList<HomePrayerTime>
-    private val _homeData = MutableLiveData<ArrayList<HomePrayerTime>>()
-    private val _workManagerHasBeenFired = MutableLiveData<Boolean>()
     private val _progressBarVisibility = MutableLiveData<Int>()
     private val _showErrorToast = MutableLiveData<Boolean>()
     private val _contentVisibility = MutableLiveData<Int>()
@@ -49,8 +39,12 @@ class HomeViewModel @AssistedInject constructor(
     val progressBarVisibility: LiveData<Int> = _progressBarVisibility
     val showErrorToast: LiveData<Boolean> = _showErrorToast
     val contentVisibility: LiveData<Int> = _contentVisibility
-    val workManagerHasBeenFired: LiveData<Boolean> = _workManagerHasBeenFired
-    val homeData: LiveData<ArrayList<HomePrayerTime>> = _homeData
+    val homeData: LiveData<ArrayList<HomePrayerTime>> = savedStateHandle.getLiveData(HOME_DATA_LIST)
+
+    val workManagerHasBeenFired: LiveData<Boolean> = liveData {
+        val isWorkerFired = homeRepository.isWorkerFired()
+        emit(isWorkerFired)
+    }
 
     fun loadPrayerTimes() {
         viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
@@ -86,100 +80,33 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-    private fun showError() {
-        _showErrorToast.value = true
-        _progressBarVisibility.value = View.GONE
-        _contentVisibility.value = View.VISIBLE
-    }
-
-    private fun switchProgressBarOn() {
-        _progressBarVisibility.value = View.VISIBLE
-        _contentVisibility.value = View.GONE
-        _showErrorToast.value = false
-    }
-
-    private fun switchProgressBarOff() {
-        _progressBarVisibility.value = View.GONE
-        _contentVisibility.value = View.VISIBLE
-        _showErrorToast.value = false
-    }
-
     private suspend fun setValuesToLiveData() {
-        addDataToList()
+        val homePrayerData = homeRepository.getHomeData()
+        findCurrentTime(homePrayerData)
         switchProgressBarOff()
     }
 
-    private suspend fun addDataToList() {
-        homePrayerData = ArrayList()
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Fajr",
-                "${homeRepository.readFejrtime()} - ${homeRepository.readFinishFajrTime()}",
-                WHITE_BACKGROUND,
-                R.drawable.ic_fajr_sun
-            )
-        )
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Dhuhr",
-                homeRepository.readDhuhrTime() ?: "",
-                WHITE_BACKGROUND,
-                R.drawable.ic_dhuhr_sun
-            )
-        )
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Asr",
-                homeRepository.readAsrTime() ?: "",
-                WHITE_BACKGROUND,
-                R.drawable.ic_asr_sun
-            )
-        )
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Maghrib",
-                homeRepository.readMaghribTime() ?: "",
-                WHITE_BACKGROUND,
-                R.drawable.ic_magrib_sun
-            )
-        )
-
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Isha",
-                homeRepository.readIshaTime() ?: "",
-                WHITE_BACKGROUND,
-                R.drawable.ic_isha_sun
-            )
-        )
-
-        findCurrentTime()
-
-        _homeData.postValue(homePrayerData)
-    }
-
-    private fun findCurrentTime() {
+    private fun findCurrentTime(homePrayerData: ArrayList<HomePrayerTime>) {
         val currentTime = LocalTime()
         if (currentTime.isBefore(localTime(homePrayerData[0].time)) ||
             currentTime.isAfter(localTime(homePrayerData[4].time))
         ) {
-            homePrayerData[0].backgroundColor = ACCENT_BACKGROUND
+            homePrayerData[0].backgroundColor =
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
         } else {
             var currentColorFound = false
-            for (i in 1 until homePrayerData.size) {
+            for (i in 0 until homePrayerData.size) {
                 if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
-                    homePrayerData[i].backgroundColor = ACCENT_BACKGROUND
+                    homePrayerData[i].backgroundColor =
+                        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
                     currentColorFound = true
                 } else {
-                    homePrayerData[i].backgroundColor = WHITE_BACKGROUND
+                    homePrayerData[i].backgroundColor = TRANSPARENT
                 }
             }
         }
+
+        savedStateHandle.set(HOME_DATA_LIST, homePrayerData)
     }
 
     private fun localTime(timeOfPrayer: String): LocalTime = LocalTime(
@@ -224,16 +151,27 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-    fun initWorker() {
-        viewModelScope.launch(Dispatchers.IO + workerExceptionHandler) {
-            val isWorkerFired = homeRepository.isWorkerFired()
-            _workManagerHasBeenFired.postValue(isWorkerFired)
-        }
-    }
-
     fun updateWorkManagerFiredState() {
         viewModelScope.launch {
             homeRepository.updateWorkerFired()
         }
+    }
+
+    private fun showError() {
+        _showErrorToast.value = true
+        _progressBarVisibility.value = View.GONE
+        _contentVisibility.value = View.VISIBLE
+    }
+
+    private fun switchProgressBarOn() {
+        _progressBarVisibility.value = View.VISIBLE
+        _contentVisibility.value = View.GONE
+        _showErrorToast.value = false
+    }
+
+    private fun switchProgressBarOff() {
+        _progressBarVisibility.value = View.GONE
+        _contentVisibility.value = View.VISIBLE
+        _showErrorToast.value = false
     }
 }

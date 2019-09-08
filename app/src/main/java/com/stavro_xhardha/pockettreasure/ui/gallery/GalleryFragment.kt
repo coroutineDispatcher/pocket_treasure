@@ -42,9 +42,11 @@ class GalleryFragment : BaseFragment(), GalleryContract {
                 view.findNavController().popBackStack(R.id.homeFragment, false)
             }
         })
+        initializeComponents()
+        observeTheLiveData()
     }
 
-    override fun initializeComponents() {
+    fun initializeComponents() {
         rvGallery.layoutManager = GridLayoutManager(activity, 3)
         rvGallery.adapter = galleryAdapter
         btnRetry.setOnClickListener {
@@ -52,7 +54,7 @@ class GalleryFragment : BaseFragment(), GalleryContract {
         }
     }
 
-    override fun observeTheLiveData() {
+    fun observeTheLiveData() {
         galleryViewModel.getGalleryLiveData().observe(this, Observer {
             galleryAdapter.submitList(it)
         })

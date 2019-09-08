@@ -23,27 +23,19 @@ class SetupViewModel @AssistedInject constructor(
     val pbVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorVisibility: MutableLiveData<Int> = MutableLiveData()
     val contentVisibility: MutableLiveData<Int> = MutableLiveData()
-    private val _locationSettingsRequest = MutableLiveData<Boolean>()
     private val _locationRequestTurnOff = MutableLiveData<Boolean>()
     private val _serviceNotAvailableVisibility = MutableLiveData<Boolean>()
     private val _locationErrorVisibility = MutableLiveData<Boolean>()
     private val _prayerNotificationDialogVisibility = MutableLiveData<Boolean>()
-    private val _locationProvided: MutableLiveData<Boolean> = MutableLiveData()
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
     }
 
-    val locationSettingsRequest: LiveData<Boolean> = _locationSettingsRequest
     val locationRequestTurnOff: LiveData<Boolean> = _locationRequestTurnOff
     val serviceNotAvailableVisibility: LiveData<Boolean> = _serviceNotAvailableVisibility
-    val locationerrorVisibility: LiveData<Boolean> = _locationErrorVisibility
-    val locationProvided: LiveData<Boolean> = _locationProvided
+    val locationErrorVisibility: LiveData<Boolean> = _locationErrorVisibility
     val prayerNotificationDialogViaibility: LiveData<Boolean> = _prayerNotificationDialogVisibility
     private var locationTurnOfRequested: Boolean = false
-
-    init {
-        checkLocationsettings()
-    }
 
     fun switchProgressBarOn() {
         pbVisibility.value = View.VISIBLE
@@ -66,16 +58,6 @@ class SetupViewModel @AssistedInject constructor(
     fun updateNotificationFlags() {
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             setupRepository.switchNotificationFlags()
-        }
-    }
-
-    private fun checkLocationsettings() {
-        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-            if (setupRepository.isLocationProvided()) {
-                _locationProvided.postValue(true)
-            } else {
-                _locationSettingsRequest.postValue(true)
-            }
         }
     }
 

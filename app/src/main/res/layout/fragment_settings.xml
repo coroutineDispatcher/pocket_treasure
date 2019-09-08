@@ -3,7 +3,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_white_1000"
         android:orientation="vertical"
         tools:context=".ui.settings.SettingsFragment">
 
@@ -24,7 +23,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/fajr"
-                    android:textColor="@color/md_grey_700"
                     android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textStyle="bold" />
 
@@ -32,7 +30,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/wake_up_fajr"
-                    android:textColor="@color/md_grey_500"
                     android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
 
@@ -62,7 +59,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/dhuhr"
-                    android:textColor="@color/md_grey_700"
                     android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textStyle="bold" />
 
@@ -70,7 +66,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/wake_up_dhuhr"
-                    android:textColor="@color/md_grey_500"
                     android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
 
@@ -100,7 +95,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/asr"
-                    android:textColor="@color/md_grey_700"
                     android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textStyle="bold" />
 
@@ -108,7 +102,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/wake_up_asr"
-                    android:textColor="@color/md_grey_500"
                     android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
 
@@ -138,7 +131,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/maghrib"
-                    android:textColor="@color/md_grey_700"
                     android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textStyle="bold" />
 
@@ -146,7 +138,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/wake_up_maghrib"
-                    android:textColor="@color/md_grey_500"
                     android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
 
@@ -176,7 +167,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/isha"
-                    android:textColor="@color/md_grey_700"
                     android:textSize="@dimen/text_global_unit_bigger_x"
                     android:textStyle="bold" />
 
@@ -184,7 +174,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/wake_up_isha"
-                    android:textColor="@color/md_grey_500"
                     android:textSize="@dimen/text_global_unit_normal" />
         </LinearLayout>
 
@@ -196,11 +185,6 @@
                 android:layout_weight="70"
                 android:gravity="center" />
     </LinearLayout>
-
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/global_unit_smaller_xxxxxx"
-            android:background="@color/md_grey_300" />
 
     <LinearLayout
             android:id="@+id/llLocation"
@@ -216,7 +200,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/location"
-                android:textColor="@color/md_grey_700"
                 android:textSize="@dimen/text_global_unit_bigger_x"
                 android:textStyle="bold" />
 
@@ -225,7 +208,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/click_to_change_location"
-                android:textColor="@color/md_grey_500"
                 android:textSize="@dimen/text_global_unit_normal" />
     </LinearLayout>
 

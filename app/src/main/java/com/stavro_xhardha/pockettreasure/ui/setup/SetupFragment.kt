@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.google.android.gms.location.LocationResult
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
@@ -30,6 +29,7 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
     private lateinit var sharedViewModel: SharedViewModel
 
     private val locationTracker by lazy {
+        //todo singleton
         LocationTracker(requireActivity(), this)
     }
 
@@ -46,50 +46,50 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
             message(R.string.do_you_want_to_get_notified)
             positiveButton(text = activity!!.resources.getString(R.string.yes)) {
                 setupViewModel.updateNotificationFlags()
-                findNavController().navigate(SetupFragmentDirections.actionSetupFragmentToHomeFragment3())
+                findNavController().popBackStack()
                 it.dismiss()
             }
+            cancelable(false)
             negativeButton(text = activity!!.resources.getString(R.string.no)) {
-                findNavController().navigate(SetupFragmentDirections.actionSetupFragmentToHomeFragment3())
+                findNavController().popBackStack()
                 it.dismiss()
-            }
-            onDismiss {
-                Toast.makeText(requireActivity(), R.string.settings_saved, Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    override fun initializeComponents() {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initializeComponents()
+        observeTheLiveData()
+    }
+
+    fun initializeComponents() {
         sharedViewModel = requireActivity().run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
         }
+        locationTracker.startLocationRequestProcess()
     }
 
-    override fun observeTheLiveData() {
-        setupViewModel.locationSettingsRequest.observe(this, Observer {
-            if (it) locationTracker.startLocationRequestProcess()
-        })
+    fun observeTheLiveData() {
         setupViewModel.locationRequestTurnOff.observe(this, Observer {
             if (it) locationTracker.removeLocationRequest()
         })
-        setupViewModel.locationerrorVisibility.observe(this, Observer {
+        setupViewModel.locationErrorVisibility.observe(this, Observer {
             if (it) {
-                Toast.makeText(requireActivity(), R.string.invalid_coorinates, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), R.string.invalid_coorinates, Toast.LENGTH_LONG)
+                    .show()
                 requireActivity().finish()
             }
         })
         setupViewModel.serviceNotAvailableVisibility.observe(this, Observer {
             if (it) {
-                Toast.makeText(requireActivity(), R.string.service_not_available, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), R.string.service_not_available, Toast.LENGTH_LONG)
+                    .show()
                 requireActivity().finish()
             }
         })
         setupViewModel.prayerNotificationDialogViaibility.observe(this, Observer {
             if (it) askForNotifyingUser()
-        })
-        setupViewModel.locationProvided.observe(this, Observer {
-            if (it)
-                findNavController().navigate(SetupFragmentDirections.actionSetupFragmentToHomeFragment3())
         })
         sharedViewModel.onGpsOpened.observe(this, Observer {
             if (it) locationTracker.updateLocation()

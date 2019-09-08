@@ -30,7 +30,6 @@
                     android:paddingEnd="@dimen/global_unit_normal"
                     android:paddingBottom="@dimen/global_unit_smaller"
                     android:text="@string/test_arabic"
-                    android:textColor="@color/md_grey_900"
                     android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
                     android:textStyle="bold" />
 
@@ -39,7 +38,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/test_transliteration"
-                    android:textColor="@color/md_grey_700"
                     android:textSize="@dimen/text_global_unit_bigger" />
 
             <TextView
@@ -47,7 +45,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/test_meaning"
-                    android:textColor="@color/md_grey_500"
                     android:textSize="@dimen/text_global_unit_bigger" />
         </LinearLayout>
     </LinearLayout>

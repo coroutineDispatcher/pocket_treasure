@@ -41,14 +41,22 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                view.findNavController().popBackStack(R.id.homeFragment, false)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    view.findNavController().popBackStack(R.id.homeFragment, false)
+                }
+            })
     }
 
-    override fun initializeComponents() {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initializeComponents()
+        observeTheLiveData()
+    }
+
+    fun initializeComponents() {
         swFajr.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.onSwFajrClick(isChecked)
         }
@@ -78,7 +86,7 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         }
     }
 
-    override fun observeTheLiveData() {
+    fun observeTheLiveData() {
         settingsViewModel.fajrCheck.observe(this, Observer {
             swFajr.isChecked = it
         })
@@ -103,12 +111,14 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         })
         settingsViewModel.locationerrorVisibility.observe(this, Observer {
             if (it) {
-                Toast.makeText(requireActivity(), R.string.invalid_coorinates, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), R.string.invalid_coorinates, Toast.LENGTH_LONG)
+                    .show()
             }
         })
         settingsViewModel.serviceNotAvailableVisibility.observe(this, Observer {
             if (it) {
-                Toast.makeText(requireActivity(), R.string.service_not_available, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), R.string.service_not_available, Toast.LENGTH_LONG)
+                    .show()
             }
         })
         sharedViewModel.onGpsOpened.observe(this, Observer {
@@ -120,13 +130,18 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         settingsViewModel.workManagerReadyToStart.observe(this, Observer {
             if (it) {
                 startPrayerTimesWorkManager(requireActivity())
-                Toast.makeText(requireActivity(), R.string.location_updated_successfully, Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireActivity(),
+                    R.string.location_updated_successfully,
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
     }
 
     override fun onLocationError() {
-        Toast.makeText(requireActivity(), R.string.values_cannot_be_updated, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireActivity(), R.string.values_cannot_be_updated, Toast.LENGTH_LONG)
+            .show()
     }
 
     override fun onLocationResult(locationResult: LocationResult) {

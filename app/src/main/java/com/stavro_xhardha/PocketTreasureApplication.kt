@@ -1,8 +1,16 @@
 package com.stavro_xhardha
 
 import android.app.Application
+import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import com.stavro_xhardha.pockettreasure.brain.NIGHT_MODE_KEY
 import com.stavro_xhardha.pockettreasure.dependency_injection.DaggerPocketTreasureComponent
 import com.stavro_xhardha.pockettreasure.dependency_injection.PocketTreasureComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import net.danlew.android.joda.JodaTimeAndroid
 
 

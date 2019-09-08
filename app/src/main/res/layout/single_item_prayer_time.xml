@@ -44,7 +44,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/test_time"
-                        android:textColor="@color/md_grey_600"
                         android:textSize="@dimen/text_global_unit_bigger" />
             </LinearLayout>
 

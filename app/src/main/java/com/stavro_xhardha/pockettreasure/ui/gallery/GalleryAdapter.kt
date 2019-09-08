@@ -19,7 +19,13 @@ class GalleryAdapter(
     PagedListAdapter<UnsplashResult, GalleryAdapter.GalleryViewHolder>(DIFF_UTIL_GALLERY) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder =
-        GalleryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.single_item_image, parent, false))
+        GalleryViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.single_item_image,
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
         getItem(position).let { holder.bind(it, contract, picasso) }
@@ -40,11 +46,9 @@ class GalleryAdapter(
                         .error(R.drawable.img_placeholder)
                         .placeholder(R.drawable.img_placeholder)
                         .into(currentImageView)
-//                    currentImageView.load(unsplashResult?.photoUrls?.thumbnailUrl) {
-//                        error(R.drawable.img_placeholder)
-//                        placeholder(R.drawable.img_placeholder)
-//                    }
-                    tvImageDescription.text = "By ${unsplashResult?.user?.userFullName ?: "Anonymous"}"
+
+                    tvImageDescription.text =
+                        "By ${unsplashResult?.user?.userFullName ?: "Anonymous"}"
                     flImageHolder.setOnClickListener {
                         contract.onImageHolderClicked(unsplashResult?.photoUrls?.raw!!)
                     }

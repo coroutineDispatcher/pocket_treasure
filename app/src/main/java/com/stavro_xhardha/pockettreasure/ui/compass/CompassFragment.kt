@@ -34,13 +34,16 @@ class CompassFragment : BaseFragment(), CompassListener {
                 view.findNavController().popBackStack(R.id.homeFragment, false)
             }
         })
+
+        initializeComponents()
+        observeTheLiveData()
     }
 
-    override fun initializeComponents() {
+    fun initializeComponents() {
         qibla_compass.setListener(this)
     }
 
-    override fun observeTheLiveData() {
+    fun observeTheLiveData() {
         compassViewModel.rotateAnimation.observe(this, Observer {
             qibla_compass.startAnimation(it)
         })

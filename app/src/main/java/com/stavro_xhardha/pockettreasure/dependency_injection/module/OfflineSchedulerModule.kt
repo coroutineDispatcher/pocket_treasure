@@ -1,8 +1,6 @@
 package com.stavro_xhardha.pockettreasure.dependency_injection.module
 
 import android.app.Application
-import com.squareup.inject.assisted.AssistedInject
-import com.squareup.inject.assisted.dagger2.AssistedModule
 import com.stavro_xhardha.pockettreasure.background.OfflinePrayerScheduler
 import com.stavro_xhardha.pockettreasure.dependency_injection.ApplicationScope
 import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase

@@ -2,18 +2,20 @@ package com.stavro_xhardha.pockettreasure
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources
+import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -22,9 +24,9 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_CHECK_LOCATION_SETTINGS
 import com.stavro_xhardha.pockettreasure.brain.REQUEST_LOCATION_PERMISSION
-import com.stavro_xhardha.pockettreasure.brain.isDebugMode
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -32,10 +34,24 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        initMainViewModel()
+
+        if (savedInstanceState != null) {
+            checkToolbar()
+            checkNavView()
+        } else {
+            mainActivityViewModel.checkSavedTheme()
+        }
+
+        ivDarkMode.setOnClickListener {
+            mainActivityViewModel.changeCurrentTheme()
+        }
 
         sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
 
@@ -51,6 +67,51 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         setupActionBar(navController, appBarConfiguration)
 
         setupNavControllerListener(navController)
+    }
+
+    private fun initMainViewModel() {
+        val rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences
+        mainActivityViewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+                MainActivityViewModel(rocket) as T
+        }).get(MainActivityViewModel::class.java)
+    }
+
+    private fun checkToolbar() {
+        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
+            toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Dark)
+        } else {
+            toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Light)
+        }
+    }
+
+    private fun checkNavView() {
+        val colorListItems = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_enabled)
+            ),
+            intArrayOf(
+                ContextCompat.getColor(this, R.color.md_black_1000),
+                ContextCompat.getColor(this, R.color.colorAccentDark)
+            )
+        )
+
+        val colorListText = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_enabled)
+            ),
+            intArrayOf(
+                ContextCompat.getColor(this, R.color.md_black_1000),
+                ContextCompat.getColor(this, R.color.md_white_1000)
+            )
+        )
+
+        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
+            nav_view.itemTextColor = colorListText
+            nav_view.itemIconTintList = colorListItems
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -111,14 +172,16 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
             } else {
                 toolbar.visibility = View.VISIBLE
                 drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            }
-            if (isDebugMode) {
-                val dest: String = try {
-                    resources.getResourceName(destination.id)
-                } catch (e: Resources.NotFoundException) {
-                    destination.id.toString()
+                if (destination.id == R.id.homeFragment) {
+                    mainActivityViewModel.checkConfigurationState()
+                    val setupVisibilityObserver: LiveData<Boolean> =
+                        mainActivityViewModel.launchSetupVisibility
+                    setupVisibilityObserver.observe(this, Observer {
+                        if (it) {
+                            findNavController(R.id.nav_host_fragment).navigate(R.id.setupFragment)
+                        }
+                    })
                 }
-                Log.d("NavigationActivity", "Navigated to $dest")
             }
         }
     }
@@ -164,8 +227,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             android.R.id.home -> {
-                if (findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.articleWebViewFragment
-                    || findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.fullImageFragment
+                if (findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.fullImageFragment
                     || findNavController(R.id.nav_host_fragment).currentDestination?.id == R.id.ayaFragment
                 ) {
                     onBackPressed()
