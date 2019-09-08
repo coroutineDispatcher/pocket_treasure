@@ -74,7 +74,6 @@ class HomeViewModel @AssistedInject constructor(
             } else {
                 withContext(Dispatchers.Main) {
                     decrementIdlingResource()
-                    showError()
                 }
             }
         }
@@ -93,6 +92,7 @@ class HomeViewModel @AssistedInject constructor(
         ) {
             homePrayerData[0].backgroundColor =
                 if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
+            checkOtherColors(homePrayerData)
         } else {
             var currentColorFound = false
             for (i in 0 until homePrayerData.size) {
@@ -107,6 +107,12 @@ class HomeViewModel @AssistedInject constructor(
         }
 
         savedStateHandle.set(HOME_DATA_LIST, homePrayerData)
+    }
+
+    private fun checkOtherColors(homePrayerData: ArrayList<HomePrayerTime>) {
+        for (i in 1 until homePrayerData.size) {
+            homePrayerData[i].backgroundColor = TRANSPARENT
+        }
     }
 
     private fun localTime(timeOfPrayer: String): LocalTime = LocalTime(
