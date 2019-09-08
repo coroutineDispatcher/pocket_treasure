@@ -32,6 +32,7 @@ const val WHITE_BACKGROUND = R.color.md_white_1000
 const val LIGHT_SELECTOR = R.color.colorAccent
 const val DARK_BACKGROUND = R.color.md_grey_800
 const val DARK_SELECTOR = R.color.colorAccentDark
+const val TRANSPARENT = R.color.fully_color_doesnt_matter
 
 //SharedPreferences
 const val COUNTRY_SHARED_PREFERENCE_KEY = "app_country"

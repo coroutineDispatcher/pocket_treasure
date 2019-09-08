@@ -3,22 +3,19 @@ package com.stavro_xhardha.pockettreasure
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -28,41 +25,32 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.stavro_xhardha.PocketTreasureApplication
-import com.stavro_xhardha.pockettreasure.brain.*
+import com.stavro_xhardha.pockettreasure.brain.REQUEST_CHECK_LOCATION_SETTINGS
+import com.stavro_xhardha.pockettreasure.brain.REQUEST_LOCATION_PERMISSION
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedViewModel: SharedViewModel
-    val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
-    val rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initMainViewModel()
+
         if (savedInstanceState != null) {
             checkToolbar()
             checkNavView()
         } else {
-            coroutineScope.launch {
-                val currentTheme =
-                    rocket.readInt(
-                        NIGHT_MODE_KEY
-                    )
-                if (currentTheme != 0) {
-                    withContext(Dispatchers.Main) {
-                        AppCompatDelegate.setDefaultNightMode(currentTheme)
-                    }
-                }
-            }
+            mainActivityViewModel.checkSavedTheme()
         }
 
         ivDarkMode.setOnClickListener {
-            changeCurrentTheme()
+            mainActivityViewModel.changeCurrentTheme()
         }
 
         sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
@@ -81,26 +69,19 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         setupNavControllerListener(navController)
     }
 
+    private fun initMainViewModel() {
+        val rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences
+        mainActivityViewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+                MainActivityViewModel(rocket) as T
+        }).get(MainActivityViewModel::class.java)
+    }
+
     private fun checkToolbar() {
         if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Dark)
         } else {
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Light)
-        }
-    }
-
-    private fun changeCurrentTheme() {
-        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
-            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-        }
-
-        coroutineScope.launch {
-            val themeToSave = AppCompatDelegate.getDefaultNightMode()
-            rocket.writeInt(
-                NIGHT_MODE_KEY, themeToSave
-            )
         }
     }
 
@@ -192,30 +173,15 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
                 toolbar.visibility = View.VISIBLE
                 drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 if (destination.id == R.id.homeFragment) {
-                    coroutineScope.launch {
-                        val isSetupDone =
-                            rocket.readFloat(LATITUDE_KEY) != 0.toFloat() && rocket.readFloat(
-                                LONGITUDE_KEY
-                            ) != 0.toFloat()
-                                    && rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)!!.isNotEmpty() && rocket.readString(
-                                COUNTRY_SHARED_PREFERENCE_KEY
-                            )!!.isNotEmpty()
-
-                        if (!isSetupDone) {
-                            withContext(Dispatchers.Main) {
-                                findNavController(R.id.nav_host_fragment).navigate(R.id.setupFragment)
-                            }
+                    mainActivityViewModel.checkConfigurationState()
+                    val setupVisibilityObserver: LiveData<Boolean> =
+                        mainActivityViewModel.launchSetupVisibility
+                    setupVisibilityObserver.observe(this, Observer {
+                        if (it) {
+                            findNavController(R.id.nav_host_fragment).navigate(R.id.setupFragment)
                         }
-                    }
+                    })
                 }
-            }
-            if (isDebugMode) {
-                val dest: String = try {
-                    resources.getResourceName(destination.id)
-                } catch (e: Resources.NotFoundException) {
-                    destination.id.toString()
-                }
-                Log.d("NavigationActivity", "Navigated to $dest")
             }
         }
     }
@@ -280,10 +246,5 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         } else {
             super.onBackPressed()
         }
-    }
-
-    override fun onDestroy() {
-        coroutineScope.cancel()
-        super.onDestroy()
     }
 }

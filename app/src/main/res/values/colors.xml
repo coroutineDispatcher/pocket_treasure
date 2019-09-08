@@ -304,5 +304,6 @@
 
     <color name="md_black_1000_87_percent">#D9000000</color>
     <color name="fully_transparent">#FFFFFFFF</color>
+    <color name="fully_color_doesnt_matter">#00FFFFFF</color>
 
 </resources>

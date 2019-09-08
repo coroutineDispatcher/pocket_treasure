@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
@@ -33,7 +32,6 @@ class HomeViewModel @AssistedInject constructor(
         showError()
     }
 
-    private var homePrayerData: ArrayList<HomePrayerTime> = ArrayList()
     private val _progressBarVisibility = MutableLiveData<Int>()
     private val _showErrorToast = MutableLiveData<Boolean>()
     private val _contentVisibility = MutableLiveData<Int>()
@@ -46,15 +44,6 @@ class HomeViewModel @AssistedInject constructor(
     val workManagerHasBeenFired: LiveData<Boolean> = liveData {
         val isWorkerFired = homeRepository.isWorkerFired()
         emit(isWorkerFired)
-    }
-
-    val isSetupDone: LiveData<ConfigurationState> = liveData {
-        val locationProvided = homeRepository.isLocationProvided()
-        if (locationProvided) {
-            emit(ConfigurationState.CONFIGURED)
-        } else {
-            emit(ConfigurationState.NOT_CONFIGURED)
-        }
     }
 
     fun loadPrayerTimes() {
@@ -91,80 +80,13 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-    private fun showError() {
-        _showErrorToast.value = true
-        _progressBarVisibility.value = View.GONE
-        _contentVisibility.value = View.VISIBLE
-    }
-
-    private fun switchProgressBarOn() {
-        _progressBarVisibility.value = View.VISIBLE
-        _contentVisibility.value = View.GONE
-        _showErrorToast.value = false
-    }
-
-    private fun switchProgressBarOff() {
-        _progressBarVisibility.value = View.GONE
-        _contentVisibility.value = View.VISIBLE
-        _showErrorToast.value = false
-    }
-
     private suspend fun setValuesToLiveData() {
-        addDataToList()
+        val homePrayerData = homeRepository.getHomeData()
+        findCurrentTime(homePrayerData)
         switchProgressBarOff()
     }
 
-    private suspend fun addDataToList() {
-        homePrayerData.add(
-            HomePrayerTime(
-                "Fajr",
-                "${homeRepository.readFejrtime()} - ${homeRepository.readFinishFajrTime()}",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_fajr_sun
-            )
-        )
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Dhuhr",
-                homeRepository.readDhuhrTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_dhuhr_sun
-            )
-        )
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Asr",
-                homeRepository.readAsrTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_asr_sun
-            )
-        )
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Maghrib",
-                homeRepository.readMaghribTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_magrib_sun
-            )
-        )
-
-
-        homePrayerData.add(
-            HomePrayerTime(
-                "Isha",
-                homeRepository.readIshaTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_isha_sun
-            )
-        )
-
-        findCurrentTime()
-    }
-
-    fun findCurrentTime() {
+    private fun findCurrentTime(homePrayerData: ArrayList<HomePrayerTime>) {
         val currentTime = LocalTime()
         if (currentTime.isBefore(localTime(homePrayerData[0].time)) ||
             currentTime.isAfter(localTime(homePrayerData[4].time))
@@ -173,26 +95,14 @@ class HomeViewModel @AssistedInject constructor(
                 if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
         } else {
             var currentColorFound = false
-            for (i in 1 until homePrayerData.size) {
+            for (i in 0 until homePrayerData.size) {
                 if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
                     homePrayerData[i].backgroundColor =
                         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
                     currentColorFound = true
                 } else {
-                    homePrayerData[i].backgroundColor =
-                        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND
+                    homePrayerData[i].backgroundColor = TRANSPARENT
                 }
-            }
-        }
-
-        savedStateHandle.set(HOME_DATA_LIST, homePrayerData)
-    }
-
-    fun checkCurrentThemeForData() {
-        homePrayerData.forEach {
-            if (it.backgroundColor == DARK_BACKGROUND || it.backgroundColor == WHITE_BACKGROUND) {
-                it.backgroundColor =
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND
             }
         }
 
@@ -245,5 +155,23 @@ class HomeViewModel @AssistedInject constructor(
         viewModelScope.launch {
             homeRepository.updateWorkerFired()
         }
+    }
+
+    private fun showError() {
+        _showErrorToast.value = true
+        _progressBarVisibility.value = View.GONE
+        _contentVisibility.value = View.VISIBLE
+    }
+
+    private fun switchProgressBarOn() {
+        _progressBarVisibility.value = View.VISIBLE
+        _contentVisibility.value = View.GONE
+        _showErrorToast.value = false
+    }
+
+    private fun switchProgressBarOff() {
+        _progressBarVisibility.value = View.GONE
+        _contentVisibility.value = View.VISIBLE
+        _showErrorToast.value = false
     }
 }
