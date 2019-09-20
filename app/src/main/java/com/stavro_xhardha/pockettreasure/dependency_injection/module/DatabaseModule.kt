@@ -33,9 +33,4 @@ object DatabaseModule {
     @Provides
     @ApplicationScope
     fun providesAyahDao(database: TreasureDatabase): AyasDao = database.ayasDao()
-
-    @JvmStatic
-    @Provides
-    @ApplicationScope
-    fun providesPrayerTimesDao(database: TreasureDatabase): PrayerTimesDao = database.prayerTimesDao()
 }

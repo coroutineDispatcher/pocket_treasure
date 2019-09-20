@@ -4,9 +4,7 @@ import android.app.Application
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
-import com.stavro_xhardha.pockettreasure.background.OfflinePrayerScheduler
 import com.stavro_xhardha.pockettreasure.brain.WORKER_FIRED_KEY
-import com.stavro_xhardha.pockettreasure.room_db.PrayerTimesDao
 import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime

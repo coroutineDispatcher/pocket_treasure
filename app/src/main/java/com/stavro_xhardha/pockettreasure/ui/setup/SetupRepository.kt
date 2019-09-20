@@ -21,12 +21,6 @@ class SetupRepository @Inject constructor(
         rocket.writeBoolean(NOTIFY_USER_FOR_ISHA, true)
     }
 
-    suspend fun isLocationProvided(): Boolean =
-        rocket.readFloat(LATITUDE_KEY) != 0.toFloat() && rocket.readFloat(LONGITUDE_KEY) != 0.toFloat()
-                && rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)!!.isNotEmpty() && rocket.readString(
-            COUNTRY_SHARED_PREFERENCE_KEY
-        )!!.isNotEmpty()
-
     suspend fun updateCountryAndLocation(
         country: String,
         cityName: String,

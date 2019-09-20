@@ -306,4 +306,7 @@
     <color name="fully_transparent">#FFFFFFFF</color>
     <color name="fully_color_doesnt_matter">#00FFFFFF</color>
 
+    <color name="home_background">#ffffff</color>
+    <color name="card_view_default">#F5F5F5</color>
+    <color name="card_view_selector">#ffa000</color>
 </resources>

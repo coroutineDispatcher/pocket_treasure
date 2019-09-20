@@ -5,19 +5,21 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
 import com.stavro_xhardha.pockettreasure.brain.PLAY_STORE_URL
-import com.stavro_xhardha.pockettreasure.brain.startPrayerTimesWorkManager
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : Fragment() {
 
-    private val homeViewModel by viewModel { component.homeViewModelFactory.create(it) }
-    private val picasso = component.picasso
+    private val homeViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().homeViewModelFactory.create(it)
+    }
+    private val picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso
     private var homeAdapter: HomeAdapter = HomeAdapter(picasso)
 
     override fun onCreateView(
@@ -63,7 +65,7 @@ class HomeFragment : BaseFragment() {
         startActivity(Intent.createChooser(sharingIntent, resources.getString(R.string.share_via)))
     }
 
-    fun observeTheLiveData() {
+    private fun observeTheLiveData() {
         homeViewModel.homeData.observe(this, Observer {
             homeAdapter.submitList(it)
             rvHomePrayerTimes.adapter = homeAdapter
@@ -78,13 +80,6 @@ class HomeFragment : BaseFragment() {
 
         homeViewModel.progressBarVisibility.observe(this, Observer {
             pbHome.visibility = it
-        })
-
-        homeViewModel.workManagerHasBeenFired.observe(this, Observer {
-            if (!it) {
-                startPrayerTimesWorkManager(requireActivity())
-                homeViewModel.updateWorkManagerFiredState()
-            }
         })
     }
 }

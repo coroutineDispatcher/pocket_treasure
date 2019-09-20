@@ -35,8 +35,6 @@ class SettingsViewModel @AssistedInject constructor(
     val locationRequestTurnOff: LiveData<Boolean> = _locationRequestTurnOff
     val serviceNotAvailableVisibility: LiveData<Boolean> = _serviceNotAvailableVisibility
     val locationerrorVisibility: LiveData<Boolean> = _locationErrorVisibility
-    private var locationTurnOfRequested: Boolean = false
-
     val fajrCheck: LiveData<Boolean> = _fajrCheck
     val dhuhrCheck: LiveData<Boolean> = _dhuhrCheck
     val asrCheck: LiveData<Boolean> = _asrCheck
@@ -50,7 +48,7 @@ class SettingsViewModel @AssistedInject constructor(
     private var asrCheckCheckHelper: Boolean = false
     private var mahgribCheckCheckHelper: Boolean = false
     private var ishaCheckCheckHelper: Boolean = false
-    private var workerReadyToRestart = false
+    private var locationTurnOfRequested: Boolean = false
 
     init {
         listenToRepository()
@@ -72,7 +70,8 @@ class SettingsViewModel @AssistedInject constructor(
                 this@SettingsViewModel._asrCheck.value = asrCheckCheckHelper
                 this@SettingsViewModel._maghribCheck.value = mahgribCheckCheckHelper
                 this@SettingsViewModel._ishaCheck.value = ishaCheckCheckHelper
-                this@SettingsViewModel._countryAndCapital.value = settingsRepository.readCountryAndCapital()
+                this@SettingsViewModel._countryAndCapital.value =
+                    settingsRepository.readCountryAndCapital()
                 decrementIdlingResource()
             }
         }
@@ -133,13 +132,6 @@ class SettingsViewModel @AssistedInject constructor(
         }
     }
 
-    private fun resetDataForWorker() {
-        viewModelScope.launch {
-            settingsRepository.deleteAllDataInside()
-            _workManagerReadyToStart.postValue(true)
-        }
-    }
-
     fun convertToAdress(geocoder: Geocoder, latitude: Double, longitude: Double) {
         viewModelScope.launch {
             try {
@@ -147,24 +139,24 @@ class SettingsViewModel @AssistedInject constructor(
                 if (adresses.size != 0) {
                     val cityName = adresses[0].adminArea
                     val country = adresses[0].countryName
-                    settingsRepository.updateCountryAndLocation(country, cityName, latitude, longitude)
+                    settingsRepository.updateCountryAndLocation(
+                        country,
+                        cityName,
+                        latitude,
+                        longitude
+                    )
                     if (!locationTurnOfRequested) {
                         locationTurnOfRequested = true
                     }
                 }
-                workerReadyToRestart = true
             } catch (exception: IOException) {
                 exception.printStackTrace()
                 _serviceNotAvailableVisibility.postValue(true)
-                workerReadyToRestart = false
             } catch (illegalArgumentException: IllegalArgumentException) {
                 illegalArgumentException.printStackTrace()
                 _locationErrorVisibility.postValue(true)
-                workerReadyToRestart = false
             } finally {
                 _locationRequestTurnOff.postValue(true)
-                if (workerReadyToRestart)
-                    resetDataForWorker()
             }
         }
     }

@@ -24,7 +24,7 @@ import kotlinx.coroutines.withContext
 
 class PrayerTimeNotificationReceiver : BroadcastReceiver() {
 
-    private val CHANNEL_ID = "PrayerTimeId"
+    private val channelId = "Prayer Times"
     private lateinit var rocket: Rocket
     private lateinit var picasso: Picasso
 
@@ -73,7 +73,7 @@ class PrayerTimeNotificationReceiver : BroadcastReceiver() {
             getPendingIntent(PENDING_INTENT_FIRE_MAIN_ACTIVITY, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, channelId)
             .setContentIntent(resultPendingIntent)
             .setColorized(true)
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
@@ -87,7 +87,7 @@ class PrayerTimeNotificationReceiver : BroadcastReceiver() {
             val name = "Prayer time notifications"
             val descriptionText = "This notifications notify when praying time has arrived"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            val channel = NotificationChannel(channelId, name, importance).apply {
                 description = descriptionText
             }
 

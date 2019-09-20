@@ -6,32 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.google.android.gms.location.LocationResult
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.pockettreasure.background.PrayerTimeWorkManager
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-class SetupFragment : BaseFragment(), LocationTrackerListener {
-
+class SetupFragment : Fragment(), LocationTrackerListener {
 
     private val setupViewModel by viewModel {
-        component.setupViewModelFactory.create(it)
+        PocketTreasureApplication.getPocketTreasureComponent().setupViewModelFactory.create(it)
     }
 
     private lateinit var sharedViewModel: SharedViewModel
 
-    private val locationTracker by lazy {
-        //todo singleton
-        LocationTracker(requireActivity(), this)
-    }
+    private var locationTracker: LocationTracker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,13 +48,20 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
             message(R.string.do_you_want_to_get_notified)
             positiveButton(text = activity!!.resources.getString(R.string.yes)) {
                 setupViewModel.updateNotificationFlags()
-                findNavController().popBackStack()
                 it.dismiss()
             }
             cancelable(false)
             negativeButton(text = activity!!.resources.getString(R.string.no)) {
-                findNavController().popBackStack()
                 it.dismiss()
+            }.onDismiss {
+                val compressionWork =
+                    PeriodicWorkRequestBuilder<PrayerTimeWorkManager>(6, TimeUnit.HOURS)
+                        .setInitialDelay(1, TimeUnit.MINUTES)
+                        .build()
+                WorkManager.getInstance(requireActivity()).enqueue(compressionWork)
+                locationTracker = null
+
+                findNavController().popBackStack()
             }
         }
     }
@@ -63,16 +72,17 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
         observeTheLiveData()
     }
 
-    fun initializeComponents() {
+    private fun initializeComponents() {
         sharedViewModel = requireActivity().run {
             ViewModelProviders.of(this).get(SharedViewModel::class.java)
         }
-        locationTracker.startLocationRequestProcess()
+        locationTracker = LocationTracker(requireActivity(), this)
+        locationTracker?.startLocationRequestProcess()
     }
 
-    fun observeTheLiveData() {
+    private fun observeTheLiveData() {
         setupViewModel.locationRequestTurnOff.observe(this, Observer {
-            if (it) locationTracker.removeLocationRequest()
+            if (it) locationTracker?.removeLocationRequest()
         })
         setupViewModel.locationErrorVisibility.observe(this, Observer {
             if (it) {
@@ -92,10 +102,10 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
             if (it) askForNotifyingUser()
         })
         sharedViewModel.onGpsOpened.observe(this, Observer {
-            if (it) locationTracker.updateLocation()
+            if (it) locationTracker?.updateLocation()
         })
         sharedViewModel.onLocationPermissiongranted.observe(this, Observer {
-            if (it) locationTracker.getUserLocation()
+            if (it) locationTracker?.getUserLocation()
         })
     }
 

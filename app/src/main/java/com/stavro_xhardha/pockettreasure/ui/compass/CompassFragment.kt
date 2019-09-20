@@ -8,17 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import edu.arbelkilani.compass.CompassListener
 import kotlinx.android.synthetic.main.fragment_compass.*
 
-class CompassFragment : BaseFragment(), CompassListener {
+class CompassFragment : Fragment(), CompassListener {
 
-    private val compassViewModel by viewModel { component.compassViewModelFactory.create(it) }
+    private val compassViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().compassViewModelFactory.create(it)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,11 +32,13 @@ class CompassFragment : BaseFragment(), CompassListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                view.findNavController().popBackStack(R.id.homeFragment, false)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    view.findNavController().popBackStack(R.id.homeFragment, false)
+                }
+            })
 
         initializeComponents()
         observeTheLiveData()

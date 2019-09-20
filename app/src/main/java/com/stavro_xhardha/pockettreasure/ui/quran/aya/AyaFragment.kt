@@ -6,25 +6,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_aya.*
 
-class AyaFragment : BaseFragment(), AyaContract {
+class AyaFragment : Fragment(), AyaContract {
 
     private val mediaPlayer: MediaPlayer by lazy {
-        component.mediaPlayer
+        PocketTreasureApplication.getPocketTreasureComponent().mediaPlayer
     }
 
-    private val ayaViewModel by viewModel { component.ayaViewModelFactory.create(it) }
+    private val ayaViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().ayaViewModelFactory.create(it)
+    }
 
     private val ayasAdapter by lazy {
         AyasAdapter(mediaPlayer, this)
+    }
+
+    private val sharedViewModel: SharedViewModel by lazy {
+        requireActivity().run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }
     }
 
     private val args: AyaFragmentArgs by navArgs()
@@ -40,7 +50,7 @@ class AyaFragment : BaseFragment(), AyaContract {
         super.onViewCreated(view, savedInstanceState)
 
         if (args.surahsNumber == 9) {
-            requireActivity().toolbar.title = ""
+            sharedViewModel.removeToolbarTitle()
         }
     }
 
@@ -56,14 +66,14 @@ class AyaFragment : BaseFragment(), AyaContract {
         observeTheLiveData()
     }
 
-    fun initializeComponents() {
+    private fun initializeComponents() {
         val surahsNumber = args.surahsNumber
         ayaViewModel.startSuraDataBaseCall(surahsNumber)
         rvAya.adapter = ayasAdapter
         pbAya.visibility = View.VISIBLE
     }
 
-    fun observeTheLiveData() {
+    private fun observeTheLiveData() {
         ayaViewModel.ayas.observe(this, Observer {
             if (it.size > 0) {
                 ayasAdapter.submitList(it)

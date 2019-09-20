@@ -4,14 +4,16 @@ import android.view.View
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import com.stavro_xhardha.pockettreasure.model.QuranResponse
+import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
+import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
 import com.stavro_xhardha.pockettreasure.model.Surah
+import com.stavro_xhardha.pockettreasure.room_db.SurahsDao
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class QuranViewModel @AssistedInject constructor(
-    private val repository: QuranRepository,
+    private val surahsDao: SurahsDao,
     @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -20,10 +22,11 @@ class QuranViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): QuranViewModel
     }
 
-    private val coroutineExceptionHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        throwable.printStackTrace()
-        showError()
-    }
+    private val coroutineExceptionHandler: CoroutineExceptionHandler =
+        CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+            showError()
+        }
 
     private val _surahs: MutableLiveData<List<Surah>> = MutableLiveData()
     private val _errorVisibility: MutableLiveData<Int> = MutableLiveData()
@@ -36,53 +39,38 @@ class QuranViewModel @AssistedInject constructor(
     val progressVisibility: LiveData<Int> = _progressVisibility
 
     init {
-        startQuranImplementation()
+        showProgress()
     }
 
-    fun startQuranImplementation() {
+    fun startQuranDatabaseCall() {
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-            showProgress()
-            val surahsInDatabase = repository.findAllSurahs()
-            val ayasInDatabase = repository.findAllAyas()
-            if (surahsInDatabase.isEmpty() && ayasInDatabase.isEmpty()) {
-                val quranApiCall = repository.callTheQuranDataAsync()
-                if (quranApiCall.isSuccessful) {
-                    insertDataToDatabase(quranApiCall.body())
-                    makeLocalDatabaseCall()
-                } else {
-                    showError()
-                }
-            } else {
-                makeLocalDatabaseCall()
-            }
+            incrementIdlingResource()
+            makeLocalDatabaseCall()
+            decrementIdlingResource()
         }
     }
 
-    private fun showProgress() {
+    fun showProgress() {
         _progressVisibility.postValue(View.VISIBLE)
         _errorVisibility.postValue(View.GONE)
         _listVisibility.postValue(View.GONE)
     }
 
-    private fun showError() {
+    fun showError() {
         _progressVisibility.postValue(View.GONE)
         _errorVisibility.postValue(View.VISIBLE)
         _listVisibility.postValue(View.GONE)
     }
 
-    private fun resetVisibilityValues() {
+    private fun showData() {
         _progressVisibility.postValue(View.GONE)
         _errorVisibility.postValue(View.GONE)
         _listVisibility.postValue(View.VISIBLE)
     }
 
-    private suspend fun insertDataToDatabase(quranApiCall: QuranResponse?) {
-        repository.insertQuranReponseToDatabase(quranApiCall)
-    }
-
     private suspend fun makeLocalDatabaseCall() {
-        val surahs = repository.findAllSurahs()
+        val surahs = surahsDao.getAllSuras()
         _surahs.postValue(surahs)
-        resetVisibilityValues()
+        showData()
     }
 }

@@ -53,7 +53,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="70"
                     android:padding="@dimen/global_unit_bigger_x"
-                    android:src="@drawable/ic_fajr_sun" />
+                    android:src="@drawable/ic_fajr_colorful_sun" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

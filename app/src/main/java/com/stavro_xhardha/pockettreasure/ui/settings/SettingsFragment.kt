@@ -8,29 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.android.gms.location.LocationResult
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.pockettreasure.background.PrayerTimeWorkManager
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
-import com.stavro_xhardha.pockettreasure.brain.startPrayerTimesWorkManager
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-class SettingsFragment : BaseFragment(), LocationTrackerListener {
+class SettingsFragment : Fragment(), LocationTrackerListener {
 
-    private val settingsViewModel by viewModel { component.settingsViewModelFactory.create(it) }
+    private val settingsViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().settingsViewModelFactory.create(it)
+    }
 
     private lateinit var sharedViewModel: SharedViewModel
 
-    private val locationTracker by lazy {
-        LocationTracker(requireActivity(), this)
-    }
+    private var locationTracker: LocationTracker? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +60,9 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         observeTheLiveData()
     }
 
-    fun initializeComponents() {
+    private fun initializeComponents() {
+        locationTracker = LocationTracker(requireActivity(), this)
+
         swFajr.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.onSwFajrClick(isChecked)
         }
@@ -78,7 +84,7 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         }
 
         llLocation.setOnClickListener {
-            locationTracker.startLocationRequestProcess()
+            locationTracker?.startLocationRequestProcess()
         }
 
         sharedViewModel = requireActivity().run {
@@ -86,7 +92,7 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         }
     }
 
-    fun observeTheLiveData() {
+    private fun observeTheLiveData() {
         settingsViewModel.fajrCheck.observe(this, Observer {
             swFajr.isChecked = it
         })
@@ -107,7 +113,15 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         })
 
         settingsViewModel.locationRequestTurnOff.observe(this, Observer {
-            if (it) locationTracker.removeLocationRequest()
+            if (it) {
+                locationTracker?.removeLocationRequest()
+                reinitPrayerSchedulers()
+                Toast.makeText(
+                    requireActivity(),
+                    R.string.location_updated_successfully,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         })
         settingsViewModel.locationerrorVisibility.observe(this, Observer {
             if (it) {
@@ -122,21 +136,20 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
             }
         })
         sharedViewModel.onGpsOpened.observe(this, Observer {
-            if (it) locationTracker.updateLocation()
+            if (it) locationTracker?.updateLocation()
         })
         sharedViewModel.onLocationPermissiongranted.observe(this, Observer {
-            if (it) locationTracker.getUserLocation()
+            if (it) locationTracker?.getUserLocation()
         })
-        settingsViewModel.workManagerReadyToStart.observe(this, Observer {
-            if (it) {
-                startPrayerTimesWorkManager(requireActivity())
-                Toast.makeText(
-                    requireActivity(),
-                    R.string.location_updated_successfully,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        })
+    }
+
+    private fun reinitPrayerSchedulers() {
+        WorkManager.getInstance(requireActivity()).cancelAllWork()
+
+        val compressionWork =
+            PeriodicWorkRequestBuilder<PrayerTimeWorkManager>(6, TimeUnit.HOURS)
+                .build()
+        WorkManager.getInstance(requireActivity()).enqueue(compressionWork)
     }
 
     override fun onLocationError() {
@@ -149,5 +162,10 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
             val geocoder = Geocoder(requireActivity(), Locale.getDefault())
             settingsViewModel.convertToAdress(geocoder, location.latitude, location.longitude)
         }
+    }
+
+    override fun onDestroy() {
+        locationTracker = null
+        super.onDestroy()
     }
 }

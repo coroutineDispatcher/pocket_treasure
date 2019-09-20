@@ -5,7 +5,6 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.stavro_xhardha.pockettreasure.model.PrayerTiming
-import com.stavro_xhardha.pockettreasure.room_db.PrayerTimesDao
 import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase
 import kotlinx.coroutines.runBlocking
 import org.junit.After

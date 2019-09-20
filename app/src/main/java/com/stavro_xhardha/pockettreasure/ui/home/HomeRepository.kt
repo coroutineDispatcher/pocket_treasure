@@ -1,20 +1,17 @@
 package com.stavro_xhardha.pockettreasure.ui.home
 
-import androidx.appcompat.app.AppCompatDelegate
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
-import com.stavro_xhardha.pockettreasure.room_db.PrayerTimesDao
 import com.stavro_xhardha.rocket.Rocket
 import retrofit2.Response
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
     private val treasureApi: TreasureApi,
-    private val mSharedPreferences: Rocket,
-    private val prayerTimesDao: PrayerTimesDao
+    private val mSharedPreferences: Rocket
 ) {
     suspend fun makePrayerCallAsync(): Response<PrayerTimeResponse> =
         treasureApi.getPrayerTimesTodayAsync(
@@ -90,35 +87,17 @@ class HomeRepository @Inject constructor(
         mSharedPreferences.writeString(SUNRISE_KEY, sunrise)
     }
 
-    suspend fun readMonthSection(): String? {
-        val hijriDay = mSharedPreferences.readString(HIRJI_DAY_OF_MONTH_KEY)
-        val hijriMonthName = mSharedPreferences.readString(HIJRI_MONTH_NAME_KEY)
-        val hijriYear = mSharedPreferences.readString(HIJRI_YEAR_KEY)
-        val gregorianDay = mSharedPreferences.readInt(GREGORIAN_DAY_KEY)
-        val gregorianMonth = mSharedPreferences.readString(GREGORIAN_MONTH_NAME_KEY)
-        val gregorianYear = mSharedPreferences.readInt(GREGORIAN_YEAR_KEY)
+    private suspend fun readFejrtime(): String? = mSharedPreferences.readString(FAJR_KEY)
 
-        return " $hijriDay $hijriMonthName $hijriYear / $gregorianDay $gregorianMonth $gregorianYear"
-    }
+    private suspend fun readDhuhrTime(): String? = mSharedPreferences.readString(DHUHR_KEY)
 
-    suspend fun readLocationSection(): String? {
-        val capitalCity = mSharedPreferences.readString(CAPITAL_SHARED_PREFERENCES_KEY)
-        val country = mSharedPreferences.readString(COUNTRY_SHARED_PREFERENCE_KEY)
+    private suspend fun readAsrTime(): String? = mSharedPreferences.readString(ASR_KEY)
 
-        return " $capitalCity, $country"
-    }
+    private suspend fun readMaghribTime(): String? = mSharedPreferences.readString(MAGHRIB_KEY)
 
-    suspend fun readFejrtime(): String? = mSharedPreferences.readString(FAJR_KEY)
+    private suspend fun readIshaTime(): String? = mSharedPreferences.readString(ISHA_KEY)
 
-    suspend fun readDhuhrTime(): String? = mSharedPreferences.readString(DHUHR_KEY)
-
-    suspend fun readAsrTime(): String? = mSharedPreferences.readString(ASR_KEY)
-
-    suspend fun readMaghribTime(): String? = mSharedPreferences.readString(MAGHRIB_KEY)
-
-    suspend fun readIshaTime(): String? = mSharedPreferences.readString(ISHA_KEY)
-
-    suspend fun readFinishFajrTime(): String? = mSharedPreferences.readString(SUNRISE_KEY)
+    private suspend fun readFinishFajrTime(): String? = mSharedPreferences.readString(SUNRISE_KEY)
 
     suspend fun getCurrentRegisteredDay(): Int = mSharedPreferences.readInt(GREGORIAN_DAY_KEY)
 
@@ -132,43 +111,33 @@ class HomeRepository @Inject constructor(
         mSharedPreferences.writeBoolean(COUNTRY_UPDATED, false)
     }
 
-    suspend fun isWorkerFired(): Boolean {
-        val prayerTimesBackgroundData = prayerTimesDao.selectAll()
-        val workerHasBeenFired = mSharedPreferences.readBoolean(WORKER_FIRED_KEY)
-        return prayerTimesBackgroundData.isNotEmpty() && workerHasBeenFired
-    }
-
-    suspend fun updateWorkerFired() {
-        mSharedPreferences.writeBoolean(WORKER_FIRED_KEY, true)
-    }
-
     suspend fun getHomeData(): ArrayList<HomePrayerTime> {
         return arrayListOf(
             HomePrayerTime(
                 "Fajr",
                 "${readFejrtime()} - ${readFinishFajrTime()}",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_fajr_sun
+                TRANSPARENT,
+                R.drawable.ic_fajr_colorful_sun
             ), HomePrayerTime(
                 "Dhuhr",
                 readDhuhrTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_dhuhr_sun
+                TRANSPARENT,
+                R.drawable.ic_dhuhr_colorful_sun
             ), HomePrayerTime(
                 "Asr",
                 readAsrTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_asr_sun
+                TRANSPARENT,
+                R.drawable.ic_asr_colorful_sun
             ), HomePrayerTime(
                 "Maghrib",
                 readMaghribTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_magrib_sun
+                TRANSPARENT,
+                R.drawable.ic_maghrib_colorful_sun
             ), HomePrayerTime(
                 "Isha",
                 readIshaTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_isha_sun
+                TRANSPARENT,
+                R.drawable.ic_isha_moon
             )
         )
     }

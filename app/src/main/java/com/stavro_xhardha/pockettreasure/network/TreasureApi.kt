@@ -20,15 +20,6 @@ interface TreasureApi {
     ): Response<PrayerTimeResponse>
 
     @GET
-    suspend fun getLatestNewsAsync(
-        @Url baseUrl: String,
-        @Query("q") searchKeyWord: String,
-        @Query("apiKey") apiKey: String,
-        @Query("page") pageNumber: Int,
-        @Query("pageSize") pageSize: Int
-    ): Response<NewsResponse>
-
-    @GET
     suspend fun getUnsplashImagesAsync(
         @Url baseUrl: String,
         @Query("query") query: String,
@@ -40,12 +31,4 @@ interface TreasureApi {
 
     @GET
     suspend fun getQuranDataAsync(@Url baseUrl: String): Response<QuranResponse>
-
-    @GET("calendarByCity")
-    suspend fun getAllYearsPrayerTImesAsync(
-        @Query("city") city: String?,
-        @Query("country") country: String?,
-        @Query("method") method: Int = 3,
-        @Query("annual") annual: Boolean = true
-    ): Response<PrayerTimeYearResponse>
 }

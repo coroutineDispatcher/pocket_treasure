@@ -4,7 +4,6 @@ import android.app.Application
 import android.app.WallpaperManager
 import android.media.MediaPlayer
 import com.squareup.picasso.Picasso
-import com.stavro_xhardha.pockettreasure.background.OfflinePrayerScheduler
 import com.stavro_xhardha.pockettreasure.dependency_injection.module.*
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
 import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase
@@ -22,8 +21,7 @@ import dagger.Component
 
 @ApplicationScope
 @Component(
-    modules = [NetworkModule::class, PreferencesModule::class, DatabaseModule::class, MediaModule::class,
-        OfflineSchedulerModule::class, ViewModelModule::class]
+    modules = [NetworkModule::class, PreferencesModule::class, DatabaseModule::class, MediaModule::class, ViewModelModule::class]
 )
 interface PocketTreasureComponent {
 
@@ -43,7 +41,7 @@ interface PocketTreasureComponent {
 
     val setupViewModelFactory: SetupViewModel.Factory
 
-    val getTreasureApi: TreasureApi
+    val treasureApi: TreasureApi
 
     val getSharedPreferences: Rocket
 
@@ -52,8 +50,6 @@ interface PocketTreasureComponent {
     val picasso: Picasso
 
     val wallpaperManager: WallpaperManager
-
-    val offlineScheduler: OfflinePrayerScheduler
 
     val mediaPlayer: MediaPlayer
 

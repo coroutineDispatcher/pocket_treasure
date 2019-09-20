@@ -22,11 +22,14 @@ class AyaReadWrite {
     private lateinit var ayasDao: AyasDao
     private lateinit var treasureDatabase: TreasureDatabase
     private lateinit var surahsDao: SurahsDao
+    private val aya = Aya(1, "empty", "no need for that", 2, 1, 5)
+    private val surah = Surah(5, "Abc", "Def", "Ghi", "Jkl", listOf())
 
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        treasureDatabase = Room.inMemoryDatabaseBuilder(context, TreasureDatabase::class.java).build()
+        treasureDatabase =
+            Room.inMemoryDatabaseBuilder(context, TreasureDatabase::class.java).build()
         ayasDao = treasureDatabase.ayasDao()
         surahsDao = treasureDatabase.surahsDao()
     }
@@ -38,9 +41,6 @@ class AyaReadWrite {
 
     @Test
     fun writeAyaAndReadIt() = runBlocking {
-        //Arrange
-        val aya = Aya(1,"empty", "no need for that", 2, 1, 5)
-        val surah = Surah(5, "Abc", "Def", "Ghi", "Jkl", listOf())
         //Act
         surahsDao.insertSurah(surah)
         ayasDao.insertAya(aya)
@@ -48,5 +48,19 @@ class AyaReadWrite {
         //Assert
 
         assertEquals(insertedAyaList, listOf(aya))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun deleteAyaTest() = runBlocking {
+        //Act
+        surahsDao.insertSurah(surah)
+        ayasDao.insertAya(aya)
+        surahsDao.deleteAllSurahs()
+        ayasDao.deleteAllAyas()
+        val insertedAyaList = ayasDao.getAllAyas()
+
+        //Assert
+        assertEquals(insertedAyaList, listOf<Aya>())
     }
 }
