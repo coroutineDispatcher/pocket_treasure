@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui.quran
+package com.stavro_xhardha.pockettreasure.background
 
 import android.content.Context
 import androidx.work.CoroutineWorker

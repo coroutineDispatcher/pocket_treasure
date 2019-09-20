@@ -16,6 +16,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.pockettreasure.background.QuranWorker
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_quran.*

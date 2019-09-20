@@ -1,7 +1,6 @@
 package com.stavro_xhardha.pockettreasure.ui.home
 
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -35,14 +34,11 @@ class HomeViewModel @AssistedInject constructor(
     private val _progressBarVisibility = MutableLiveData<Int>()
     private val _showErrorToast = MutableLiveData<Boolean>()
     private val _contentVisibility = MutableLiveData<Int>()
-    private val _workManagerHasBeenFired = MutableLiveData<Boolean>()
 
     val progressBarVisibility: LiveData<Int> = _progressBarVisibility
     val showErrorToast: LiveData<Boolean> = _showErrorToast
     val contentVisibility: LiveData<Int> = _contentVisibility
     val homeData: LiveData<ArrayList<HomePrayerTime>> = savedStateHandle.getLiveData(HOME_DATA_LIST)
-
-    val workManagerHasBeenFired: LiveData<Boolean> = _workManagerHasBeenFired
 
     fun loadPrayerTimes() {
         viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
@@ -81,12 +77,6 @@ class HomeViewModel @AssistedInject constructor(
         val homePrayerData = homeRepository.getHomeData()
         findCurrentTime(homePrayerData)
         switchProgressBarOff()
-        checkWorkManager()
-    }
-
-    private suspend fun checkWorkManager() {
-        val isWorkerFired = homeRepository.isWorkerFired()
-        _workManagerHasBeenFired.postValue(isWorkerFired)
     }
 
     private fun findCurrentTime(homePrayerData: ArrayList<HomePrayerTime>) {
@@ -94,15 +84,13 @@ class HomeViewModel @AssistedInject constructor(
         if (currentTime.isBefore(localTime(homePrayerData[0].time)) ||
             currentTime.isAfter(localTime(homePrayerData[4].time))
         ) {
-            homePrayerData[0].backgroundColor =
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
+            homePrayerData[0].backgroundColor = SELECTOR
             checkOtherColors(homePrayerData)
         } else {
             var currentColorFound = false
             for (i in 0 until homePrayerData.size) {
                 if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
-                    homePrayerData[i].backgroundColor =
-                        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_SELECTOR else LIGHT_SELECTOR
+                    homePrayerData[i].backgroundColor = SELECTOR
                     currentColorFound = true
                 } else {
                     homePrayerData[i].backgroundColor = TRANSPARENT
@@ -158,12 +146,6 @@ class HomeViewModel @AssistedInject constructor(
             homeRepository.saveYearHijri(it.data.date.hijriPrayerDate.year)
             homeRepository.saveMidnight(it.data.timings.midnight)
             homeRepository.updateCountryState()
-        }
-    }
-
-    fun updateWorkManagerFiredState() {
-        viewModelScope.launch {
-            homeRepository.updateWorkerFired()
         }
     }
 

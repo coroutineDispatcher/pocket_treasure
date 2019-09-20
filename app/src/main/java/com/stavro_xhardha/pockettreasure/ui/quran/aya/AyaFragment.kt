@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_aya.*
 
 class AyaFragment : Fragment(), AyaContract {
@@ -30,6 +31,12 @@ class AyaFragment : Fragment(), AyaContract {
         AyasAdapter(mediaPlayer, this)
     }
 
+    private val sharedViewModel: SharedViewModel by lazy {
+        requireActivity().run {
+            ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        }
+    }
+
     private val args: AyaFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -43,8 +50,7 @@ class AyaFragment : Fragment(), AyaContract {
         super.onViewCreated(view, savedInstanceState)
 
         if (args.surahsNumber == 9) {
-            //todo switch to events
-            requireActivity().toolbar.title = ""
+            sharedViewModel.removeToolbarTitle()
         }
     }
 
@@ -60,14 +66,14 @@ class AyaFragment : Fragment(), AyaContract {
         observeTheLiveData()
     }
 
-    fun initializeComponents() {
+    private fun initializeComponents() {
         val surahsNumber = args.surahsNumber
         ayaViewModel.startSuraDataBaseCall(surahsNumber)
         rvAya.adapter = ayasAdapter
         pbAya.visibility = View.VISIBLE
     }
 
-    fun observeTheLiveData() {
+    private fun observeTheLiveData() {
         ayaViewModel.ayas.observe(this, Observer {
             if (it.size > 0) {
                 ayasAdapter.submitList(it)

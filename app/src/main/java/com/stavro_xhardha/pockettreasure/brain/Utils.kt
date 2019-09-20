@@ -2,24 +2,20 @@
 
 package com.stavro_xhardha.pockettreasure.brain
 
-import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.stavro_xhardha.pockettreasure.BuildConfig
-import com.stavro_xhardha.pockettreasure.background.PrayerTimeWorkManager
 import com.stavro_xhardha.pockettreasure.model.*
 import com.sxhardha.smoothie.Smoothie
 
 val isDebugMode: Boolean = BuildConfig.DEBUG
-
-val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
 
 fun buildPagedList() = PagedList.Config.Builder()
     .setPageSize(INITIAL_PAGE_SIZE)
@@ -52,19 +48,6 @@ val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
 
     override fun areContentsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
         oldItem.name == newItem.name && oldItem.time == newItem.time
-}
-
-val DIFF_UTIL_NEWS = object : DiffUtil.ItemCallback<News>() {
-    override fun areItemsTheSame(oldItem: News, newItem: News): Boolean =
-        oldItem.title == newItem.title
-
-    override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
-        return oldItem.title == newItem.title
-                && oldItem.author == newItem.author
-                && oldItem.content == newItem.content
-                && oldItem.urlOfImage == newItem.urlOfImage
-                && oldItem.description == newItem.description
-    }
 }
 
 val DIFF_UTIL_NAMES = object : DiffUtil.ItemCallback<Name>() {
@@ -118,10 +101,6 @@ fun decrementIdlingResource() {
         Smoothie.endProcess()
 }
 
-fun startPrayerTimesWorkManager(context: Context) {
-
-}
-
 inline fun <reified T : ViewModel> Fragment.viewModel(
     crossinline provider: (SavedStateHandle) -> T
 ) = viewModels<T> {
@@ -133,13 +112,4 @@ inline fun <reified T : ViewModel> Fragment.viewModel(
         ): T =
             provider(handle) as T
     }
-}
-
-fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
-    observe(lifecycleOwner, object : Observer<T> {
-        override fun onChanged(t: T?) {
-            observer.onChanged(t)
-            removeObserver(this)
-        }
-    })
 }

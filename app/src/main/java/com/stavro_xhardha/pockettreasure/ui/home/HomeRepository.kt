@@ -1,20 +1,17 @@
 package com.stavro_xhardha.pockettreasure.ui.home
 
-import androidx.appcompat.app.AppCompatDelegate
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
-import com.stavro_xhardha.pockettreasure.room_db.PrayerTimesDao
 import com.stavro_xhardha.rocket.Rocket
 import retrofit2.Response
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
     private val treasureApi: TreasureApi,
-    private val mSharedPreferences: Rocket,
-    private val prayerTimesDao: PrayerTimesDao
+    private val mSharedPreferences: Rocket
 ) {
     suspend fun makePrayerCallAsync(): Response<PrayerTimeResponse> =
         treasureApi.getPrayerTimesTodayAsync(
@@ -114,43 +111,33 @@ class HomeRepository @Inject constructor(
         mSharedPreferences.writeBoolean(COUNTRY_UPDATED, false)
     }
 
-    suspend fun isWorkerFired(): Boolean {
-        val prayerTimesBackgroundData = prayerTimesDao.selectAll()
-        val workerHasBeenFired = mSharedPreferences.readBoolean(WORKER_FIRED_KEY)
-        return prayerTimesBackgroundData.isNotEmpty() && workerHasBeenFired
-    }
-
-    suspend fun updateWorkerFired() {
-        mSharedPreferences.writeBoolean(WORKER_FIRED_KEY, true)
-    }
-
     suspend fun getHomeData(): ArrayList<HomePrayerTime> {
         return arrayListOf(
             HomePrayerTime(
                 "Fajr",
                 "${readFejrtime()} - ${readFinishFajrTime()}",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_fajr_sun
+                TRANSPARENT,
+                R.drawable.ic_fajr_colorful_sun
             ), HomePrayerTime(
                 "Dhuhr",
                 readDhuhrTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_dhuhr_sun
+                TRANSPARENT,
+                R.drawable.ic_dhuhr_colorful_sun
             ), HomePrayerTime(
                 "Asr",
                 readAsrTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_asr_sun
+                TRANSPARENT,
+                R.drawable.ic_asr_colorful_sun
             ), HomePrayerTime(
                 "Maghrib",
                 readMaghribTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_magrib_sun
+                TRANSPARENT,
+                R.drawable.ic_maghrib_colorful_sun
             ), HomePrayerTime(
                 "Isha",
                 readIshaTime() ?: "",
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) DARK_BACKGROUND else WHITE_BACKGROUND,
-                R.drawable.ic_isha_sun
+                TRANSPARENT,
+                R.drawable.ic_isha_moon
             )
         )
     }

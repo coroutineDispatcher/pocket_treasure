@@ -53,19 +53,7 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
-<!--    <fragment-->
-<!--            android:id="@+id/newsFragment"-->
-<!--            android:name="com.stavro_xhardha.pockettreasure.ui.news.NewsFragment"-->
-<!--            android:label="News"-->
-<!--            tools:layout="@layout/fragment_news">-->
-<!--        <action-->
-<!--                android:id="@+id/action_newsFragment_to_articleWebViewFragment"-->
-<!--                app:destination="@id/articleWebViewFragment"-->
-<!--                app:enterAnim="@anim/nav_default_enter_anim"-->
-<!--                app:exitAnim="@anim/nav_default_exit_anim"-->
-<!--                app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
-<!--                app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
-<!--    </fragment>-->
+
     <fragment
             android:id="@+id/settingsFragment"
             android:name="com.stavro_xhardha.pockettreasure.ui.settings.SettingsFragment"
@@ -76,16 +64,6 @@
             android:name="com.stavro_xhardha.pockettreasure.ui.setup.SetupFragment"
             android:label="Pick country"
             tools:layout="@layout/fragment_setup"/>
-    <fragment
-            android:id="@+id/articleWebViewFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.news.ArticleWebViewFragment"
-            android:label="Post Details"
-            tools:layout="@layout/fragment_article_web_view">
-        <argument
-                android:name="url"
-                android:defaultValue='""'
-                app:argType="string" />
-    </fragment>
     <fragment
             android:id="@+id/fullImageFragment"
             android:name="com.stavro_xhardha.pockettreasure.ui.gallery.full_image.FullImageFragment"

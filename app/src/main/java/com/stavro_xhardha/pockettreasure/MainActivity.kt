@@ -67,6 +67,10 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         setupActionBar(navController, appBarConfiguration)
 
         setupNavControllerListener(navController)
+
+        sharedViewModel.onToolbarTitleRemoveRequested.observe(this, Observer {
+            toolbar.title = ""
+        })
     }
 
     private fun initMainViewModel() {

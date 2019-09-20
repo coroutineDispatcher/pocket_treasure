@@ -7,16 +7,12 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.background.PrayerTimeWorkManager
 import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
 import com.stavro_xhardha.pockettreasure.brain.PLAY_STORE_URL
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.util.concurrent.TimeUnit
 
 class HomeFragment : Fragment() {
 
@@ -69,7 +65,7 @@ class HomeFragment : Fragment() {
         startActivity(Intent.createChooser(sharingIntent, resources.getString(R.string.share_via)))
     }
 
-    fun observeTheLiveData() {
+    private fun observeTheLiveData() {
         homeViewModel.homeData.observe(this, Observer {
             homeAdapter.submitList(it)
             rvHomePrayerTimes.adapter = homeAdapter
@@ -84,16 +80,6 @@ class HomeFragment : Fragment() {
 
         homeViewModel.progressBarVisibility.observe(this, Observer {
             pbHome.visibility = it
-        })
-
-        homeViewModel.workManagerHasBeenFired.observe(this, Observer {
-            if (!it) {
-                val compressionWork =
-                    PeriodicWorkRequestBuilder<PrayerTimeWorkManager>(6, TimeUnit.HOURS)
-                        .build()
-                WorkManager.getInstance(requireActivity()).enqueue(compressionWork)
-                homeViewModel.updateWorkManagerFiredState()
-            }
         })
     }
 }
