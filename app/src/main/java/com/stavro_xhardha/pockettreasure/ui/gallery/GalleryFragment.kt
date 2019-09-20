@@ -5,28 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.Status
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
-class GalleryFragment : BaseFragment(), GalleryContract {
+class GalleryFragment : Fragment(), GalleryContract {
     private val picasso by lazy {
-        component.picasso
+        PocketTreasureApplication.getPocketTreasureComponent().picasso
     }
 
     private val galleryAdapter by lazy {
         GalleryAdapter(this, picasso)
     }
 
-    private val galleryViewModel by viewModel { component.galleryViewModelFactory.create(it) }
+    private val galleryViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().galleryViewModelFactory.create(it)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +40,13 @@ class GalleryFragment : BaseFragment(), GalleryContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                view.findNavController().popBackStack(R.id.homeFragment, false)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    view.findNavController().popBackStack(R.id.homeFragment, false)
+                }
+            })
         initializeComponents()
         observeTheLiveData()
     }

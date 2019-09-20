@@ -35,16 +35,14 @@ class HomeViewModel @AssistedInject constructor(
     private val _progressBarVisibility = MutableLiveData<Int>()
     private val _showErrorToast = MutableLiveData<Boolean>()
     private val _contentVisibility = MutableLiveData<Int>()
+    private val _workManagerHasBeenFired = MutableLiveData<Boolean>()
 
     val progressBarVisibility: LiveData<Int> = _progressBarVisibility
     val showErrorToast: LiveData<Boolean> = _showErrorToast
     val contentVisibility: LiveData<Int> = _contentVisibility
     val homeData: LiveData<ArrayList<HomePrayerTime>> = savedStateHandle.getLiveData(HOME_DATA_LIST)
 
-    val workManagerHasBeenFired: LiveData<Boolean> = liveData {
-        val isWorkerFired = homeRepository.isWorkerFired()
-        emit(isWorkerFired)
-    }
+    val workManagerHasBeenFired: LiveData<Boolean> = _workManagerHasBeenFired
 
     fun loadPrayerTimes() {
         viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
@@ -83,6 +81,12 @@ class HomeViewModel @AssistedInject constructor(
         val homePrayerData = homeRepository.getHomeData()
         findCurrentTime(homePrayerData)
         switchProgressBarOff()
+        checkWorkManager()
+    }
+
+    private suspend fun checkWorkManager() {
+        val isWorkerFired = homeRepository.isWorkerFired()
+        _workManagerHasBeenFired.postValue(isWorkerFired)
     }
 
     private fun findCurrentTime(homePrayerData: ArrayList<HomePrayerTime>) {

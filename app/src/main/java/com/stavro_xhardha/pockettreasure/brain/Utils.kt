@@ -10,10 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.Constraints
-import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.stavro_xhardha.pockettreasure.BuildConfig
@@ -123,20 +119,7 @@ fun decrementIdlingResource() {
 }
 
 fun startPrayerTimesWorkManager(context: Context) {
-    val constraints = Constraints.Builder()
-        .setRequiredNetworkType(NetworkType.CONNECTED)
-        .build()
-    val compressionWork = OneTimeWorkRequestBuilder<PrayerTimeWorkManager>()
-        .setConstraints(constraints)
-        .build()
 
-    WorkManager.getInstance(context).enqueue(compressionWork)
-}
-
-val MIGRATION_1_2 = object : Migration(1, 2) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS countries")
-    }
 }
 
 inline fun <reified T : ViewModel> Fragment.viewModel(

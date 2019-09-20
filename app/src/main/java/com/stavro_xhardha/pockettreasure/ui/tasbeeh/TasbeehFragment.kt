@@ -4,14 +4,14 @@ package com.stavro_xhardha.pockettreasure.ui.tasbeeh
 import android.os.Bundle
 import android.view.*
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import kotlinx.android.synthetic.main.fragment_tasbeeh.*
 
-class TasbeehFragment : BaseFragment() {
+class TasbeehFragment : Fragment() {
 
     private val tasbeehViewModel by lazy {
         ViewModelProviders.of(this).get(TasbeehViewModel::class.java)

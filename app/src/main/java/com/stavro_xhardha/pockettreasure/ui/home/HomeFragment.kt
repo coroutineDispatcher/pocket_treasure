@@ -5,19 +5,25 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.pockettreasure.background.PrayerTimeWorkManager
 import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
 import com.stavro_xhardha.pockettreasure.brain.PLAY_STORE_URL
-import com.stavro_xhardha.pockettreasure.brain.startPrayerTimesWorkManager
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.concurrent.TimeUnit
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : Fragment() {
 
-    private val homeViewModel by viewModel { component.homeViewModelFactory.create(it) }
-    private val picasso = component.picasso
+    private val homeViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().homeViewModelFactory.create(it)
+    }
+    private val picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso
     private var homeAdapter: HomeAdapter = HomeAdapter(picasso)
 
     override fun onCreateView(
@@ -82,7 +88,10 @@ class HomeFragment : BaseFragment() {
 
         homeViewModel.workManagerHasBeenFired.observe(this, Observer {
             if (!it) {
-                startPrayerTimesWorkManager(requireActivity())
+                val compressionWork =
+                    PeriodicWorkRequestBuilder<PrayerTimeWorkManager>(6, TimeUnit.HOURS)
+                        .build()
+                WorkManager.getInstance(requireActivity()).enqueue(compressionWork)
                 homeViewModel.updateWorkManagerFiredState()
             }
         })

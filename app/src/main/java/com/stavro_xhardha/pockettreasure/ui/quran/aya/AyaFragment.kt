@@ -6,22 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_aya.*
 
-class AyaFragment : BaseFragment(), AyaContract {
+class AyaFragment : Fragment(), AyaContract {
 
     private val mediaPlayer: MediaPlayer by lazy {
-        component.mediaPlayer
+        PocketTreasureApplication.getPocketTreasureComponent().mediaPlayer
     }
 
-    private val ayaViewModel by viewModel { component.ayaViewModelFactory.create(it) }
+    private val ayaViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().ayaViewModelFactory.create(it)
+    }
 
     private val ayasAdapter by lazy {
         AyasAdapter(mediaPlayer, this)
@@ -40,6 +43,7 @@ class AyaFragment : BaseFragment(), AyaContract {
         super.onViewCreated(view, savedInstanceState)
 
         if (args.surahsNumber == 9) {
+            //todo switch to events
             requireActivity().toolbar.title = ""
         }
     }

@@ -6,17 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_names.*
 
-class NamesFragment : BaseFragment() {
+class NamesFragment : Fragment() {
 
-    private val namesViewModel by viewModel { component.namesViewModelFactory.create(it) }
+    private val namesViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().namesViewModelFactory.create(it)
+    }
 
     private val namesAdapter by lazy {
         NamesAdapter()

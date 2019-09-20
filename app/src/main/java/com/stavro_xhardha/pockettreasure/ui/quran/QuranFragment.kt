@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -13,15 +14,17 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
-import com.stavro_xhardha.pockettreasure.BaseFragment
+import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_quran.*
 
-class QuranFragment : BaseFragment(), QuranAdapterContract {
+class QuranFragment : Fragment(), QuranAdapterContract {
 
-    private val quranViewModel by viewModel { component.quranViewModelFactory.create(it) }
+    private val quranViewModel by viewModel {
+        PocketTreasureApplication.getPocketTreasureComponent().quranViewModelFactory.create(it)
+    }
     private lateinit var compressionWork: WorkRequest
 
     private val quranAdapter by lazy {

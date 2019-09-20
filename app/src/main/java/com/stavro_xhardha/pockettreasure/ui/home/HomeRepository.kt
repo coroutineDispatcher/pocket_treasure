@@ -90,35 +90,17 @@ class HomeRepository @Inject constructor(
         mSharedPreferences.writeString(SUNRISE_KEY, sunrise)
     }
 
-    suspend fun readMonthSection(): String? {
-        val hijriDay = mSharedPreferences.readString(HIRJI_DAY_OF_MONTH_KEY)
-        val hijriMonthName = mSharedPreferences.readString(HIJRI_MONTH_NAME_KEY)
-        val hijriYear = mSharedPreferences.readString(HIJRI_YEAR_KEY)
-        val gregorianDay = mSharedPreferences.readInt(GREGORIAN_DAY_KEY)
-        val gregorianMonth = mSharedPreferences.readString(GREGORIAN_MONTH_NAME_KEY)
-        val gregorianYear = mSharedPreferences.readInt(GREGORIAN_YEAR_KEY)
+    private suspend fun readFejrtime(): String? = mSharedPreferences.readString(FAJR_KEY)
 
-        return " $hijriDay $hijriMonthName $hijriYear / $gregorianDay $gregorianMonth $gregorianYear"
-    }
+    private suspend fun readDhuhrTime(): String? = mSharedPreferences.readString(DHUHR_KEY)
 
-    suspend fun readLocationSection(): String? {
-        val capitalCity = mSharedPreferences.readString(CAPITAL_SHARED_PREFERENCES_KEY)
-        val country = mSharedPreferences.readString(COUNTRY_SHARED_PREFERENCE_KEY)
+    private suspend fun readAsrTime(): String? = mSharedPreferences.readString(ASR_KEY)
 
-        return " $capitalCity, $country"
-    }
+    private suspend fun readMaghribTime(): String? = mSharedPreferences.readString(MAGHRIB_KEY)
 
-    suspend fun readFejrtime(): String? = mSharedPreferences.readString(FAJR_KEY)
+    private suspend fun readIshaTime(): String? = mSharedPreferences.readString(ISHA_KEY)
 
-    suspend fun readDhuhrTime(): String? = mSharedPreferences.readString(DHUHR_KEY)
-
-    suspend fun readAsrTime(): String? = mSharedPreferences.readString(ASR_KEY)
-
-    suspend fun readMaghribTime(): String? = mSharedPreferences.readString(MAGHRIB_KEY)
-
-    suspend fun readIshaTime(): String? = mSharedPreferences.readString(ISHA_KEY)
-
-    suspend fun readFinishFajrTime(): String? = mSharedPreferences.readString(SUNRISE_KEY)
+    private suspend fun readFinishFajrTime(): String? = mSharedPreferences.readString(SUNRISE_KEY)
 
     suspend fun getCurrentRegisteredDay(): Int = mSharedPreferences.readInt(GREGORIAN_DAY_KEY)
 
