@@ -12,4 +12,7 @@ interface SurahsDao {
 
     @Insert
     suspend fun insertSurah(surah: Surah)
+
+    @Query("Delete FROM surahs")
+    suspend fun deleteAllSurahs()
 }

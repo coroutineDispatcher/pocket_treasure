@@ -9,6 +9,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import com.stavro_xhardha.pockettreasure.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
@@ -18,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_quran.*
 class QuranFragment : BaseFragment(), QuranAdapterContract {
 
     private val quranViewModel by viewModel { component.quranViewModelFactory.create(it) }
+    private lateinit var compressionWork: WorkRequest
 
     private val quranAdapter by lazy {
         QuranAdapter(this)
@@ -32,11 +37,13 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                view.findNavController().popBackStack(R.id.homeFragment, false)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    view.findNavController().popBackStack(R.id.homeFragment, false)
+                }
+            })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -46,10 +53,30 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
     }
 
     fun initializeComponents() {
+        startQuranWorker()
         rvSuras.adapter = quranAdapter
         btnRetry.setOnClickListener {
-            quranViewModel.startQuranImplementation()
+            startQuranWorker()
         }
+    }
+
+    private fun startQuranWorker() {
+        quranViewModel.showProgress()
+
+        compressionWork = OneTimeWorkRequestBuilder<QuranWorker>().build()
+
+        WorkManager.getInstance(requireActivity()).enqueue(compressionWork)
+
+        WorkManager.getInstance(requireActivity()).getWorkInfoByIdLiveData(compressionWork.id)
+            .observe(this, Observer {
+                if (it != null && it.state == WorkInfo.State.SUCCEEDED) {
+                    quranViewModel.startQuranDatabaseCall()
+                } else {
+                    if (it != null && it.state == WorkInfo.State.FAILED) {
+                        quranViewModel.showError()
+                    }
+                }
+            })
     }
 
     fun observeTheLiveData() {
@@ -73,5 +100,10 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
     override fun onSurahClicked(surahsNumber: Int) {
         val action = QuranFragmentDirections.actionQuranFragmentToAyaFragment(surahsNumber)
         findNavController().navigate(action)
+    }
+
+    override fun onDestroy() {
+        WorkManager.getInstance(requireActivity()).cancelWorkById(compressionWork.id)
+        super.onDestroy()
     }
 }

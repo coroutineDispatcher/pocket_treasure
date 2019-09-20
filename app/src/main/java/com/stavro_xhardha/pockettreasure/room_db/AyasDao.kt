@@ -16,4 +16,7 @@ interface AyasDao {
 
     @Insert
     suspend fun insertAya(aya: Aya)
+
+    @Query("DELETE FROM ayas")
+    suspend fun deleteAllAyas()
 }

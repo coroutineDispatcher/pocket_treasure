@@ -43,7 +43,7 @@ interface PocketTreasureComponent {
 
     val setupViewModelFactory: SetupViewModel.Factory
 
-    val getTreasureApi: TreasureApi
+    val treasureApi: TreasureApi
 
     val getSharedPreferences: Rocket
 

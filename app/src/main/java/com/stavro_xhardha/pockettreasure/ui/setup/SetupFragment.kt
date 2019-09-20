@@ -29,7 +29,6 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
     private lateinit var sharedViewModel: SharedViewModel
 
     private val locationTracker by lazy {
-        //todo singleton
         LocationTracker(requireActivity(), this)
     }
 

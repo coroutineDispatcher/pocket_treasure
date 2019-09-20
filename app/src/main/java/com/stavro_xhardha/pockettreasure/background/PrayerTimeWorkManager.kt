@@ -99,7 +99,7 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
 
     private fun instantiateDependencies() {
         val application = PocketTreasureApplication.getPocketTreasureComponent()
-        treasureApi = application.getTreasureApi
+        treasureApi = application.treasureApi
         rocket = application.getSharedPreferences
         treasureDatabase = application.treasureDatabase
         prayerTimesDao = treasureDatabase.prayerTimesDao()

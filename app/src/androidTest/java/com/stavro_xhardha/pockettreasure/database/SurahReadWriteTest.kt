@@ -19,11 +19,14 @@ class SurahReadWriteTest {
 
     private lateinit var surahsDao: SurahsDao
     private lateinit var treasureDatabase: TreasureDatabase
+    private val surah = Surah(1, "Abc", "Def", "Ghi", "Jkl", listOf())
+
 
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        treasureDatabase = Room.inMemoryDatabaseBuilder(context, TreasureDatabase::class.java).build()
+        treasureDatabase =
+            Room.inMemoryDatabaseBuilder(context, TreasureDatabase::class.java).build()
         surahsDao = treasureDatabase.surahsDao()
     }
 
@@ -35,14 +38,23 @@ class SurahReadWriteTest {
     @Test
     @Throws(Exception::class)
     fun writeSurahAndReadIt() = runBlocking {
-        //Arrange
-        val surah = Surah(1, "Abc", "Def", "Ghi", "Jkl", listOf())
-
         //Act
         surahsDao.insertSurah(surah)
         val insertedSurah = surahsDao.getAllSuras()
 
         //Assert
         assertEquals(listOf(surah), insertedSurah)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun deleteSurahTest() = runBlocking {
+        //Act
+        surahsDao.insertSurah(surah)
+        surahsDao.deleteAllSurahs()
+        val insertedSurah = surahsDao.getAllSuras()
+
+        //Assert
+        assertEquals(insertedSurah, listOf<Surah>())
     }
 }
