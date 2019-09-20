@@ -61,8 +61,6 @@ class SettingsFragment : Fragment(), LocationTrackerListener {
     }
 
     private fun initializeComponents() {
-        locationTracker = LocationTracker(requireActivity(), this)
-
         swFajr.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.onSwFajrClick(isChecked)
         }
@@ -84,6 +82,7 @@ class SettingsFragment : Fragment(), LocationTrackerListener {
         }
 
         llLocation.setOnClickListener {
+            locationTracker = LocationTracker(requireActivity(), this)
             locationTracker?.startLocationRequestProcess()
         }
 
