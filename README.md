@@ -3,3 +3,9 @@ Just another Android app for my muslim brothers. You can use this app also as an
 App screenshots:
 
 <img src="app_screenshots/Screenshot_20190921-232330__01__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232330__01__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232330__01__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232330__01__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232330__01__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232330__01__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232330__01__01.jpg" width = 100/>
