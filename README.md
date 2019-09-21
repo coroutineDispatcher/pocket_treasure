@@ -8,3 +8,5 @@ App screenshots:
 <img src="app_screenshots/Screenshot_20190921-232350__01.jpg" width = 100/>
 <img src="app_screenshots/Screenshot_20190921-232355__01.jpg" width = 100/>
 <img src="app_screenshots/Screenshot_20190921-232412__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232420__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232424__01__01.jpg" width = 100/>
