@@ -17,8 +17,7 @@ Just another Android app for my muslim brothers. You can use this app also as an
 
 ## Light mode
 
-<img src="app_screenshots/Screenshot_20190921-232448__01.jpg" width = 100/>
-<img src="app_screenshots/Screenshot_20190921-232453__01.jpg" width = 100/>
+<img src="app_screenshots/Screenshot_20190921-232448__01.jpg" width = 100/><img src="app_screenshots/Screenshot_20190921-232453__01.jpg" width = 100/>
 <img src="app_screenshots/Screenshot_20190921-232456__01.jpg" width = 100/>
 <img src="app_screenshots/Screenshot_20190921-232500__01.jpg" width = 100/>
 <img src="app_screenshots/Screenshot_20190921-232503__01.jpg" width = 100/>
