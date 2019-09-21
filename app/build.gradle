@@ -19,8 +19,8 @@ android {
         applicationId "com.stavro_xhardha.pockettreasure"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 31
-        versionName "2.0.1"
+        versionCode 33
+        versionName "2.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
