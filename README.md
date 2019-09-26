@@ -1,6 +1,8 @@
 # pocket_treasure
 Just another Android app for my muslim brothers. You can use this app also as an MVVM example or check all used Android Architecture Components. I tried following the best practices around.
 
+<a href="https://www.buymeacoffee.com/pnRYZ5qBy" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
 ## App screenshots:
 
 ## Dark Mode
