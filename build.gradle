@@ -9,7 +9,7 @@ buildscript {
     }
 
     ext {
-        navigationVersion = "2.2.0-alpha02"
+        navigationVersion = "2.2.0-alpha03"
         appCompatVersion = "1.1.0"
         recyclerVersion = "1.1.0-alpha05"
         materialVersion = "1.1.0-alpha05"
@@ -17,11 +17,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-alpha02"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-alpha03"
         // Check for v3.1.2 or higher
-        classpath 'com.google.gms:google-services:4.3.1'
+        classpath 'com.google.gms:google-services:4.3.2'
 
         // Add dependency
         classpath 'io.fabric.tools:gradle:1.31.0'
