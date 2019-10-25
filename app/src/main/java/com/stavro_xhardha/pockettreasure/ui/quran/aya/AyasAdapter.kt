@@ -28,19 +28,19 @@ class AyasAdapter(val mediaPlayer: MediaPlayer, val ayaContract: AyaContract) :
             mediaPlayer: MediaPlayer,
             ayaContract: AyaContract
         ) = with(itemView) {
-            if (aya?.ayatText!!.contains(FIRST_SURAH_SENTENCE) && aya.surahNumber != 1) {
-                val newAya = aya.ayatText.substring(FIRST_SURAH_SENTENCE.length, aya.ayatText.length)
+            if (aya?.text!!.contains(FIRST_SURAH_SENTENCE) && aya.surahNumber != 1) {
+                val newAya = aya.text.substring(FIRST_SURAH_SENTENCE.length, aya.text.length)
                 tvAyaText.text = newAya
             } else
-                tvAyaText.text = aya.ayatText
+                tvAyaText.text = aya.text
 
-            tvAyaNumber.text = aya.ayatNumber.toString()
+            tvAyaNumber.text = aya.numberInSurah.toString()
 
             ivPlayImage.setOnClickListener {
                 if (!mediaPlayer.isPlaying) {
                     try {
-                        val audioUrl = if (aya.audioUrl.contains("https")) aya.audioUrl else
-                            aya.audioUrl.replace("http", "https")
+                        val audioUrl = if (aya.audio.contains("https")) aya.audio else
+                            aya.audio.replace("http", "https")
                         mediaPlayer.setDataSource(audioUrl)
                         mediaPlayer.prepareAsync()
 

@@ -1,11 +1,9 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PrayerTimeData(
-    @SerializedName("timings")
     val timings: PrayerTiming,
-
-    @SerializedName("date")
     val date: PrayerDate
 )

@@ -1,14 +1,11 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UnsplashLink(
-    @SerializedName("self")
-    val selfUrl: String,
-    @SerializedName("html")
-    val htmlUrl: String,
-    @SerializedName("download")
-    val downloadUrl: String,
-    @SerializedName("download_location")
-    val downloadLocationUrl: String
+    val self: String,
+    val html: String,
+    val download: String,
+    val download_location: String
 )

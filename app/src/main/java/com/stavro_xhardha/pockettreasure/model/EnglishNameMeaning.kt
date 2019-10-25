@@ -1,5 +1,6 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
-data class EnglishNameMeaning(@SerializedName("meaning") val meaning: String)
+@Serializable
+data class EnglishNameMeaning(val meaning: String)

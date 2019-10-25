@@ -1,18 +1,11 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PrayerDate(
-    @SerializedName("readable")
-    val readableDate: String,
-
-    @SerializedName("timestamp")
+    val readable: String,
     val timestamp: String,
-
-    @SerializedName("hijri")
-    val hijriPrayerDate: HijriDate,
-
-    @SerializedName("gregorian")
-    val gregorianDate: GregorianDate
-
+    val hijri: HijriDate,
+    val gregorian: GregorianDate
 )

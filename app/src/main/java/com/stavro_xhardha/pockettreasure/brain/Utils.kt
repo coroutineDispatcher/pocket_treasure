@@ -26,8 +26,8 @@ val DIFF_UTIL_AYA = object : DiffUtil.ItemCallback<Aya>() {
     override fun areItemsTheSame(oldItem: Aya, newItem: Aya): Boolean = oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: Aya, newItem: Aya): Boolean =
-        oldItem.ayatText == newItem.ayatText
-                && oldItem.audioUrl == newItem.audioUrl
+        oldItem.text == newItem.text
+                && oldItem.audio == newItem.audio
                 && oldItem.id == newItem.id
 
 }
@@ -38,8 +38,8 @@ val DIFF_UTIL_GALLERY = object : DiffUtil.ItemCallback<UnsplashResult>() {
 
     override fun areContentsTheSame(oldItem: UnsplashResult, newItem: UnsplashResult): Boolean =
         oldItem.id == newItem.id && oldItem.description == newItem.description
-                && oldItem.altDescription == newItem.description
-                && oldItem.photoUrls == newItem.photoUrls
+                && oldItem.alt_description == newItem.alt_description
+                && oldItem.urls == newItem.urls
 }
 
 val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
@@ -52,11 +52,11 @@ val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
 
 val DIFF_UTIL_NAMES = object : DiffUtil.ItemCallback<Name>() {
     override fun areItemsTheSame(oldItem: Name, newItem: Name): Boolean =
-        oldItem.arabicName == newItem.arabicName
+        oldItem.name == newItem.name
 
     override fun areContentsTheSame(oldItem: Name, newItem: Name): Boolean {
-        return oldItem.arabicName == newItem.arabicName
-                && oldItem.englishNameMeaning == newItem.englishNameMeaning
+        return oldItem.name == newItem.name
+                && oldItem.en == newItem.en
                 && oldItem.number == newItem.number
                 && oldItem.transliteration == newItem.transliteration
     }
@@ -64,14 +64,14 @@ val DIFF_UTIL_NAMES = object : DiffUtil.ItemCallback<Name>() {
 
 val DIFF_UTIL_QURAN = object : DiffUtil.ItemCallback<Surah>() {
     override fun areItemsTheSame(oldItem: Surah, newItem: Surah): Boolean =
-        oldItem.surahNumber == newItem.surahNumber
+        oldItem.number == newItem.number
 
     override fun areContentsTheSame(oldItem: Surah, newItem: Surah): Boolean =
         oldItem.englishName == newItem.englishName
-                && oldItem.englishTranslation == newItem.englishTranslation
-                && oldItem.surahArabicName == newItem.surahArabicName
+                && oldItem.englishNameTranslation == newItem.englishNameTranslation
+                && oldItem.name == newItem.name
                 && oldItem.revelationType == newItem.revelationType
-                && oldItem.surahNumber == newItem.surahNumber
+                && oldItem.number == newItem.number
 
 }
 

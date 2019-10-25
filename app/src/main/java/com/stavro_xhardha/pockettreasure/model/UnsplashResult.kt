@@ -1,18 +1,13 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UnsplashResult(
-    @SerializedName("id")
     val id: String,
-    @SerializedName("description")
     val description: String?,
-    @SerializedName("alt_description")
-    val altDescription: String?,
-    @SerializedName("urls")
-    val photoUrls: UnsplashUrl,
-    @SerializedName("links")
+    val alt_description: String?,
+    val urls: UnsplashUrl,
     val links: UnsplashLink,
-    @SerializedName("user")
     val user: UnsplashUser
 )

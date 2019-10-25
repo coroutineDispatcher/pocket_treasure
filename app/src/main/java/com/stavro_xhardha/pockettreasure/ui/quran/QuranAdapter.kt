@@ -27,12 +27,12 @@ class QuranAdapter(private val quranAdapterContract: QuranAdapterContract) :
             quranAdapterContract: QuranAdapterContract
         ) {
             with(itemView) {
-                tvSurahTitle.text = "${surah?.surahNumber}. ${surah?.englishName}"
+                tvSurahTitle.text = "${surah?.number}. ${surah?.englishName}"
                 tvRelevation.text = "Relevation: ${surah?.revelationType}"
-                tvarabicSurahName.text = "${surah?.surahArabicName}"
+                tvarabicSurahName.text = "${surah?.name}"
 
                 cvSurah.setOnClickListener {
-                    surah?.surahNumber?.let { clickedSurah -> quranAdapterContract.onSurahClicked(clickedSurah) }
+                    surah?.number?.let { clickedSurah -> quranAdapterContract.onSurahClicked(clickedSurah) }
                 }
             }
         }

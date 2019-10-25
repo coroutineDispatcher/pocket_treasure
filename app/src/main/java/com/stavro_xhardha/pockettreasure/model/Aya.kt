@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
 @Entity(
     tableName = "ayas",
@@ -16,24 +16,21 @@ import com.google.gson.annotations.SerializedName
         onDelete = CASCADE
     )]
 )
+@Serializable
 data class Aya(
     @ColumnInfo(name = "aya_id")
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 
-    @SerializedName("audio")
     @ColumnInfo(name = "audio_url")
-    val audioUrl: String,
+    val audio: String,
 
-    @SerializedName("text")
     @ColumnInfo(name = "ayat_text")
-    val ayatText: String,
+    val text: String,
 
-    @SerializedName("numberInSurah")
     @ColumnInfo(name = "ayat_number")
-    val ayatNumber: Int,
+    val numberInSurah: Int,
 
-    @SerializedName("juz")
     @ColumnInfo(name = "juz_number")
     val juz: Int,
 

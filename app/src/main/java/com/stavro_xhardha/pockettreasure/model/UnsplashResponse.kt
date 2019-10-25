@@ -1,12 +1,10 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UnsplashResponse(
-    @SerializedName("total")
     val total: Int,
-    @SerializedName("total_pages")
-    val totalPages: Int,
-    @SerializedName("results")
+    val total_pages: Int,
     val results: List<UnsplashResult>
 )

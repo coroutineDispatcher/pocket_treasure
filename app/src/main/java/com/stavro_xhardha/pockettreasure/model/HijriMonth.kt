@@ -1,11 +1,9 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class HijriMonth(
-    @SerializedName("number")
     val number: Int,
-
-    @SerializedName("en")
-    val monthNameInEnglish: String
+    val en: String
 )

@@ -41,16 +41,16 @@ class GalleryAdapter(
             with(itemView) {
                 val currentImageView = ivUnsplashImage
                 if (currentImageView != null) {
-                    picasso.load(unsplashResult?.photoUrls?.thumbnailUrl)
+                    picasso.load(unsplashResult?.urls?.thumb)
                         .fit()
                         .error(R.drawable.img_placeholder)
                         .placeholder(R.drawable.img_placeholder)
                         .into(currentImageView)
 
                     tvImageDescription.text =
-                        "By ${unsplashResult?.user?.userFullName ?: "Anonymous"}"
+                        "By ${unsplashResult?.user?.name ?: "Anonymous"}"
                     flImageHolder.setOnClickListener {
-                        contract.onImageHolderClicked(unsplashResult?.photoUrls?.raw!!)
+                        contract.onImageHolderClicked(unsplashResult?.urls?.raw!!)
                     }
                 }
             }
