@@ -1,12 +1,14 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class UnsplashResponse(
-    @SerializedName("total")
+    @Json(name ="total")
     val total: Int,
-    @SerializedName("total_pages")
+    @Json(name ="total_pages")
     val totalPages: Int,
-    @SerializedName("results")
+    @Json(name ="results")
     val results: List<UnsplashResult>
 )

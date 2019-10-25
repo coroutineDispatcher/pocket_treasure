@@ -1,11 +1,13 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class GregorianMonth(
-    @SerializedName("number")
+    @Json(name ="number")
     val number: Int,
 
-    @SerializedName("en")
+    @Json(name ="en")
     val monthNameInEnglish: String
 )

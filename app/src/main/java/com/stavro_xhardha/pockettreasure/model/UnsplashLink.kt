@@ -1,14 +1,16 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class UnsplashLink(
-    @SerializedName("self")
+    @Json(name ="self")
     val selfUrl: String,
-    @SerializedName("html")
+    @Json(name ="html")
     val htmlUrl: String,
-    @SerializedName("download")
+    @Json(name ="download")
     val downloadUrl: String,
-    @SerializedName("download_location")
+    @Json(name ="download_location")
     val downloadLocationUrl: String
 )

@@ -33,7 +33,7 @@ class NamesReadWrite {
 
     @Test
     fun nameReadWrite() = runBlocking {
-        val nameToInsert = Name("rahman", "rahman", 1, null, "no meaning")
+        val nameToInsert = Name("rahman", "rahman", 1, null, "no nameMeaning")
 
         namesDao.insertName(nameToInsert)
 

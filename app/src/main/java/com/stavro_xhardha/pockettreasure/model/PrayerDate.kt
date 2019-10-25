@@ -1,18 +1,19 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class PrayerDate(
-    @SerializedName("readable")
+    @Json(name = "readable")
     val readableDate: String,
 
-    @SerializedName("timestamp")
+    @Json(name = "timestamp")
     val timestamp: String,
 
-    @SerializedName("hijri")
+    @Json(name = "hijri")
     val hijriPrayerDate: HijriDate,
 
-    @SerializedName("gregorian")
+    @Json(name = "gregorian")
     val gregorianDate: GregorianDate
-
 )

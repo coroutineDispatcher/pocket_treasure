@@ -1,18 +1,20 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class UnsplashResult(
-    @SerializedName("id")
+    @Json(name ="id")
     val id: String,
-    @SerializedName("description")
+    @Json(name ="description")
     val description: String?,
-    @SerializedName("alt_description")
+    @Json(name ="alt_description")
     val altDescription: String?,
-    @SerializedName("urls")
+    @Json(name ="urls")
     val photoUrls: UnsplashUrl,
-    @SerializedName("links")
+    @Json(name ="links")
     val links: UnsplashLink,
-    @SerializedName("user")
+    @Json(name ="user")
     val user: UnsplashUser
 )

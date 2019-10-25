@@ -1,8 +1,10 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class SurahResponse(
-    @SerializedName("surahs")
+    @Json(name ="surahs")
     val surahs: List<Surah>
 )

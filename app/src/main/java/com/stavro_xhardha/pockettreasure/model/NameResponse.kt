@@ -1,12 +1,14 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class NameResponse(
-    @SerializedName("code")
+    @Json(name ="code")
     val code: Int,
-    @SerializedName("status")
+    @Json(name ="status")
     val status: String,
-    @SerializedName("data")
-    val data: ArrayList<Name>
+    @Json(name ="data")
+    val data: List<Name>
 )

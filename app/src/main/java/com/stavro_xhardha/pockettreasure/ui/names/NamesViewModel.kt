@@ -78,7 +78,7 @@ class NamesViewModel @AssistedInject constructor(
         }
     }
 
-    private suspend fun saveNameToDatabase(data: ArrayList<Name>?) {
+    private suspend fun saveNameToDatabase(data: List<Name>?) {
         data?.forEach {
             repository.saveToDatabase(
                 Name(

@@ -1,5 +1,7 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-data class EnglishNameMeaning(@SerializedName("meaning") val meaning: String)
+@JsonClass(generateAdapter = true)
+data class EnglishNameMeaning(@Json(name = "meaning") val meaning: String)

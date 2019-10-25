@@ -12,7 +12,7 @@ import com.stavro_xhardha.pockettreasure.brain.FIRST_SURAH_SENTENCE
 import com.stavro_xhardha.pockettreasure.model.Aya
 import kotlinx.android.synthetic.main.single_item_aya.view.*
 
-class AyasAdapter(val mediaPlayer: MediaPlayer, val ayaContract: AyaContract) :
+class AyasAdapter(private val mediaPlayer: MediaPlayer, private val ayaContract: AyaContract) :
     PagedListAdapter<Aya, AyasAdapter.AyasViewHolder>(DIFF_UTIL_AYA) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AyasViewHolder =

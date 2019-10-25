@@ -1,32 +1,34 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class PrayerTiming(
-    @SerializedName("Fajr")
+    @Json(name = "Fajr")
     val fajr: String,
 
-    @SerializedName("Sunrise")
+    @Json(name = "Sunrise")
     val sunrise: String,
 
-    @SerializedName("Dhuhr")
+    @Json(name = "Dhuhr")
     val dhuhr: String,
 
-    @SerializedName("Asr")
+    @Json(name = "Asr")
     val asr: String,
 
-    @SerializedName("Sunset")
+    @Json(name = "Sunset")
     val sunset: String,
 
-    @SerializedName("Maghrib")
+    @Json(name = "Maghrib")
     val magrib: String,
 
-    @SerializedName("Isha")
+    @Json(name = "Isha")
     val isha: String,
 
-    @SerializedName("Imsak")
+    @Json(name = "Imsak")
     val imsak: String,
 
-    @SerializedName("Midnight")
+    @Json(name = "Midnight")
     val midnight: String
 )

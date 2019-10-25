@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module(includes = [InterceptorModule::class])
 object NetworkModule {
@@ -15,14 +15,15 @@ object NetworkModule {
     @JvmStatic
     @Provides
     @ApplicationScope
-    fun provideTreasureApi(retrofit: Retrofit): TreasureApi = retrofit.create(TreasureApi::class.java)
+    fun provideTreasureApi(retrofit: Retrofit): TreasureApi =
+        retrofit.create(TreasureApi::class.java)
 
     @JvmStatic
     @Provides
     @ApplicationScope
     fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(PRAYER_API_BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create())
         .client(client)
         .build()
 }
