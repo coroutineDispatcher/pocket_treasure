@@ -1,9 +1,10 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class UnsplashUser(
+    @field:Json(name ="id")
     val id: String,
-    val name: String
+    @field:Json(name ="name")
+    val userFullName: String
 )

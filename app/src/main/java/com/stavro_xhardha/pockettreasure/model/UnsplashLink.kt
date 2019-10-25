@@ -1,11 +1,14 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class UnsplashLink(
-    val self: String,
-    val html: String,
-    val download: String,
-    val download_location: String
+    @field:Json(name ="self")
+    val selfUrl: String,
+    @field:Json(name ="html")
+    val htmlUrl: String,
+    @field:Json(name ="download")
+    val downloadUrl: String,
+    @field:Json(name ="download_location")
+    val downloadLocationUrl: String
 )

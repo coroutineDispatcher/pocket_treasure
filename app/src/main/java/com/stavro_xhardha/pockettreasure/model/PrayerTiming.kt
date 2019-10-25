@@ -1,16 +1,32 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 class PrayerTiming(
-    val Fajr: String,
-    val Sunrise: String,
-    val Dhuhr: String,
-    val Asr: String,
-    val Sunset: String,
-    val Maghrib: String,
-    val Isha: String,
-    val Imsak: String,
-    val Midnight: String
+    @field:Json(name = "Fajr")
+    val fajr: String,
+
+    @field:Json(name = "Sunrise")
+    val sunrise: String,
+
+    @field:Json(name = "Dhuhr")
+    val dhuhr: String,
+
+    @field:Json(name = "Asr")
+    val asr: String,
+
+    @field:Json(name = "Sunset")
+    val sunset: String,
+
+    @field:Json(name = "Maghrib")
+    val magrib: String,
+
+    @field:Json(name = "Isha")
+    val isha: String,
+
+    @field:Json(name = "Imsak")
+    val imsak: String,
+
+    @field:Json(name = "Midnight")
+    val midnight: String
 )

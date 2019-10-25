@@ -1,11 +1,17 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class PrayerDate(
-    val readable: String,
+    @field:Json(name = "readable")
+    val readableDate: String,
+
+    @field:Json(name = "timestamp")
     val timestamp: String,
-    val hijri: HijriDate,
-    val gregorian: GregorianDate
+
+    @field:Json(name = "hijri")
+    val hijriPrayerDate: HijriDate,
+
+    @field:Json(name = "gregorian")
+    val gregorianDate: GregorianDate
 )

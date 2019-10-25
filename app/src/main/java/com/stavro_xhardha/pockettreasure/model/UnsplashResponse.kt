@@ -1,10 +1,12 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class UnsplashResponse(
+    @field:Json(name ="total")
     val total: Int,
-    val total_pages: Int,
+    @field:Json(name ="total_pages")
+    val totalPages: Int,
+    @field:Json(name ="results")
     val results: List<UnsplashResult>
 )

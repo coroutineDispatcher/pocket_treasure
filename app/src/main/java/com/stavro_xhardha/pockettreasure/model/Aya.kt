@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
 @Entity(
     tableName = "ayas",
@@ -16,21 +16,24 @@ import kotlinx.serialization.Serializable
         onDelete = CASCADE
     )]
 )
-@Serializable
 data class Aya(
     @ColumnInfo(name = "aya_id")
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 
+    @field:Json(name ="audio")
     @ColumnInfo(name = "audio_url")
-    val audio: String,
+    val audioUrl: String,
 
+    @field:Json(name ="text")
     @ColumnInfo(name = "ayat_text")
-    val text: String,
+    val ayatText: String,
 
+    @field:Json(name ="numberInSurah")
     @ColumnInfo(name = "ayat_number")
-    val numberInSurah: Int,
+    val ayatNumber: Int,
 
+    @field:Json(name ="juz")
     @ColumnInfo(name = "juz_number")
     val juz: Int,
 

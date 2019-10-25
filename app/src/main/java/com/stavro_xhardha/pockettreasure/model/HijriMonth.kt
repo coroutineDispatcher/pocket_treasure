@@ -1,9 +1,11 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class HijriMonth(
+    @field:Json(name ="number")
     val number: Int,
-    val en: String
+
+    @field:Json(name ="en")
+    val monthNameInEnglish: String
 )

@@ -56,14 +56,14 @@ class QuranWorker(context: Context, workerParameters: WorkerParameters) :
     private suspend fun insertDataToDatabase(body: QuranResponse?) {
         body?.data?.surahs?.forEach { surah ->
             surahsDao.insertSurah(surah)
-            surah.ayahs.forEach { aya ->
+            surah.ayas.forEach { aya ->
                 val ayaHelper = Aya(
                     0,
-                    aya.audio,
-                    aya.text,
-                    aya.numberInSurah,
+                    aya.audioUrl,
+                    aya.ayatText,
+                    aya.ayatNumber,
                     aya.juz,
-                    surah.number
+                    surah.surahNumber
                 )
                 ayasDao.insertAya(ayaHelper)
             }

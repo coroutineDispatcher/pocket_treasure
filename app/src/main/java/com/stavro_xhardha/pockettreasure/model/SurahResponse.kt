@@ -1,8 +1,8 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class SurahResponse(
+    @field:Json(name ="surahs")
     val surahs: List<Surah>
 )

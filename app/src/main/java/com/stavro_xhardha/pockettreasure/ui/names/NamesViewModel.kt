@@ -82,10 +82,10 @@ class NamesViewModel @AssistedInject constructor(
         data?.forEach {
             repository.saveToDatabase(
                 Name(
-                    name = it.name,
+                    arabicName = it.arabicName,
                     number = it.number,
                     transliteration = it.transliteration,
-                    meaning = it.en?.meaning ?: ""
+                    meaning = it.englishNameMeaning?.meaning ?: ""
                 )
             )
         }

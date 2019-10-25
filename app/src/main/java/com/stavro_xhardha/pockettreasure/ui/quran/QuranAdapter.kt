@@ -11,7 +11,7 @@ import com.stavro_xhardha.pockettreasure.brain.DIFF_UTIL_QURAN
 import com.stavro_xhardha.pockettreasure.model.Surah
 import kotlinx.android.synthetic.main.single_item_surah.view.*
 
-class QuranAdapter(private val quranAdapterContract: QuranAdapterContract) :
+class QuranAdapter(val quranAdapterContract: QuranAdapterContract) :
     ListAdapter<Surah, QuranAdapter.QuranViewHolder>(DIFF_UTIL_QURAN) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuranViewHolder =
         QuranViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.single_item_surah, parent, false))
@@ -27,12 +27,12 @@ class QuranAdapter(private val quranAdapterContract: QuranAdapterContract) :
             quranAdapterContract: QuranAdapterContract
         ) {
             with(itemView) {
-                tvSurahTitle.text = "${surah?.number}. ${surah?.englishName}"
+                tvSurahTitle.text = "${surah?.surahNumber}. ${surah?.englishName}"
                 tvRelevation.text = "Relevation: ${surah?.revelationType}"
-                tvarabicSurahName.text = "${surah?.name}"
+                tvarabicSurahName.text = "${surah?.surahArabicName}"
 
                 cvSurah.setOnClickListener {
-                    surah?.number?.let { clickedSurah -> quranAdapterContract.onSurahClicked(clickedSurah) }
+                    surah?.surahNumber?.let { clickedSurah -> quranAdapterContract.onSurahClicked(clickedSurah) }
                 }
             }
         }

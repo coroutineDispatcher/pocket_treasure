@@ -21,7 +21,7 @@ class NamesAdapter : ListAdapter<Name, NamesAdapter.NamesViewHolder>(DIFF_UTIL_N
 
     class NamesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(name: Name) = with(itemView) {
-            itemView.tvArabicName.text = name.name
+            itemView.tvArabicName.text = name.arabicName
             itemView.tvMeaning.text = name.meaning
             itemView.tvTransliteration.text = name.transliteration
         }

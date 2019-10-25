@@ -12,7 +12,7 @@ import com.stavro_xhardha.pockettreasure.brain.FIRST_SURAH_SENTENCE
 import com.stavro_xhardha.pockettreasure.model.Aya
 import kotlinx.android.synthetic.main.single_item_aya.view.*
 
-class AyasAdapter(val mediaPlayer: MediaPlayer, val ayaContract: AyaContract) :
+class AyasAdapter(private val mediaPlayer: MediaPlayer, private val ayaContract: AyaContract) :
     PagedListAdapter<Aya, AyasAdapter.AyasViewHolder>(DIFF_UTIL_AYA) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AyasViewHolder =
@@ -28,19 +28,19 @@ class AyasAdapter(val mediaPlayer: MediaPlayer, val ayaContract: AyaContract) :
             mediaPlayer: MediaPlayer,
             ayaContract: AyaContract
         ) = with(itemView) {
-            if (aya?.text!!.contains(FIRST_SURAH_SENTENCE) && aya.surahNumber != 1) {
-                val newAya = aya.text.substring(FIRST_SURAH_SENTENCE.length, aya.text.length)
+            if (aya?.ayatText!!.contains(FIRST_SURAH_SENTENCE) && aya.surahNumber != 1) {
+                val newAya = aya.ayatText.substring(FIRST_SURAH_SENTENCE.length, aya.ayatText.length)
                 tvAyaText.text = newAya
             } else
-                tvAyaText.text = aya.text
+                tvAyaText.text = aya.ayatText
 
-            tvAyaNumber.text = aya.numberInSurah.toString()
+            tvAyaNumber.text = aya.ayatNumber.toString()
 
             ivPlayImage.setOnClickListener {
                 if (!mediaPlayer.isPlaying) {
                     try {
-                        val audioUrl = if (aya.audio.contains("https")) aya.audio else
-                            aya.audio.replace("http", "https")
+                        val audioUrl = if (aya.audioUrl.contains("https")) aya.audioUrl else
+                            aya.audioUrl.replace("http", "https")
                         mediaPlayer.setDataSource(audioUrl)
                         mediaPlayer.prepareAsync()
 

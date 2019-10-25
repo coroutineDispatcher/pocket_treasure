@@ -1,9 +1,11 @@
 package com.stavro_xhardha.pockettreasure.model
 
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class PrayerTimeData(
+    @field:Json(name ="timings")
     val timings: PrayerTiming,
+
+    @field:Json(name ="date")
     val date: PrayerDate
 )
