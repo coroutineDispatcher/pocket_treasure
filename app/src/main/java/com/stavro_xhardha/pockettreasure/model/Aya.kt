@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 @Entity(
     tableName = "ayas",
@@ -16,27 +17,30 @@ import com.squareup.moshi.Json
         onDelete = CASCADE
     )]
 )
+@JsonClass(generateAdapter = true)
 data class Aya(
     @ColumnInfo(name = "aya_id")
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @Transient
+    val id: Int = 0,
 
-    @field:Json(name ="audio")
+    @Json(name = "audio")
     @ColumnInfo(name = "audio_url")
     val audioUrl: String,
 
-    @field:Json(name ="text")
+    @Json(name = "text")
     @ColumnInfo(name = "ayat_text")
     val ayatText: String,
 
-    @field:Json(name ="numberInSurah")
+    @Json(name = "numberInSurah")
     @ColumnInfo(name = "ayat_number")
     val ayatNumber: Int,
 
-    @field:Json(name ="juz")
+    @Json(name = "juz")
     @ColumnInfo(name = "juz_number")
     val juz: Int,
 
     @ColumnInfo(name = "surahs_number", index = true)
-    val surahNumber: Int
+    @Transient
+    val surahNumber: Int = 0
 )

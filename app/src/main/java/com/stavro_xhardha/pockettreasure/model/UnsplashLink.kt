@@ -1,14 +1,16 @@
 package com.stavro_xhardha.pockettreasure.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class UnsplashLink(
-    @field:Json(name ="self")
+    @Json(name ="self")
     val selfUrl: String,
-    @field:Json(name ="html")
+    @Json(name ="html")
     val htmlUrl: String,
-    @field:Json(name ="download")
+    @Json(name ="download")
     val downloadUrl: String,
-    @field:Json(name ="download_location")
+    @Json(name ="download_location")
     val downloadLocationUrl: String
 )

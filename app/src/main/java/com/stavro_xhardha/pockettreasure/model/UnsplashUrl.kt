@@ -1,14 +1,16 @@
 package com.stavro_xhardha.pockettreasure.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class UnsplashUrl(
-    @field:Json(name = "raw")
+    @Json(name = "raw")
     val raw: String,
-    @field:Json(name = "full")
+    @Json(name = "full")
     val fullUrl: String,
-    @field:Json(name = "regular")
+    @Json(name = "regular")
     val regularUrl: String,
-    @field:Json(name = "thumb")
+    @Json(name = "thumb")
     val thumbnailUrl: String
 )

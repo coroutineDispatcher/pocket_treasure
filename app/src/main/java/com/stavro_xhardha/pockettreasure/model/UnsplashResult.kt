@@ -1,18 +1,20 @@
 package com.stavro_xhardha.pockettreasure.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class UnsplashResult(
-    @field:Json(name ="id")
+    @Json(name ="id")
     val id: String,
-    @field:Json(name ="description")
+    @Json(name ="description")
     val description: String?,
-    @field:Json(name ="alt_description")
+    @Json(name ="alt_description")
     val altDescription: String?,
-    @field:Json(name ="urls")
+    @Json(name ="urls")
     val photoUrls: UnsplashUrl,
-    @field:Json(name ="links")
+    @Json(name ="links")
     val links: UnsplashLink,
-    @field:Json(name ="user")
+    @Json(name ="user")
     val user: UnsplashUser
 )

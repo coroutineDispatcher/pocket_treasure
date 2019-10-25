@@ -1,32 +1,34 @@
 package com.stavro_xhardha.pockettreasure.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class PrayerTiming(
-    @field:Json(name = "Fajr")
+    @Json(name = "Fajr")
     val fajr: String,
 
-    @field:Json(name = "Sunrise")
+    @Json(name = "Sunrise")
     val sunrise: String,
 
-    @field:Json(name = "Dhuhr")
+    @Json(name = "Dhuhr")
     val dhuhr: String,
 
-    @field:Json(name = "Asr")
+    @Json(name = "Asr")
     val asr: String,
 
-    @field:Json(name = "Sunset")
+    @Json(name = "Sunset")
     val sunset: String,
 
-    @field:Json(name = "Maghrib")
+    @Json(name = "Maghrib")
     val magrib: String,
 
-    @field:Json(name = "Isha")
+    @Json(name = "Isha")
     val isha: String,
 
-    @field:Json(name = "Imsak")
+    @Json(name = "Imsak")
     val imsak: String,
 
-    @field:Json(name = "Midnight")
+    @Json(name = "Midnight")
     val midnight: String
 )

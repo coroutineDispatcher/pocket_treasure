@@ -1,12 +1,14 @@
 package com.stavro_xhardha.pockettreasure.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class NameResponse(
-    @field:Json(name ="code")
+    @Json(name ="code")
     val code: Int,
-    @field:Json(name ="status")
+    @Json(name ="status")
     val status: String,
-    @field:Json(name ="data")
-    val data: ArrayList<Name>
+    @Json(name ="data")
+    val data: List<Name>
 )

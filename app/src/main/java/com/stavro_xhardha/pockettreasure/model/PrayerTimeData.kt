@@ -1,11 +1,13 @@
 package com.stavro_xhardha.pockettreasure.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class PrayerTimeData(
-    @field:Json(name ="timings")
+    @Json(name ="timings")
     val timings: PrayerTiming,
 
-    @field:Json(name ="date")
+    @Json(name ="date")
     val date: PrayerDate
 )

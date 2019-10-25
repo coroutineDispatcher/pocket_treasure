@@ -6,29 +6,32 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 
 @Entity(tableName = "names_of_creator")
 @Parcelize
+@JsonClass(generateAdapter = true)
 data class Name @JvmOverloads constructor(
-    @field:Json(name ="name")
+    @Json(name = "name")
     @ColumnInfo(name = "arabic_name")
     val arabicName: String,
 
-    @field:Json(name ="transliteration")
+    @Json(name = "transliteration")
     @ColumnInfo(name = "transliteration")
     val transliteration: String,
 
-    @field:Json(name ="number")
+    @Json(name = "number")
     @PrimaryKey
     @ColumnInfo(name = "id")
     val number: Int,
 
-    @field:Json(name ="en")
+    @Json(name = "en")
     @Ignore
     val englishNameMeaning: @RawValue EnglishNameMeaning? = null,
 
     @ColumnInfo(name = "name_meaning")
-    val meaning: String
+    @Transient
+    var meaning: String? = ""
 ) : Parcelable

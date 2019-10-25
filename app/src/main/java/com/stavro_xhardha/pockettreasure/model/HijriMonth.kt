@@ -1,11 +1,13 @@
 package com.stavro_xhardha.pockettreasure.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class HijriMonth(
-    @field:Json(name ="number")
+    @Json(name ="number")
     val number: Int,
 
-    @field:Json(name ="en")
+    @Json(name ="en")
     val monthNameInEnglish: String
 )
