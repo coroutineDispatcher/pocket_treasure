@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.stavro_xhardha.pockettreasure.brain.*
+import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

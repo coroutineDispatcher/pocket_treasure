@@ -102,7 +102,6 @@
     <string name="values_cannot_be_updated">Location cannot be updated, please check permissions or location settings</string>
     <string name="location_updated_successfully">Location Updated Successfully</string>
     <string name="compass">Qibla Compass</string>
-    <string name="found">Qibla found</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="please_wait_takes_long">Please wait, downloading quran might take a little long</string>

@@ -1,7 +1,7 @@
 package com.stavro_xhardha.pockettreasure.dependency_injection.module
 
 import android.app.Application
-import com.stavro_xhardha.pockettreasure.brain.SHARED_PREFERENCES_TAG
+import com.stavro_xhardha.core_module.brain.SHARED_PREFERENCES_TAG
 import com.stavro_xhardha.rocket.Rocket
 import dagger.Module
 import dagger.Provides

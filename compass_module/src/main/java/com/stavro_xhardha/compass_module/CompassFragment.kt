@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui.compass
+package com.stavro_xhardha.compass_module
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -7,20 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
-import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.viewModel
-import com.stavro_xhardha.pockettreasure.ui.BaseFragment
+import androidx.lifecycle.ViewModelProvider
 import edu.arbelkilani.compass.CompassListener
 import kotlinx.android.synthetic.main.fragment_compass.*
+import javax.inject.Inject
 
-class CompassFragment : BaseFragment(), CompassListener {
+class CompassFragment : Fragment(), CompassListener {
 
-    private val compassViewModel by viewModel {
-        applicationComponent.compassViewModelFactory.create(it)
-    }
+    @Inject
+    lateinit var compassViewModelFactory: ViewModelProvider.Factory
+
+    private val compassViewModel by viewModels<CompassViewModel> { compassViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,20 +31,19 @@ class CompassFragment : BaseFragment(), CompassListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    view.findNavController().popBackStack(R.id.homeFragment, false)
-                }
-            })
     }
 
-    override fun initializeComponents() {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initializeComponents()
+        observeTheLiveData()
+    }
+
+    private fun initializeComponents() {
         qibla_compass.setListener(this)
     }
 
-    override fun observeTheLiveData() {
+    private fun observeTheLiveData() {
         compassViewModel.rotateAnimation.observe(viewLifecycleOwner, Observer {
             qibla_compass.startAnimation(it)
         })

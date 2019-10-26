@@ -2,8 +2,9 @@ package com.stavro_xhardha.pockettreasure.ui.gallery
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.pockettreasure.brain.*
-import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
+import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.model.UnsplashResponse
 import com.stavro_xhardha.pockettreasure.model.UnsplashResult
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
@@ -103,8 +104,11 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi, val ap
 
     private suspend fun getPhotosFromUsplashAPI(pageNumber: Int): Response<UnsplashResponse> =
         treasureApi.getUnsplashImagesAsync(
-            UNSPLASH_BASE_URL, UNPLASH_QUERY_VALUE, pageNumber, INITIAL_PAGE_SIZE,
-            CLIENT_ID, CLIENT_SECRET
+            UNSPLASH_BASE_URL,
+            UNPLASH_QUERY_VALUE, pageNumber,
+            INITIAL_PAGE_SIZE,
+            CLIENT_ID,
+            CLIENT_SECRET
         )
 
     fun clearCoroutineJobs() {

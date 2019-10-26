@@ -5,12 +5,10 @@ package com.stavro_xhardha.pockettreasure.brain
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
+import com.stavro_xhardha.core_module.brain.INITIAL_PAGE_SIZE
 import com.stavro_xhardha.pockettreasure.BuildConfig
 import com.stavro_xhardha.pockettreasure.model.*
 import com.sxhardha.smoothie.Smoothie

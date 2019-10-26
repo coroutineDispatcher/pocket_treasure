@@ -2,7 +2,7 @@ package com.stavro_xhardha.pockettreasure.dependency_injection.module
 
 import android.app.Application
 import androidx.room.Room
-import com.stavro_xhardha.pockettreasure.brain.TREASURE_DATABASE_NAME
+import com.stavro_xhardha.core_module.brain.TREASURE_DATABASE_NAME
 import com.stavro_xhardha.pockettreasure.room_db.AyasDao
 import com.stavro_xhardha.pockettreasure.room_db.NamesDao
 import com.stavro_xhardha.pockettreasure.room_db.SurahsDao

@@ -10,6 +10,9 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import com.stavro_xhardha.core_module.brain.APPLICATION_TAG
+import com.stavro_xhardha.core_module.brain.REQUEST_CHECK_LOCATION_SETTINGS
+import com.stavro_xhardha.core_module.brain.REQUEST_LOCATION_PERMISSION
 
 class LocationTracker(
     val activity: FragmentActivity,

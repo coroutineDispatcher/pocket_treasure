@@ -4,8 +4,11 @@ import android.view.View
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import com.stavro_xhardha.pockettreasure.brain.*
-import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
+import com.stavro_xhardha.core_module.brain.HOME_DATA_LIST
+import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
+import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
+import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
 import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -85,16 +88,17 @@ class HomeViewModel @AssistedInject constructor(
         if (currentTime.isBefore(localTime(homePrayerData[0].time)) ||
             currentTime.isAfter(localTime(homePrayerData[4].time))
         ) {
-            homePrayerData[0].backgroundColor = SELECTOR
+            homePrayerData[0].backgroundColor = R.color.card_view_selector
             checkOtherColors(homePrayerData)
         } else {
             var currentColorFound = false
             for (i in 0 until homePrayerData.size) {
                 if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
-                    homePrayerData[i].backgroundColor = SELECTOR
+                    homePrayerData[i].backgroundColor = R.color.card_view_selector
                     currentColorFound = true
                 } else {
-                    homePrayerData[i].backgroundColor = TRANSPARENT
+                    homePrayerData[i].backgroundColor =
+                        R.color.card_view_default
                 }
             }
         }
@@ -104,7 +108,7 @@ class HomeViewModel @AssistedInject constructor(
 
     private fun checkOtherColors(homePrayerData: ArrayList<HomePrayerTime>) {
         for (i in 1 until homePrayerData.size) {
-            homePrayerData[i].backgroundColor = TRANSPARENT
+            homePrayerData[i].backgroundColor = R.color.card_view_default
         }
     }
 

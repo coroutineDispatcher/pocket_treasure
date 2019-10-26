@@ -1,1 +1,1 @@
-include ':app', ':tasbeeh_module'
+include ':app', ':tasbeeh_module', ':compass_module', ':core_module'

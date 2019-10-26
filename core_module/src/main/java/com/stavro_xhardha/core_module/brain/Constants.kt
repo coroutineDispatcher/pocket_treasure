@@ -1,6 +1,6 @@
-package com.stavro_xhardha.pockettreasure.brain
+package com.stavro_xhardha.core_module.brain
 
-import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.core_module.R
 
 //App constants
 const val APPLICATION_TAG = "PocketTreasure"
@@ -19,8 +19,6 @@ const val QURAN_API_CALL_BASE_URL = "https://api.alquran.cloud/v1/quran/ar.alafa
 const val FIRST_SURAH_SENTENCE = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
 const val PLAY_STORE_URL =
     "https://play.google.com/store/apps/details?id=com.stavro_xhardha.pockettreasure"
-const val SELECTOR = R.color.card_view_selector
-const val TRANSPARENT = R.color.card_view_default
 const val COUNTRY_SHARED_PREFERENCE_KEY = "app_country"
 const val CAPITAL_SHARED_PREFERENCES_KEY = "app_capital"
 const val FAJR_KEY = "app_fejr"

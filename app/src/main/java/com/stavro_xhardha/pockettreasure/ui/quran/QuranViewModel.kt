@@ -6,7 +6,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
-import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
+import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.model.Surah
 import com.stavro_xhardha.pockettreasure.room_db.SurahsDao
 import kotlinx.coroutines.CoroutineExceptionHandler

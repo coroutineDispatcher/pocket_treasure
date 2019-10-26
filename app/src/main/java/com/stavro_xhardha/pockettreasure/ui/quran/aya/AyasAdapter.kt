@@ -8,7 +8,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.DIFF_UTIL_AYA
-import com.stavro_xhardha.pockettreasure.brain.FIRST_SURAH_SENTENCE
+import com.stavro_xhardha.core_module.brain.FIRST_SURAH_SENTENCE
 import com.stavro_xhardha.pockettreasure.model.Aya
 import kotlinx.android.synthetic.main.single_item_aya.view.*
 

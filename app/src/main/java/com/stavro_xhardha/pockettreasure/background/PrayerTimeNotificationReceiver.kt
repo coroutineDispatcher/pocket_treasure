@@ -13,9 +13,9 @@ import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.PocketTreasureApplication
+import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.pockettreasure.MainActivity
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

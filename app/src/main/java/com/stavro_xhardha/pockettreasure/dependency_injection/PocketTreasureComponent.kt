@@ -4,11 +4,11 @@ import android.app.Application
 import android.app.WallpaperManager
 import android.media.MediaPlayer
 import com.squareup.picasso.Picasso
+import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
+import com.stavro_xhardha.pockettreasure.brain.GeneralViewModelFactory
 import com.stavro_xhardha.pockettreasure.dependency_injection.module.*
-import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
 import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase
-import com.stavro_xhardha.pockettreasure.ui.compass.CompassViewModel
 import com.stavro_xhardha.pockettreasure.ui.gallery.GalleryViewModel
 import com.stavro_xhardha.pockettreasure.ui.home.HomeViewModel
 import com.stavro_xhardha.pockettreasure.ui.names.NamesViewModel
@@ -23,13 +23,13 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [NetworkModule::class, PreferencesModule::class, DatabaseModule::class, MediaModule::class, ViewModelModule::class, DispatchersModule::class]
+    modules = [NetworkModule::class, PreferencesModule::class, DatabaseModule::class, MediaModule::class, ViewModelModule::class, DispatchersModule::class, VMModule::class]
 )
 interface PocketTreasureComponent {
 
-    val galleryViewModelFactory: GalleryViewModel.Factory
+    val viewModelFactory: GeneralViewModelFactory
 
-    val compassViewModelFactory: CompassViewModel.Factory
+    val galleryViewModelFactory: GalleryViewModel.Factory
 
     val homeViewModelFactory: HomeViewModel.Factory
 

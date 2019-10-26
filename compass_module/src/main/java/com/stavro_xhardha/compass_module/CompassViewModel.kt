@@ -1,32 +1,30 @@
-package com.stavro_xhardha.pockettreasure.ui.compass
+package com.stavro_xhardha.compass_module
 
 import android.hardware.SensorEvent
-import android.util.Log
 import android.view.animation.RotateAnimation
-import androidx.lifecycle.*
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
-import com.stavro_xhardha.pockettreasure.brain.*
-import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.stavro_xhardha.core_module.brain.LATITUDE_KEY
+import com.stavro_xhardha.core_module.brain.LONGITUDE_KEY
+import com.stavro_xhardha.core_module.brain.MAKKAH_LATITUDE
+import com.stavro_xhardha.core_module.brain.MAKKAH_LONGITUDE
+import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Math.toDegrees
 import java.lang.Math.toRadians
+import javax.inject.Inject
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-class CompassViewModel @AssistedInject constructor(
+class CompassViewModel @Inject constructor(
     private val appCoroutineDispatchers: AppCoroutineDispatchers,
-    private val rocket: Rocket,
-    @Assisted val savedStateHandle: SavedStateHandle
+    private val rocket: Rocket
 ) : ViewModel() {
-
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(savedStateHandle: SavedStateHandle): CompassViewModel
-    }
 
     private val _rotateAnimation = MutableLiveData<RotateAnimation>()
     private val _qiblaFound = MutableLiveData<Boolean>()
@@ -65,9 +63,6 @@ class CompassViewModel @AssistedInject constructor(
             withContext(appCoroutineDispatchers.mainDispatcher) {
                 rotateCompass(degreesToRotate)
             }
-
-            if (isDebugMode)
-                Log.d(APPLICATION_TAG, "$degreesToRotate")
         }
     }
 

@@ -23,8 +23,8 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.FULL_IMAGE_SAVED_STATE
-import com.stavro_xhardha.pockettreasure.brain.REQUEST_STORAGE_PERMISSION
+import com.stavro_xhardha.core_module.brain.FULL_IMAGE_SAVED_STATE
+import com.stavro_xhardha.core_module.brain.REQUEST_STORAGE_PERMISSION
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
 import kotlinx.android.synthetic.main.fragment_full_image.*

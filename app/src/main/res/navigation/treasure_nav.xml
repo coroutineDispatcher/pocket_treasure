@@ -86,7 +86,7 @@
     </fragment>
     <fragment
             android:id="@+id/compassFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.compass.CompassFragment"
+            android:name="com.stavro_xhardha.compass_module.CompassFragment"
             android:label="Qibla Compass"
             tools:layout="@layout/fragment_compass" />
 </navigation>

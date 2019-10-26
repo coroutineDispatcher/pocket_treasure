@@ -1,7 +1,7 @@
 package com.stavro_xhardha.pockettreasure.ui.home
 
+import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
@@ -116,27 +116,27 @@ class HomeRepository @Inject constructor(
             HomePrayerTime(
                 "Fajr",
                 "${readFejrtime()} - ${readFinishFajrTime()}",
-                TRANSPARENT,
+                R.color.card_view_default,
                 R.drawable.ic_fajr_colorful_sun
             ), HomePrayerTime(
                 "Dhuhr",
                 readDhuhrTime() ?: "",
-                TRANSPARENT,
+                R.color.card_view_default,
                 R.drawable.ic_dhuhr_colorful_sun
             ), HomePrayerTime(
                 "Asr",
                 readAsrTime() ?: "",
-                TRANSPARENT,
+                R.color.card_view_default,
                 R.drawable.ic_asr_colorful_sun
             ), HomePrayerTime(
                 "Maghrib",
                 readMaghribTime() ?: "",
-                TRANSPARENT,
+                R.color.card_view_default,
                 R.drawable.ic_maghrib_colorful_sun
             ), HomePrayerTime(
                 "Isha",
                 readIshaTime() ?: "",
-                TRANSPARENT,
+                R.color.card_view_default,
                 R.drawable.ic_isha_moon
             )
         )

@@ -1,6 +1,6 @@
 package com.stavro_xhardha.pockettreasure.ui.setup
 
-import com.stavro_xhardha.pockettreasure.brain.*
+import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.rocket.Rocket
 import javax.inject.Inject
 

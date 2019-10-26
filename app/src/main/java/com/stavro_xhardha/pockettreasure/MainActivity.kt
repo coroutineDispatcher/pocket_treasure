@@ -25,8 +25,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.stavro_xhardha.PocketTreasureApplication
-import com.stavro_xhardha.pockettreasure.brain.REQUEST_CHECK_LOCATION_SETTINGS
-import com.stavro_xhardha.pockettreasure.brain.REQUEST_LOCATION_PERMISSION
+import com.stavro_xhardha.core_module.brain.REQUEST_CHECK_LOCATION_SETTINGS
+import com.stavro_xhardha.core_module.brain.REQUEST_LOCATION_PERMISSION
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 

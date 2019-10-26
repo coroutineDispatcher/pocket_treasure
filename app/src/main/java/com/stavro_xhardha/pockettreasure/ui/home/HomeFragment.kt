@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
-import com.stavro_xhardha.pockettreasure.brain.PLAY_STORE_URL
+import com.stavro_xhardha.core_module.brain.APPLICATION_TAG
+import com.stavro_xhardha.core_module.brain.PLAY_STORE_URL
 import com.stavro_xhardha.pockettreasure.brain.viewModel
 import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -54,8 +54,12 @@ class HomeFragment : BaseFragment() {
     private fun shareApp() {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, APPLICATION_TAG)
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, PLAY_STORE_URL)
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT,
+            APPLICATION_TAG
+        )
+        sharingIntent.putExtra(Intent.EXTRA_TEXT,
+            PLAY_STORE_URL
+        )
         startActivity(Intent.createChooser(sharingIntent, resources.getString(R.string.share_via)))
     }
 

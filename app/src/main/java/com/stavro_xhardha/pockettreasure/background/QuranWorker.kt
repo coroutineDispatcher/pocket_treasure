@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.stavro_xhardha.PocketTreasureApplication
-import com.stavro_xhardha.pockettreasure.brain.QURAN_API_CALL_BASE_URL
+import com.stavro_xhardha.core_module.brain.QURAN_API_CALL_BASE_URL
 import com.stavro_xhardha.pockettreasure.model.Aya
 import com.stavro_xhardha.pockettreasure.model.QuranResponse
 import com.stavro_xhardha.pockettreasure.network.TreasureApi

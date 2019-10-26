@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.stavro_xhardha.PocketTreasureApplication
+import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.coroutineScope
@@ -88,23 +89,38 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
     private fun checkIntentVariables(intentKey: Int, intent: Intent) {
         when (intentKey) {
             PENDING_INTENT_FIRE_NOTIFICATION_FAJR -> {
-                intent.putExtra(PRAYER_TITLE, FAJR)
+                intent.putExtra(
+                    PRAYER_TITLE,
+                    FAJR
+                )
                 intent.putExtra(PRAYER_DESCRIPTION, "Fajr time has arrived")
             }
             PENDING_INTENT_FIRE_NOTIFICATION_DHUHR -> {
-                intent.putExtra(PRAYER_TITLE, DHUHR)
+                intent.putExtra(
+                    PRAYER_TITLE,
+                    DHUHR
+                )
                 intent.putExtra(PRAYER_DESCRIPTION, "Dhuhr time has arrived")
             }
             PENDING_INTENT_FIRE_NOTIFICATION_ASR -> {
-                intent.putExtra(PRAYER_TITLE, ASR)
+                intent.putExtra(
+                    PRAYER_TITLE,
+                    ASR
+                )
                 intent.putExtra(PRAYER_DESCRIPTION, "Asr time has arrived")
             }
             PENDING_INTENT_FIRE_NOTIFICATION_MAGHRIB -> {
-                intent.putExtra(PRAYER_TITLE, MAGHRIB)
+                intent.putExtra(
+                    PRAYER_TITLE,
+                    MAGHRIB
+                )
                 intent.putExtra(PRAYER_DESCRIPTION, "Maghrib time has arrived")
             }
             PENDING_INTENT_FIRE_NOTIFICATION_ISHA -> {
-                intent.putExtra(PRAYER_TITLE, ISHA)
+                intent.putExtra(
+                    PRAYER_TITLE,
+                    ISHA
+                )
                 intent.putExtra(PRAYER_DESCRIPTION, "Isha time has arrived")
             }
         }

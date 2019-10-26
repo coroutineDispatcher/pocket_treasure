@@ -4,8 +4,8 @@ import android.view.View
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import com.stavro_xhardha.pockettreasure.brain.NAMES_LIST_STATE
-import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
+import com.stavro_xhardha.core_module.brain.NAMES_LIST_STATE
+import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.model.Name
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
