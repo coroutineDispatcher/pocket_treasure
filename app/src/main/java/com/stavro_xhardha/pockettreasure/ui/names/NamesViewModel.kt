@@ -5,13 +5,14 @@ import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.NAMES_LIST_STATE
+import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.model.Name
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NamesViewModel @AssistedInject constructor(
+    private val appCoroutineDispatchers: AppCoroutineDispatchers,
     private val repository: NamesRepository,
     @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -28,7 +29,8 @@ class NamesViewModel @AssistedInject constructor(
 
     private val _progressBarVisibility: MutableLiveData<Int> = MutableLiveData()
     private val _errorLayoutVisibility: MutableLiveData<Int> = MutableLiveData()
-    private val _namesList: MutableLiveData<List<Name>> = savedStateHandle.getLiveData(NAMES_LIST_STATE)
+    private val _namesList: MutableLiveData<List<Name>> =
+        savedStateHandle.getLiveData(NAMES_LIST_STATE)
 
     val namesList: LiveData<List<Name>> = _namesList
     val progressBarVisibility: LiveData<Int> = _progressBarVisibility
@@ -39,9 +41,9 @@ class NamesViewModel @AssistedInject constructor(
     }
 
     private fun loadNamesList() {
-        viewModelScope.launch(Dispatchers.Main + coroutineExceptionHandler) {
+        viewModelScope.launch(appCoroutineDispatchers.mainDispatcher + coroutineExceptionHandler) {
             startProgressBar()
-            withContext(Dispatchers.IO) {
+            withContext(appCoroutineDispatchers.ioDispatcher) {
                 val dataIsLocally = dataExistInDatabase()
                 if (dataIsLocally) {
                     makeNamesDatabaseCall()
@@ -59,7 +61,7 @@ class NamesViewModel @AssistedInject constructor(
 
     private suspend fun makeNamesDatabaseCall() {
         val names = repository.getNamesFromDatabase()
-        withContext(Dispatchers.Main) {
+        withContext(appCoroutineDispatchers.mainDispatcher) {
             savedStateHandle.set(NAMES_LIST_STATE, names)
             _progressBarVisibility.value = View.GONE
             _errorLayoutVisibility.value = View.GONE
@@ -72,7 +74,7 @@ class NamesViewModel @AssistedInject constructor(
             saveNameToDatabase(namesResponse.body()?.data)
             makeNamesDatabaseCall()
         } else {
-            withContext(Dispatchers.Main) {
+            withContext(appCoroutineDispatchers.mainDispatcher) {
                 showError()
             }
         }

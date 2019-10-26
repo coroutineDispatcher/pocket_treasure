@@ -1,8 +1,7 @@
-package com.stavro_xhardha.pockettreasure.ui.tasbeeh
+package com.stavro_xhardha.tasbeeh_module
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.stavro_xhardha.pockettreasure.model.Tasbeeh
 
 class TasbeehViewModel : ViewModel() {
 

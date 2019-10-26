@@ -5,10 +5,10 @@ import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.*
+import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
 import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
@@ -16,6 +16,7 @@ import org.joda.time.LocalTime
 
 
 class HomeViewModel @AssistedInject constructor(
+    private val appCoroutineDispatchers: AppCoroutineDispatchers,
     private val homeRepository: HomeRepository,
     @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -41,13 +42,13 @@ class HomeViewModel @AssistedInject constructor(
     val homeData: LiveData<ArrayList<HomePrayerTime>> = savedStateHandle.getLiveData(HOME_DATA_LIST)
 
     fun loadPrayerTimes() {
-        viewModelScope.launch(Dispatchers.Main + exceptionHandle) {
+        viewModelScope.launch(appCoroutineDispatchers.mainDispatcher + exceptionHandle) {
             val dateHasPassed = dateHasPassed()
             val countryHasBeenUpdated = homeRepository.countryHasBeenUpdated()
             if (dateHasPassed || countryHasBeenUpdated) {
                 makePrayerApiCall()
             } else {
-                withContext(Dispatchers.Main) {
+                withContext(appCoroutineDispatchers.mainDispatcher) {
                     setValuesToLiveData()
                 }
             }
@@ -57,16 +58,16 @@ class HomeViewModel @AssistedInject constructor(
     private suspend fun makePrayerApiCall() {
         switchProgressBarOn()
         incrementIdlingResource()
-        withContext(Dispatchers.IO) {
+        withContext(appCoroutineDispatchers.ioDispatcher) {
             val todaysPrayerTime = homeRepository.makePrayerCallAsync()
             if (todaysPrayerTime.isSuccessful) {
                 decrementIdlingResource()
                 saveDataToShardPreferences(todaysPrayerTime.body())
-                withContext(Dispatchers.Main) {
+                withContext(appCoroutineDispatchers.mainDispatcher) {
                     setValuesToLiveData()
                 }
             } else {
-                withContext(Dispatchers.Main) {
+                withContext(appCoroutineDispatchers.mainDispatcher) {
                     decrementIdlingResource()
                 }
             }

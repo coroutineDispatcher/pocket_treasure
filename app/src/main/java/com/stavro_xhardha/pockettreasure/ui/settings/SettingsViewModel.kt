@@ -6,12 +6,13 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
-import kotlinx.coroutines.Dispatchers
+import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class SettingsViewModel @AssistedInject constructor(
+    private val appCoroutineDispatchers: AppCoroutineDispatchers,
     private val settingsRepository: SettingsRepository,
     @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -27,7 +28,6 @@ class SettingsViewModel @AssistedInject constructor(
     private val _maghribCheck: MutableLiveData<Boolean> = MutableLiveData()
     private val _ishaCheck: MutableLiveData<Boolean> = MutableLiveData()
     private val _countryAndCapital: MutableLiveData<String> = MutableLiveData()
-    private val _workManagerReadyToStart = MutableLiveData<Boolean>()
     private val _locationRequestTurnOff = MutableLiveData<Boolean>()
     private val _serviceNotAvailableVisibility = MutableLiveData<Boolean>()
     private val _locationErrorVisibility = MutableLiveData<Boolean>()
@@ -41,7 +41,6 @@ class SettingsViewModel @AssistedInject constructor(
     val maghribCheck: LiveData<Boolean> = _maghribCheck
     val ishaCheck: LiveData<Boolean> = _ishaCheck
     val countryAndCapital: LiveData<String> = _countryAndCapital
-    val workManagerReadyToStart: LiveData<Boolean> = _workManagerReadyToStart
 
     private var fajrCheckHelper: Boolean = false
     private var dhuhrCheckHelper: Boolean = false
@@ -56,7 +55,7 @@ class SettingsViewModel @AssistedInject constructor(
 
     private fun listenToRepository() {
         incrementIdlingResource()
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.let {
                 fajrCheckHelper = it.getFajrChecked()
                 dhuhrCheckHelper = it.getDhuhrChecked()
@@ -64,7 +63,7 @@ class SettingsViewModel @AssistedInject constructor(
                 mahgribCheckCheckHelper = it.getMaghribChecked()
                 ishaCheckCheckHelper = it.getIshaChecked()
             }
-            withContext(Dispatchers.Main) {
+            withContext(appCoroutineDispatchers.mainDispatcher) {
                 this@SettingsViewModel._fajrCheck.value = fajrCheckHelper
                 this@SettingsViewModel._dhuhrCheck.value = dhuhrCheckHelper
                 this@SettingsViewModel._asrCheck.value = asrCheckCheckHelper
@@ -79,62 +78,53 @@ class SettingsViewModel @AssistedInject constructor(
 
     fun onSwFajrClick(checked: Boolean) {
         incrementIdlingResource()
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putFajrNotification(checked)
-            withContext(Dispatchers.Main) {
-                decrementIdlingResource()
-                _fajrCheck.value = settingsRepository.getFajrChecked()
-            }
+            decrementIdlingResource()
+            _fajrCheck.postValue(settingsRepository.getFajrChecked())
         }
     }
 
     fun onSwDhuhrClick(checked: Boolean) {
         incrementIdlingResource()
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putDhuhrNotification(checked)
-            withContext(Dispatchers.Main) {
-                decrementIdlingResource()
-                _dhuhrCheck.value = settingsRepository.getDhuhrChecked()
-            }
+            decrementIdlingResource()
+            _dhuhrCheck.postValue(settingsRepository.getDhuhrChecked())
         }
     }
 
     fun onSwAsrClick(checked: Boolean) {
         incrementIdlingResource()
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putAsrNotification(checked)
-            withContext(Dispatchers.Main) {
-                decrementIdlingResource()
-                _asrCheck.value = settingsRepository.getAsrChecked()
-            }
+            decrementIdlingResource()
+            _asrCheck.postValue(settingsRepository.getAsrChecked())
         }
     }
 
     fun onSwMaghribClick(checked: Boolean) {
         incrementIdlingResource()
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putMaghribNotification(checked)
-            withContext(Dispatchers.Main) {
-                decrementIdlingResource()
-                _maghribCheck.value = settingsRepository.getMaghribChecked()
-            }
+            decrementIdlingResource()
+            _maghribCheck.postValue(settingsRepository.getMaghribChecked())
         }
     }
 
     fun onSwIshaClick(checked: Boolean) {
         incrementIdlingResource()
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putIshaNotification(checked)
-            withContext(Dispatchers.Main) {
-                decrementIdlingResource()
-                _ishaCheck.value = settingsRepository.getIshaChecked()
-            }
+            decrementIdlingResource()
+            _ishaCheck.postValue(settingsRepository.getIshaChecked())
         }
     }
 
     fun convertToAdress(geocoder: Geocoder, latitude: Double, longitude: Double) {
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             try {
+                _countryAndCapital.postValue("...")
                 val adresses = geocoder.getFromLocation(latitude, longitude, 1)
                 if (adresses.size != 0) {
                     val cityName = adresses[0].adminArea
@@ -157,6 +147,7 @@ class SettingsViewModel @AssistedInject constructor(
                 _locationErrorVisibility.postValue(true)
             } finally {
                 _locationRequestTurnOff.postValue(true)
+                _countryAndCapital.postValue(settingsRepository.readCountryAndCapital())
             }
         }
     }

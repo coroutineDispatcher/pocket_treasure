@@ -48,7 +48,7 @@ class SetupViewModelTest {
     @ExperimentalCoroutinesApi
     @After
     fun endTest() {
-        Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
+        Dispatchers.resetMain() // reset_counting main dispatcher to the original Main dispatcher
         mainThreadSurrogate.close()
         print("Test has finished")
     }

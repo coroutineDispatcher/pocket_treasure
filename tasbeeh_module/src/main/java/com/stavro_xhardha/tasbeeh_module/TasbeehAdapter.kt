@@ -1,13 +1,11 @@
-package com.stavro_xhardha.pockettreasure.ui.tasbeeh
+package com.stavro_xhardha.tasbeeh_module
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.DIFF_UTIL_TASBEEH
-import com.stavro_xhardha.pockettreasure.model.Tasbeeh
 import kotlinx.android.synthetic.main.single_item_tasbeeh.view.*
 
 class TasbeehAdapter : ListAdapter<Tasbeeh, TasbeehAdapter.TasbeehViewHolder>(DIFF_UTIL_TASBEEH) {
@@ -46,4 +44,15 @@ class TasbeehAdapter : ListAdapter<Tasbeeh, TasbeehAdapter.TasbeehViewHolder>(DI
             }
         }
     }
+}
+
+val DIFF_UTIL_TASBEEH = object : DiffUtil.ItemCallback<Tasbeeh>() {
+    override fun areItemsTheSame(oldItem: Tasbeeh, newItem: Tasbeeh): Boolean =
+        oldItem.arabicPhrase == newItem.arabicPhrase
+
+    override fun areContentsTheSame(oldItem: Tasbeeh, newItem: Tasbeeh): Boolean =
+        oldItem.arabicPhrase == newItem.arabicPhrase
+                && oldItem.translation == newItem.translation
+                && oldItem.transliteration == newItem.transliteration
+
 }

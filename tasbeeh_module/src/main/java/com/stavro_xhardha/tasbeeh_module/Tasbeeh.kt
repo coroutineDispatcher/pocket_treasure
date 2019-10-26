@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.model
+package com.stavro_xhardha.tasbeeh_module
 
 data class Tasbeeh(
     val arabicPhrase: String,

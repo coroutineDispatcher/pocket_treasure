@@ -3,6 +3,7 @@ package com.stavro_xhardha.pockettreasure.ui.gallery
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.stavro_xhardha.pockettreasure.brain.*
+import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.model.UnsplashResponse
 import com.stavro_xhardha.pockettreasure.model.UnsplashResult
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
@@ -10,7 +11,7 @@ import kotlinx.coroutines.*
 import retrofit2.Response
 import javax.inject.Inject
 
-class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
+class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi, val appCoroutineDispatchers: AppCoroutineDispatchers) :
     PageKeyedDataSource<Int, UnsplashResult>() {
 
     private var retry: (() -> Any)? = null
@@ -18,7 +19,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
     val initialLoad = MutableLiveData<NetworkState>()
 
     private val completableJob = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.IO + completableJob)
+    private val coroutineScope = CoroutineScope(appCoroutineDispatchers.ioDispatcher + completableJob)
 
     fun retryAllFailed() {
         val prevRetry = retry
@@ -30,7 +31,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, UnsplashResult>) {
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(appCoroutineDispatchers.ioDispatcher) {
             try {
                 incrementIdlingResource()
                 networkState.postValue(NetworkState.LOADING)
@@ -65,7 +66,7 @@ class GalleryDataSource @Inject constructor(val treasureApi: TreasureApi) :
     }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, UnsplashResult>) {
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(appCoroutineDispatchers.ioDispatcher) {
             try {
                 incrementIdlingResource()
                 initialLoad.postValue(NetworkState.LOADING)

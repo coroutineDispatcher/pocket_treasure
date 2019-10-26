@@ -5,21 +5,20 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.APPLICATION_TAG
 import com.stavro_xhardha.pockettreasure.brain.PLAY_STORE_URL
 import com.stavro_xhardha.pockettreasure.brain.viewModel
+import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private val homeViewModel by viewModel {
-        PocketTreasureApplication.getPocketTreasureComponent().homeViewModelFactory.create(it)
+        applicationComponent.homeViewModelFactory.create(it)
     }
-    private val picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso
+    private val picasso = applicationComponent.picasso
     private var homeAdapter: HomeAdapter = HomeAdapter(picasso)
 
     override fun onCreateView(
@@ -31,9 +30,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        homeViewModel.loadPrayerTimes()
-
         requireActivity().onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
@@ -42,8 +38,6 @@ class HomeFragment : Fragment() {
                 }
             })
         setHasOptionsMenu(true)
-
-        observeTheLiveData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -65,20 +59,24 @@ class HomeFragment : Fragment() {
         startActivity(Intent.createChooser(sharingIntent, resources.getString(R.string.share_via)))
     }
 
-    private fun observeTheLiveData() {
-        homeViewModel.homeData.observe(this, Observer {
+    override fun initializeComponents() {
+        homeViewModel.loadPrayerTimes()
+    }
+
+    override fun observeTheLiveData() {
+        homeViewModel.homeData.observe(viewLifecycleOwner, Observer {
             homeAdapter.submitList(it)
             rvHomePrayerTimes.adapter = homeAdapter
         })
 
-        homeViewModel.contentVisibility.observe(this, Observer {
+        homeViewModel.contentVisibility.observe(viewLifecycleOwner, Observer {
             rvHomePrayerTimes.visibility = it
         })
-        homeViewModel.showErrorToast.observe(this, Observer {
+        homeViewModel.showErrorToast.observe(viewLifecycleOwner, Observer {
             if (it) Toast.makeText(activity!!, R.string.error_occured, Toast.LENGTH_LONG).show()
         })
 
-        homeViewModel.progressBarVisibility.observe(this, Observer {
+        homeViewModel.progressBarVisibility.observe(viewLifecycleOwner, Observer {
             pbHome.visibility = it
         })
     }

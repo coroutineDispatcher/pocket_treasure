@@ -8,19 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
+import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import edu.arbelkilani.compass.CompassListener
 import kotlinx.android.synthetic.main.fragment_compass.*
 
-class CompassFragment : Fragment(), CompassListener {
+class CompassFragment : BaseFragment(), CompassListener {
 
     private val compassViewModel by viewModel {
-        PocketTreasureApplication.getPocketTreasureComponent().compassViewModelFactory.create(it)
+        applicationComponent.compassViewModelFactory.create(it)
     }
 
     override fun onCreateView(
@@ -39,21 +38,18 @@ class CompassFragment : Fragment(), CompassListener {
                     view.findNavController().popBackStack(R.id.homeFragment, false)
                 }
             })
-
-        initializeComponents()
-        observeTheLiveData()
     }
 
-    fun initializeComponents() {
+    override fun initializeComponents() {
         qibla_compass.setListener(this)
     }
 
-    fun observeTheLiveData() {
-        compassViewModel.rotateAnimation.observe(this, Observer {
+    override fun observeTheLiveData() {
+        compassViewModel.rotateAnimation.observe(viewLifecycleOwner, Observer {
             qibla_compass.startAnimation(it)
         })
 
-        compassViewModel.qiblaFound.observe(this, Observer {
+        compassViewModel.qiblaFound.observe(viewLifecycleOwner, Observer {
             if (it) Toast.makeText(requireActivity(), R.string.found, Toast.LENGTH_LONG).show()
         })
     }

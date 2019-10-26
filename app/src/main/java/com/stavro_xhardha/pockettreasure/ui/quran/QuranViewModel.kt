@@ -6,13 +6,14 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
+import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.model.Surah
 import com.stavro_xhardha.pockettreasure.room_db.SurahsDao
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class QuranViewModel @AssistedInject constructor(
+    private val appCoroutineDispatchers: AppCoroutineDispatchers,
     private val surahsDao: SurahsDao,
     @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -43,7 +44,7 @@ class QuranViewModel @AssistedInject constructor(
     }
 
     fun startQuranDatabaseCall() {
-        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
             incrementIdlingResource()
             makeLocalDatabaseCall()
             decrementIdlingResource()

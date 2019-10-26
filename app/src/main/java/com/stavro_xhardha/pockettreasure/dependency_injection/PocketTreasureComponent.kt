@@ -5,6 +5,7 @@ import android.app.WallpaperManager
 import android.media.MediaPlayer
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.pockettreasure.dependency_injection.module.*
+import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.network.TreasureApi
 import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase
 import com.stavro_xhardha.pockettreasure.ui.compass.CompassViewModel
@@ -18,10 +19,11 @@ import com.stavro_xhardha.pockettreasure.ui.setup.SetupViewModel
 import com.stavro_xhardha.rocket.Rocket
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
-@ApplicationScope
+@Singleton
 @Component(
-    modules = [NetworkModule::class, PreferencesModule::class, DatabaseModule::class, MediaModule::class, ViewModelModule::class]
+    modules = [NetworkModule::class, PreferencesModule::class, DatabaseModule::class, MediaModule::class, ViewModelModule::class, DispatchersModule::class]
 )
 interface PocketTreasureComponent {
 
@@ -52,6 +54,8 @@ interface PocketTreasureComponent {
     val wallpaperManager: WallpaperManager
 
     val mediaPlayer: MediaPlayer
+
+    val appCoroutineDispatchers: AppCoroutineDispatchers
 
     @Component.Factory
     interface Factory {

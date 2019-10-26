@@ -1,18 +1,18 @@
 package com.stavro_xhardha.pockettreasure.dependency_injection.module
 
-import com.stavro_xhardha.pockettreasure.dependency_injection.ApplicationScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 object InterceptorModule {
 
     @JvmStatic
     @Provides
-    @ApplicationScope
+    @Singleton
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
@@ -23,7 +23,7 @@ object InterceptorModule {
 
     @JvmStatic
     @Provides
-    @ApplicationScope
+    @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY

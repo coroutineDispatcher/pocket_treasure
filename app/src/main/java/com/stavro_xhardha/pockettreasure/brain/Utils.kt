@@ -75,17 +75,6 @@ val DIFF_UTIL_QURAN = object : DiffUtil.ItemCallback<Surah>() {
 
 }
 
-val DIFF_UTIL_TASBEEH = object : DiffUtil.ItemCallback<Tasbeeh>() {
-    override fun areItemsTheSame(oldItem: Tasbeeh, newItem: Tasbeeh): Boolean =
-        oldItem.arabicPhrase == newItem.arabicPhrase
-
-    override fun areContentsTheSame(oldItem: Tasbeeh, newItem: Tasbeeh): Boolean =
-        oldItem.arabicPhrase == newItem.arabicPhrase
-                && oldItem.translation == newItem.translation
-                && oldItem.transliteration == newItem.transliteration
-
-}
-
 fun <T> LiveData<T>.observeOnce(onChangeHandler: (T) -> Unit) {
     val observer = OneTimeObserver(handler = onChangeHandler)
     observe(observer, observer)

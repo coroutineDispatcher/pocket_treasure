@@ -5,22 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.Status
 import com.stavro_xhardha.pockettreasure.brain.viewModel
+import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
-class GalleryFragment : Fragment(), GalleryContract {
+class GalleryFragment : BaseFragment(), GalleryContract {
     private val picasso by lazy {
-        PocketTreasureApplication.getPocketTreasureComponent().picasso
+        applicationComponent.picasso
     }
 
     private val galleryAdapter by lazy {
@@ -28,7 +27,7 @@ class GalleryFragment : Fragment(), GalleryContract {
     }
 
     private val galleryViewModel by viewModel {
-        PocketTreasureApplication.getPocketTreasureComponent().galleryViewModelFactory.create(it)
+        applicationComponent.galleryViewModelFactory.create(it)
     }
 
     override fun onCreateView(
@@ -47,11 +46,9 @@ class GalleryFragment : Fragment(), GalleryContract {
                     view.findNavController().popBackStack(R.id.homeFragment, false)
                 }
             })
-        initializeComponents()
-        observeTheLiveData()
     }
 
-    fun initializeComponents() {
+    override fun initializeComponents() {
         rvGallery.layoutManager = GridLayoutManager(activity, 3)
         rvGallery.adapter = galleryAdapter
         btnRetry.setOnClickListener {
@@ -59,15 +56,15 @@ class GalleryFragment : Fragment(), GalleryContract {
         }
     }
 
-    fun observeTheLiveData() {
-        galleryViewModel.getGalleryLiveData().observe(this, Observer {
+    override fun observeTheLiveData() {
+        galleryViewModel.getGalleryLiveData().observe(viewLifecycleOwner, Observer {
             galleryAdapter.submitList(it)
         })
-        galleryViewModel.getCurrentState().observe(this, Observer {
+        galleryViewModel.getCurrentState().observe(viewLifecycleOwner, Observer {
             if (it.status == Status.FAILED)
                 Snackbar.make(rlGallery, R.string.failed_loading_more, Snackbar.LENGTH_LONG).show()
         })
-        galleryViewModel.getInitialState().observe(this, Observer {
+        galleryViewModel.getInitialState().observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.FAILED -> {
                     pbGallery.visibility = View.GONE

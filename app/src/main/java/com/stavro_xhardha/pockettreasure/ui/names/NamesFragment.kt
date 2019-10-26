@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
+import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_names.*
 
-class NamesFragment : Fragment() {
+class NamesFragment : BaseFragment() {
 
     private val namesViewModel by viewModel {
-        PocketTreasureApplication.getPocketTreasureComponent().namesViewModelFactory.create(it)
+        applicationComponent.namesViewModelFactory.create(it)
     }
 
     private val namesAdapter by lazy {
@@ -32,30 +31,23 @@ class NamesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_names, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initializeComponents()
-        observeTheLiveData()
-    }
-
-    fun observeTheLiveData() {
-        namesViewModel.namesList.observe(this, Observer {
+    override fun observeTheLiveData() {
+        namesViewModel.namesList.observe(viewLifecycleOwner, Observer {
             rvNames.adapter = namesAdapter
             namesAdapter.submitList(it)
         })
-        namesViewModel.progressBarVisibility.observe(this, Observer {
+        namesViewModel.progressBarVisibility.observe(viewLifecycleOwner, Observer {
             pbNames.visibility = it
         })
-        namesViewModel.errorLayoutVisibility.observe(this, Observer {
+        namesViewModel.errorLayoutVisibility.observe(viewLifecycleOwner, Observer {
             llError.visibility = it
         })
     }
 
-    fun initializeComponents() {
+    override fun initializeComponents() {
         btnRetry.setOnClickListener {
             namesViewModel.retryConnection()
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

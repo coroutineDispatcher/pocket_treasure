@@ -7,8 +7,8 @@ import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.*
+import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import com.stavro_xhardha.rocket.Rocket
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Math.toDegrees
@@ -18,6 +18,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class CompassViewModel @AssistedInject constructor(
+    private val appCoroutineDispatchers: AppCoroutineDispatchers,
     private val rocket: Rocket,
     @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -40,7 +41,7 @@ class CompassViewModel @AssistedInject constructor(
     }
 
     private fun findQibla() {
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             val latitude = rocket.readFloat(LATITUDE_KEY)
             val longitude = rocket.readFloat(LONGITUDE_KEY)
 
@@ -53,13 +54,15 @@ class CompassViewModel @AssistedInject constructor(
             val lonDelta = maccahCurrentLongRad - currentLong
             val y = (sin(lonDelta) * cos(maccahCurrentLatRad)).toFloat()
             val x =
-                (cos(currentLatRad) * sin(maccahCurrentLatRad) - sin(currentLatRad) * cos(maccahCurrentLatRad) * cos(
+                (cos(currentLatRad) * sin(maccahCurrentLatRad) - sin(currentLatRad) * cos(
+                    maccahCurrentLatRad
+                ) * cos(
                     lonDelta
                 )).toFloat()
 
             val degreesToRotate = toDegrees(atan2(y.toDouble(), x.toDouble()))
 
-            withContext(Dispatchers.Main) {
+            withContext(appCoroutineDispatchers.mainDispatcher) {
                 rotateCompass(degreesToRotate)
             }
 

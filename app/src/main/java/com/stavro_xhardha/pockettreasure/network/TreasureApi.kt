@@ -1,6 +1,9 @@
 package com.stavro_xhardha.pockettreasure.network
 
-import com.stavro_xhardha.pockettreasure.model.*
+import com.stavro_xhardha.pockettreasure.model.NameResponse
+import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
+import com.stavro_xhardha.pockettreasure.model.QuranResponse
+import com.stavro_xhardha.pockettreasure.model.UnsplashResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

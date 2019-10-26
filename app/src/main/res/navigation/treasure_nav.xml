@@ -37,7 +37,7 @@
     </fragment>
     <fragment
             android:id="@+id/tasbeehFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.tasbeeh.TasbeehFragment"
+            android:name="com.stavro_xhardha.tasbeeh_module.TasbeehFragment"
             android:label="Tasbeeh"
             tools:layout="@layout/fragment_tasbeeh" />
     <fragment

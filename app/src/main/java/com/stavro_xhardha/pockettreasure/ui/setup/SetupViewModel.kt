@@ -5,12 +5,13 @@ import android.view.View
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import com.stavro_xhardha.pockettreasure.model.AppCoroutineDispatchers
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 class SetupViewModel @AssistedInject constructor(
+    private val appCoroutineDispatchers: AppCoroutineDispatchers,
     private val setupRepository: SetupRepository,
     @Assisted val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -56,13 +57,13 @@ class SetupViewModel @AssistedInject constructor(
     }
 
     fun updateNotificationFlags() {
-        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
             setupRepository.switchNotificationFlags()
         }
     }
 
     fun convertToAdress(geocoder: Geocoder, latitude: Double, longitude: Double) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             try {
                 val adresses = geocoder.getFromLocation(latitude, longitude, 1)
                 if (adresses.size != 0) {

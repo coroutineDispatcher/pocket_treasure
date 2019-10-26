@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -14,17 +13,17 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.background.QuranWorker
 import com.stavro_xhardha.pockettreasure.brain.viewModel
+import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_quran.*
 
-class QuranFragment : Fragment(), QuranAdapterContract {
+class QuranFragment : BaseFragment(), QuranAdapterContract {
 
     private val quranViewModel by viewModel {
-        PocketTreasureApplication.getPocketTreasureComponent().quranViewModelFactory.create(it)
+        applicationComponent.quranViewModelFactory.create(it)
     }
     private lateinit var compressionWork: WorkRequest
 
@@ -49,14 +48,8 @@ class QuranFragment : Fragment(), QuranAdapterContract {
                 }
             })
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initializeComponents()
-        observeTheLiveData()
-    }
-
-    fun initializeComponents() {
+    
+    override fun initializeComponents() {
         startQuranWorker()
         rvSuras.adapter = quranAdapter
         btnRetry.setOnClickListener {
@@ -72,7 +65,7 @@ class QuranFragment : Fragment(), QuranAdapterContract {
         WorkManager.getInstance(requireActivity()).enqueue(compressionWork)
 
         WorkManager.getInstance(requireActivity()).getWorkInfoByIdLiveData(compressionWork.id)
-            .observe(this, Observer {
+            .observe(viewLifecycleOwner, Observer {
                 if (it != null && it.state == WorkInfo.State.SUCCEEDED) {
                     quranViewModel.startQuranDatabaseCall()
                 } else {
@@ -83,20 +76,20 @@ class QuranFragment : Fragment(), QuranAdapterContract {
             })
     }
 
-    fun observeTheLiveData() {
-        quranViewModel.surahs.observe(this, Observer {
+    override fun observeTheLiveData() {
+        quranViewModel.surahs.observe(viewLifecycleOwner, Observer {
             quranAdapter.submitList(it)
         })
 
-        quranViewModel.errorVisibility.observe(this, Observer {
+        quranViewModel.errorVisibility.observe(viewLifecycleOwner, Observer {
             llError.visibility = it
         })
 
-        quranViewModel.progressVisibility.observe(this, Observer {
+        quranViewModel.progressVisibility.observe(viewLifecycleOwner, Observer {
             pbQuran.visibility = it
         })
 
-        quranViewModel.listVisibility.observe(this, Observer {
+        quranViewModel.listVisibility.observe(viewLifecycleOwner, Observer {
             rvSuras.visibility = it
         })
     }

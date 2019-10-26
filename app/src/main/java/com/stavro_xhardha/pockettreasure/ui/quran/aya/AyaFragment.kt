@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
@@ -14,10 +13,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.viewModel
+import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_aya.*
 
-class AyaFragment : Fragment(), AyaContract {
+class AyaFragment : BaseFragment(), AyaContract {
 
     private val mediaPlayer: MediaPlayer by lazy {
         PocketTreasureApplication.getPocketTreasureComponent().mediaPlayer
@@ -60,21 +60,15 @@ class AyaFragment : Fragment(), AyaContract {
         mediaPlayer.reset()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initializeComponents()
-        observeTheLiveData()
-    }
-
-    private fun initializeComponents() {
+    override fun initializeComponents() {
         val surahsNumber = args.surahsNumber
         ayaViewModel.startSuraDataBaseCall(surahsNumber)
         rvAya.adapter = ayasAdapter
         pbAya.visibility = View.VISIBLE
     }
 
-    private fun observeTheLiveData() {
-        ayaViewModel.ayas.observe(this, Observer {
+    override fun observeTheLiveData() {
+        ayaViewModel.ayas.observe(viewLifecycleOwner, Observer {
             if (it.size > 0) {
                 ayasAdapter.submitList(it)
                 pbAya.visibility = View.GONE

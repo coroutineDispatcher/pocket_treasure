@@ -8,28 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.gms.location.LocationResult
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.background.PrayerTimeWorkManager
 import com.stavro_xhardha.pockettreasure.brain.LocationTracker
 import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
 import com.stavro_xhardha.pockettreasure.brain.viewModel
+import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class SettingsFragment : Fragment(), LocationTrackerListener {
+class SettingsFragment : BaseFragment(), LocationTrackerListener {
 
     private val settingsViewModel by viewModel {
-        PocketTreasureApplication.getPocketTreasureComponent().settingsViewModelFactory.create(it)
+        applicationComponent.settingsViewModelFactory.create(it)
     }
 
     private lateinit var sharedViewModel: SharedViewModel
@@ -53,14 +52,8 @@ class SettingsFragment : Fragment(), LocationTrackerListener {
                 }
             })
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initializeComponents()
-        observeTheLiveData()
-    }
-
-    private fun initializeComponents() {
+    
+    override fun initializeComponents() {
         swFajr.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.onSwFajrClick(isChecked)
         }
@@ -91,27 +84,27 @@ class SettingsFragment : Fragment(), LocationTrackerListener {
         }
     }
 
-    private fun observeTheLiveData() {
-        settingsViewModel.fajrCheck.observe(this, Observer {
+    override fun observeTheLiveData() {
+        settingsViewModel.fajrCheck.observe(viewLifecycleOwner, Observer {
             swFajr.isChecked = it
         })
-        settingsViewModel.dhuhrCheck.observe(this, Observer {
+        settingsViewModel.dhuhrCheck.observe(viewLifecycleOwner, Observer {
             swDhuhr.isChecked = it
         })
-        settingsViewModel.asrCheck.observe(this, Observer {
+        settingsViewModel.asrCheck.observe(viewLifecycleOwner, Observer {
             swAsr.isChecked = it
         })
-        settingsViewModel.maghribCheck.observe(this, Observer {
+        settingsViewModel.maghribCheck.observe(viewLifecycleOwner, Observer {
             swMaghrib.isChecked = it
         })
-        settingsViewModel.ishaCheck.observe(this, Observer {
+        settingsViewModel.ishaCheck.observe(viewLifecycleOwner, Observer {
             swIsha.isChecked = it
         })
-        settingsViewModel.countryAndCapital.observe(this, Observer {
+        settingsViewModel.countryAndCapital.observe(viewLifecycleOwner, Observer {
             tvCountryAndCapital.text = it
         })
 
-        settingsViewModel.locationRequestTurnOff.observe(this, Observer {
+        settingsViewModel.locationRequestTurnOff.observe(viewLifecycleOwner, Observer {
             if (it) {
                 locationTracker?.removeLocationRequest()
                 reinitPrayerSchedulers()
@@ -122,22 +115,22 @@ class SettingsFragment : Fragment(), LocationTrackerListener {
                 ).show()
             }
         })
-        settingsViewModel.locationerrorVisibility.observe(this, Observer {
+        settingsViewModel.locationerrorVisibility.observe(viewLifecycleOwner, Observer {
             if (it) {
                 Toast.makeText(requireActivity(), R.string.invalid_coorinates, Toast.LENGTH_LONG)
                     .show()
             }
         })
-        settingsViewModel.serviceNotAvailableVisibility.observe(this, Observer {
+        settingsViewModel.serviceNotAvailableVisibility.observe(viewLifecycleOwner, Observer {
             if (it) {
                 Toast.makeText(requireActivity(), R.string.service_not_available, Toast.LENGTH_LONG)
                     .show()
             }
         })
-        sharedViewModel.onGpsOpened.observe(this, Observer {
+        sharedViewModel.onGpsOpened.observe(viewLifecycleOwner, Observer {
             if (it) locationTracker?.updateLocation()
         })
-        sharedViewModel.onLocationPermissiongranted.observe(this, Observer {
+        sharedViewModel.onLocationPermissiongranted.observe(viewLifecycleOwner, Observer {
             if (it) locationTracker?.getUserLocation()
         })
     }
