@@ -12,8 +12,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import com.squareup.picasso.Picasso
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.core_module.brain.*
+import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import com.stavro_xhardha.pockettreasure.MainActivity
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.rocket.Rocket
@@ -29,8 +29,8 @@ class PrayerTimeNotificationReceiver : BroadcastReceiver() {
     private lateinit var picasso: Picasso
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences
-        picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso
+        rocket = CoreApplication.getCoreComponent().rocket
+        picasso = CoreApplication.getCoreComponent().picasso
         val title = intent?.getStringExtra(PRAYER_TITLE)
         val description = intent?.getStringExtra(PRAYER_DESCRIPTION)
         GlobalScope.launch {

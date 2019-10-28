@@ -13,11 +13,11 @@ apply plugin: "io.fabric"
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion compileSDKVersionValue
     defaultConfig {
         applicationId "com.stavro_xhardha.pockettreasure"
-        minSdkVersion 22
-        targetSdkVersion 29
+        minSdkVersion minSDKVersionValue
+        targetSdkVersion targetSDKVersionValue
         versionCode 33
         versionName "2.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -55,55 +55,54 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation project(':tasbeeh_module')
     implementation project(':core_module')
     implementation project(':compass_module')
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.2.0-beta01'
-    implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta3"
-    implementation "androidx.navigation:navigation-fragment-ktx:2.2.0-rc01"
-    implementation "androidx.navigation:navigation-ui-ktx:2.2.0-rc01"
-    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-    implementation 'com.google.dagger:dagger:2.24'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc01'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.afollestad.material-dialogs:core:2.8.1'
-    implementation 'com.afollestad.material-dialogs:input:3.0.0-rc2'
-    implementation "androidx.room:room-runtime:2.2.1"
-    implementation "androidx.room:room-ktx:2.2.1"
-    implementation 'net.danlew:android.joda:2.10.2'
-    implementation 'com.github.stavro96:Rocket:1.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc01'
-    implementation "androidx.paging:paging-runtime:2.1.0"
-    implementation 'androidx.fragment:fragment:1.2.0-rc01'
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-rc01'
-    implementation "androidx.work:work-runtime-ktx:2.2.0"
-    implementation 'com.google.firebase:firebase-core:17.2.1'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-rc01'
-    implementation 'com.airbnb.android:lottie:3.0.7'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
-    implementation "com.squareup.moshi:moshi:1.8.0"
-    implementation "com.squareup.moshi:moshi-kotlin:1.6.0"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.8.0"
-    implementation 'com.github.stavro96:smoothie:1.0'
-    compileOnly 'com.squareup.inject:assisted-inject-annotations-dagger2:0.5.0'
+    implementation libraries.cardView
+    implementation libraries.kotlin
+    implementation libraries.androidXLegacySupport
+    implementation libraries.androidXAppCompat
+    implementation libraries.coreKtx
+    implementation libraries.lifecycleExtension
+    implementation libraries.viewModelKtx
+    implementation libraries.constraintLayout
+    implementation libraries.fragmentNavigation
+    implementation libraries.fragmentNavigationKtx
+    implementation libraries.retrofit
+    implementation libraries.loggingInterceptor
+    implementation libraries.dagger
+    implementation libraries.coroutinesCore
+    implementation libraries.livedataKtx
+    implementation libraries.picasso
+    implementation libraries.materialDialogCore
+    implementation libraries.materialDialogInputs
+    implementation libraries.room
+    implementation libraries.roomKtx
+    implementation libraries.jodaTime
+    implementation libraries.rocket
+    implementation libraries.paging
+    implementation libraries.fragment
+    implementation libraries.fragmentKtx
+    implementation libraries.workManager
+    implementation libraries.viewModelSavedState
+    implementation libraries.retrofitMoshiConverter
+    implementation libraries.moshiCore
+    implementation libraries.moshiKotlin
+    implementation libraries.smoothie
+    implementation libraries.airBnBLottie
+    implementation libraries.firebase
+    implementation libraries.crashLytics
+    implementation libraries.locationService
 
-    kapt 'com.google.dagger:dagger-compiler:2.24'
-    kapt 'com.squareup.inject:assisted-inject-processor-dagger2:0.5.0'
-    kapt "androidx.room:room-compiler:2.2.1"
+    compileOnly libraries.assistedInject
+
+    kapt annotationProcessors.daggerKapt
+    kapt annotationProcessors.assistedInjectKapt
+    kapt annotationProcessors.roomKapt
+    kapt annotationProcessors.moshiKapt
 
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2'
     testImplementation 'junit:junit:4.12'

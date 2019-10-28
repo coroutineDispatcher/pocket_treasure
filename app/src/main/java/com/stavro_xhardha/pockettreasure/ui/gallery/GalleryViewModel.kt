@@ -11,7 +11,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.core_module.brain.APPLICATION_TAG
 import com.stavro_xhardha.pockettreasure.brain.*
-import com.stavro_xhardha.pockettreasure.model.UnsplashResult
+import com.stavro_xhardha.core_module.model.UnsplashResult
 
 class GalleryViewModel @AssistedInject constructor(
     private val galleryDataSourceFactory: GalleryDataSourceFactory,

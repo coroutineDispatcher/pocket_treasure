@@ -24,9 +24,9 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.core_module.brain.REQUEST_CHECK_LOCATION_SETTINGS
 import com.stavro_xhardha.core_module.brain.REQUEST_LOCATION_PERMISSION
+import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     }
 
     private fun initMainViewModel() {
-        val rocket = PocketTreasureApplication.getPocketTreasureComponent().getSharedPreferences
+        val rocket = CoreApplication.getCoreComponent().rocket
         mainActivityViewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T =
                 MainActivityViewModel(rocket) as T

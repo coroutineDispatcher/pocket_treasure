@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.Status
-import com.stavro_xhardha.pockettreasure.brain.viewModel
-import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
@@ -26,9 +26,7 @@ class GalleryFragment : BaseFragment(), GalleryContract {
         GalleryAdapter(this, picasso)
     }
 
-    private val galleryViewModel by viewModel {
-        applicationComponent.galleryViewModelFactory.create(it)
-    }
+    private val galleryViewModel by viewModels<GalleryViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

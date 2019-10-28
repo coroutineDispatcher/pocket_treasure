@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.DIFF_UTIL_GALLERY
-import com.stavro_xhardha.pockettreasure.model.UnsplashResult
+import com.stavro_xhardha.core_module.model.UnsplashResult
 import kotlinx.android.synthetic.main.single_item_image.view.*
 
 class GalleryAdapter(

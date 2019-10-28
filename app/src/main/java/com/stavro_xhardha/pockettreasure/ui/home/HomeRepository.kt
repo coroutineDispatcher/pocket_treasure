@@ -2,9 +2,9 @@ package com.stavro_xhardha.pockettreasure.ui.home
 
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
-import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
-import com.stavro_xhardha.pockettreasure.network.TreasureApi
+import com.stavro_xhardha.core_module.model.HomePrayerTime
+import com.stavro_xhardha.core_module.model.PrayerTimeResponse
+import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
 import com.stavro_xhardha.rocket.Rocket
 import retrofit2.Response
 import javax.inject.Inject

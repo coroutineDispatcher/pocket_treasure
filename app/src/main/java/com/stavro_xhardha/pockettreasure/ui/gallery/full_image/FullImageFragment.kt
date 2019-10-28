@@ -21,10 +21,10 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.stavro_xhardha.PocketTreasureApplication
-import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.core_module.brain.FULL_IMAGE_SAVED_STATE
 import com.stavro_xhardha.core_module.brain.REQUEST_STORAGE_PERMISSION
+import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
+import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
 import kotlinx.android.synthetic.main.fragment_full_image.*
@@ -63,8 +63,8 @@ class FullImageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        picasso = PocketTreasureApplication.getPocketTreasureComponent().picasso
-        wallpaperManager = PocketTreasureApplication.getPocketTreasureComponent().wallpaperManager
+        picasso = CoreApplication.getCoreComponent().picasso
+        wallpaperManager = CoreApplication.getCoreComponent().wallpaperManager
 
         if (savedInstanceState == null) {
             expetedUrl = args.imageUrl

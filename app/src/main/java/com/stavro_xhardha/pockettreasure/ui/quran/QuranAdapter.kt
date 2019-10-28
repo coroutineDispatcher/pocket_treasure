@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.DIFF_UTIL_QURAN
-import com.stavro_xhardha.pockettreasure.model.Surah
+import com.stavro_xhardha.core_module.model.Surah
 import kotlinx.android.synthetic.main.single_item_surah.view.*
 
 class QuranAdapter(val quranAdapterContract: QuranAdapterContract) :

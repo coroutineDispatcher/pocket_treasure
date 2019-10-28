@@ -3,13 +3,13 @@ package com.stavro_xhardha.pockettreasure.background
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.stavro_xhardha.PocketTreasureApplication
 import com.stavro_xhardha.core_module.brain.QURAN_API_CALL_BASE_URL
-import com.stavro_xhardha.pockettreasure.model.Aya
-import com.stavro_xhardha.pockettreasure.model.QuranResponse
-import com.stavro_xhardha.pockettreasure.network.TreasureApi
-import com.stavro_xhardha.pockettreasure.room_db.AyasDao
-import com.stavro_xhardha.pockettreasure.room_db.SurahsDao
+import com.stavro_xhardha.core_module.model.Aya
+import com.stavro_xhardha.core_module.model.QuranResponse
+import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
+import com.stavro_xhardha.core_module.core_dependencies.AyasDao
+import com.stavro_xhardha.core_module.core_dependencies.SurahsDao
+import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import kotlinx.coroutines.*
 
 
@@ -71,10 +71,10 @@ class QuranWorker(context: Context, workerParameters: WorkerParameters) :
     }
 
     private fun initDependencies() {
-        treasureApi = PocketTreasureApplication.getPocketTreasureComponent().treasureApi
+        treasureApi = CoreApplication.getCoreComponent().treasureApi
         surahsDao =
-            PocketTreasureApplication.getPocketTreasureComponent().treasureDatabase.surahsDao()
+            CoreApplication.getCoreComponent().treasureDatabase.surahsDao()
         ayasDao =
-            PocketTreasureApplication.getPocketTreasureComponent().treasureDatabase.ayasDao()
+            CoreApplication.getCoreComponent().treasureDatabase.ayasDao()
     }
 }

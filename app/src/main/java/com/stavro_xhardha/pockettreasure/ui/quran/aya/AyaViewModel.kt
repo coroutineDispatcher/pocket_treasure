@@ -8,8 +8,8 @@ import androidx.paging.PagedList
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.pockettreasure.brain.buildPagedList
-import com.stavro_xhardha.pockettreasure.model.Aya
-import com.stavro_xhardha.pockettreasure.room_db.AyasDao
+import com.stavro_xhardha.core_module.model.Aya
+import com.stavro_xhardha.core_module.core_dependencies.AyasDao
 
 class AyaViewModel @AssistedInject constructor(
     private val ayasDao: AyasDao,

@@ -6,26 +6,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import com.stavro_xhardha.PocketTreasureApplication
+import com.stavro_xhardha.core_module.brain.BaseFragment
+import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.brain.viewModel
-import com.stavro_xhardha.pockettreasure.ui.BaseFragment
 import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_aya.*
 
 class AyaFragment : BaseFragment(), AyaContract {
 
     private val mediaPlayer: MediaPlayer by lazy {
-        PocketTreasureApplication.getPocketTreasureComponent().mediaPlayer
+        CoreApplication.getCoreComponent().mediaPlayer
     }
 
-    private val ayaViewModel by viewModel {
-        PocketTreasureApplication.getPocketTreasureComponent().ayaViewModelFactory.create(it)
-    }
+    private val ayaViewModel by viewModels<AyaViewModel>()
 
     private val ayasAdapter by lazy {
         AyasAdapter(mediaPlayer, this)

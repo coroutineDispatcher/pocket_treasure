@@ -5,9 +5,9 @@ import androidx.paging.PageKeyedDataSource
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
-import com.stavro_xhardha.pockettreasure.model.UnsplashResponse
-import com.stavro_xhardha.pockettreasure.model.UnsplashResult
-import com.stavro_xhardha.pockettreasure.network.TreasureApi
+import com.stavro_xhardha.core_module.model.UnsplashResponse
+import com.stavro_xhardha.core_module.model.UnsplashResult
+import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
 import kotlinx.coroutines.*
 import retrofit2.Response
 import javax.inject.Inject

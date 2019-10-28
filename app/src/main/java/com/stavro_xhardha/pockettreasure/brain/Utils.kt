@@ -9,8 +9,8 @@ import androidx.lifecycle.*
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
 import com.stavro_xhardha.core_module.brain.INITIAL_PAGE_SIZE
+import com.stavro_xhardha.core_module.model.*
 import com.stavro_xhardha.pockettreasure.BuildConfig
-import com.stavro_xhardha.pockettreasure.model.*
 import com.sxhardha.smoothie.Smoothie
 
 val isDebugMode: Boolean = BuildConfig.DEBUG
@@ -46,18 +46,6 @@ val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
 
     override fun areContentsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
         oldItem.name == newItem.name && oldItem.time == newItem.time
-}
-
-val DIFF_UTIL_NAMES = object : DiffUtil.ItemCallback<Name>() {
-    override fun areItemsTheSame(oldItem: Name, newItem: Name): Boolean =
-        oldItem.arabicName == newItem.arabicName
-
-    override fun areContentsTheSame(oldItem: Name, newItem: Name): Boolean {
-        return oldItem.arabicName == newItem.arabicName
-                && oldItem.englishNameMeaning == newItem.englishNameMeaning
-                && oldItem.number == newItem.number
-                && oldItem.transliteration == newItem.transliteration
-    }
 }
 
 val DIFF_UTIL_QURAN = object : DiffUtil.ItemCallback<Surah>() {

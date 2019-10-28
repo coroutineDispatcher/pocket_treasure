@@ -9,8 +9,8 @@ import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
 import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
-import com.stavro_xhardha.pockettreasure.model.HomePrayerTime
-import com.stavro_xhardha.pockettreasure.model.PrayerTimeResponse
+import com.stavro_xhardha.core_module.model.HomePrayerTime
+import com.stavro_xhardha.core_module.model.PrayerTimeResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
