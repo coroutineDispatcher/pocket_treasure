@@ -33,8 +33,6 @@
     <string name="test_meaning">The Precious / The Most Mighty</string>
     <string name="error_occured">An error occurred , please check internet connection try again later</string>
     <string name="wake_me_up_for_fajr">Do you want the app to wake you up for Fajr?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
     <string name="article_title">Title</string>
     <string name="by_author">By Beni Malko</string>
     <string name="some_date">01/01/0001</string>
@@ -81,7 +79,6 @@
         جُنَاحٌ أَلَّا تَكْتُبُوهَا ۗ وَأَشْهِدُوا إِذَا تَبَايَعْتُمْ ۚ وَلَا يُضَارَّ كَاتِبٌ وَلَا شَهِيدٌ ۚ وَإِنْ
         تَفْعَلُوا فَإِنَّهُ فُسُوقٌ بِكُمْ ۗ وَاتَّقُوا اللَّهَ ۖ وَيُعَلِّمُكُمُ ا
     </string>
-    <string name="do_you_want_to_get_notified">Do you want to get notified for prayer times?</string>
     <string name="retry_connection">Retry</string>
     <string name="error_retry">An error occurred, please retry</string>
     <string name="refresh">Refresh</string>
@@ -94,8 +91,6 @@
     <string name="share">Share</string>
     <string name="share_app">Share App</string>
     <string name="cannot_play_sound_check_connection">Cannot play sound, please check your connection</string>
-    <string name="service_not_available">Service not available</string>
-    <string name="invalid_coorinates">Invalid Coordinates</string>
     <string name="settings_saved">Setttings saved</string>
     <string name="location">Location</string>
     <string name="click_to_change_location">Click here if you want to change location of your device</string>

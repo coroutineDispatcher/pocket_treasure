@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
+import com.stavro_xhardha.core_module.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_aya.*
 
 class AyaFragment : BaseFragment(), AyaContract {

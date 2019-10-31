@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui
+package com.stavro_xhardha.core_module
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

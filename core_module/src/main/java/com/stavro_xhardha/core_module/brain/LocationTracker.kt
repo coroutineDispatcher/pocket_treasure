@@ -1,18 +1,14 @@
-package com.stavro_xhardha.pockettreasure.brain
+package com.stavro_xhardha.core_module.brain
 
 import android.Manifest
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
-import com.stavro_xhardha.core_module.brain.APPLICATION_TAG
-import com.stavro_xhardha.core_module.brain.REQUEST_CHECK_LOCATION_SETTINGS
-import com.stavro_xhardha.core_module.brain.REQUEST_LOCATION_PERMISSION
 
 class LocationTracker(
     val activity: FragmentActivity,
@@ -65,7 +61,6 @@ class LocationTracker(
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
 
         task.addOnSuccessListener {
-            if (isDebugMode) Log.d(APPLICATION_TAG, "LOCATION SETTINGS ARE READY, GPS IS ON")
             updateLocation()
         }
 

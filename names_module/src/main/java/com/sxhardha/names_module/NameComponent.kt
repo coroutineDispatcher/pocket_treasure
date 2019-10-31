@@ -11,7 +11,7 @@ import dagger.Component
 )
 interface NameComponent {
     val namesViewModelFactory: NamesViewModel.Factory
-
+    
     @Component.Factory
     interface NamesFactory {
         fun create(coreComponent: CoreComponent): NameComponent

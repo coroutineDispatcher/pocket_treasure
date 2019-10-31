@@ -61,7 +61,7 @@
             tools:layout="@layout/fragment_settings" />
     <fragment
             android:id="@+id/setupFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.setup.SetupFragment"
+            android:name="com.sxhardha.setup_module.SetupFragment"
             android:label="Pick country"
             tools:layout="@layout/fragment_setup"/>
     <fragment

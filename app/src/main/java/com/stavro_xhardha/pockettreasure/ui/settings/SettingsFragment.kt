@@ -17,15 +17,16 @@ import androidx.work.WorkManager
 import com.google.android.gms.location.LocationResult
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.background.PrayerTimeWorkManager
-import com.stavro_xhardha.pockettreasure.brain.LocationTracker
-import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
-import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
+import com.stavro_xhardha.core_module.background.PrayerTimeWorkManager
+import com.stavro_xhardha.core_module.brain.LocationTracker
+import com.stavro_xhardha.core_module.brain.LocationTrackerListener
+import com.stavro_xhardha.core_module.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class SettingsFragment : BaseFragment(), LocationTrackerListener {
+class SettingsFragment : BaseFragment(),
+    LocationTrackerListener {
 
     private val settingsViewModel by viewModels<SettingsViewModel>()
 
@@ -73,7 +74,8 @@ class SettingsFragment : BaseFragment(), LocationTrackerListener {
         }
 
         llLocation.setOnClickListener {
-            locationTracker = LocationTracker(requireActivity(), this)
+            locationTracker =
+                LocationTracker(requireActivity(), this)
             locationTracker?.startLocationRequestProcess()
         }
 

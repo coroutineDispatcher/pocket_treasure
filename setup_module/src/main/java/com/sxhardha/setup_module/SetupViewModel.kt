@@ -1,19 +1,18 @@
-package com.stavro_xhardha.pockettreasure.ui.setup
+package com.sxhardha.setup_module
 
 import android.location.Geocoder
 import android.view.View
 import androidx.lifecycle.*
-import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
-class SetupViewModel @AssistedInject constructor(
+class SetupViewModel @Inject constructor(
     private val appCoroutineDispatchers: AppCoroutineDispatchers,
-    private val setupRepository: SetupRepository,
-    @Assisted val savedStateHandle: SavedStateHandle
+    private val setupRepository: SetupRepository
 ) : ViewModel() {
 
     @AssistedInject.Factory

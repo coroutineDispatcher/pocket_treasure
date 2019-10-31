@@ -1,15 +1,13 @@
-package com.stavro_xhardha.pockettreasure.background
+package com.stavro_xhardha.core_module.background
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
-import com.stavro_xhardha.pockettreasure.brain.*
 import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -145,9 +143,6 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
         val alarmManager = mContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         alarmManager.setExact(AlarmManager.RTC, time.millis, pendingIntent)
-
-        if (isDebugMode)
-            Log.d(APPLICATION_TAG, "Alarm set at ${time.millis}")
     }
 
     private fun getCurrentDayPrayerImplementation(prayerTime: String): DateTime =

@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui.setup
+package com.sxhardha.setup_module
 
 import android.location.Geocoder
 import android.os.Bundle
@@ -15,13 +15,11 @@ import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.google.android.gms.location.LocationResult
-import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.background.PrayerTimeWorkManager
-import com.stavro_xhardha.pockettreasure.brain.LocationTracker
-import com.stavro_xhardha.pockettreasure.brain.LocationTrackerListener
-import com.stavro_xhardha.pockettreasure.brain.viewModel
 import com.stavro_xhardha.core_module.brain.BaseFragment
-import com.stavro_xhardha.pockettreasure.ui.SharedViewModel
+import com.stavro_xhardha.core_module.SharedViewModel
+import com.stavro_xhardha.core_module.background.PrayerTimeWorkManager
+import com.stavro_xhardha.core_module.brain.LocationTracker
+import com.stavro_xhardha.core_module.brain.LocationTrackerListener
 import java.util.*
 import java.util.concurrent.TimeUnit
 

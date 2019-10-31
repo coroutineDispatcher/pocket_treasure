@@ -67,10 +67,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.5.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-rc01"
-        // Check for v3.1.2 or higher
         classpath 'com.google.gms:google-services:4.3.2'
-
-        // Add dependency
         classpath 'io.fabric.tools:gradle:1.31.0'
     }
 }

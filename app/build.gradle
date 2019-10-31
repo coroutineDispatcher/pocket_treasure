@@ -60,6 +60,8 @@ dependencies {
     implementation project(':tasbeeh_module')
     implementation project(':core_module')
     implementation project(':compass_module')
+    implementation project(':names_module')
+    implementation project(':setup_module')
 
     implementation libraries.cardView
     implementation libraries.kotlin
