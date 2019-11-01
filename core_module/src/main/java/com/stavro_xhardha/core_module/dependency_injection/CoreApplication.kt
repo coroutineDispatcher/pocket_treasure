@@ -10,6 +10,7 @@ class CoreApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         coreComponent = DaggerCoreComponent.factory().create(this)
+        INSTANCE = coreComponent
     }
 
     companion object {

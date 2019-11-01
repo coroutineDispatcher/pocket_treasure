@@ -8,7 +8,9 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.stavro_xhardha.core_module.PrayerTimeNotificationReceiver
 import com.stavro_xhardha.core_module.brain.*
+import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
+import com.stavro_xhardha.core_module.model.PrayerTimeResponse
 import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -19,55 +21,86 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
     CoroutineWorker(context, parameters) {
 
     private lateinit var rocket: Rocket
+    private lateinit var treasureApi: TreasureApi
 
     override suspend fun doWork(): Result = coroutineScope {
         instantiateDependencies()
         launch {
-            val fajrTime = rocket.readString(FAJR_KEY)
-            val dhuhrTime = rocket.readString(DHUHR_KEY)
-            val asrTime = rocket.readString(ASR_KEY)
-            val maghribTime = rocket.readString(MAGHRIB_KEY)
-            val ishaTime = rocket.readString(ISHA_KEY)
+            try {
+                val capital = rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)
+                val country = rocket.readString(COUNTRY_SHARED_PREFERENCE_KEY)
 
-            val currentTIme = LocalTime()
-
-            if (currentTIme.isBefore(localTime(fajrTime!!))) {
-                scheduleAlarmForPrayer(
-                    rocket.readBoolean(NOTIFY_USER_FOR_FAJR),
-                    fajrTime,
-                    PENDING_INTENT_FIRE_NOTIFICATION_FAJR
+                val response = treasureApi.getPrayerTimesTodayAsync(
+                    capital, country
                 )
-            }
-            if (currentTIme.isBefore(localTime(dhuhrTime!!))) {
-                scheduleAlarmForPrayer(
-                    rocket.readBoolean(NOTIFY_USER_FOR_DHUHR),
-                    dhuhrTime,
-                    PENDING_INTENT_FIRE_NOTIFICATION_DHUHR
-                )
-            }
-            if (currentTIme.isBefore(localTime(asrTime!!))) {
-                scheduleAlarmForPrayer(
-                    rocket.readBoolean(NOTIFY_USER_FOR_ASR),
-                    asrTime,
-                    PENDING_INTENT_FIRE_NOTIFICATION_ASR
-                )
-            }
-            if (currentTIme.isBefore(localTime(maghribTime!!))) {
-                scheduleAlarmForPrayer(
-                    rocket.readBoolean(NOTIFY_USER_FOR_MAGHRIB),
-                    maghribTime,
-                    PENDING_INTENT_FIRE_NOTIFICATION_MAGHRIB
-                )
-            }
-            if (currentTIme.isBefore(localTime(ishaTime!!))) {
-                scheduleAlarmForPrayer(
-                    rocket.readBoolean(NOTIFY_USER_FOR_ISHA),
-                    ishaTime,
-                    PENDING_INTENT_FIRE_NOTIFICATION_ISHA
-                )
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        updatePrayerTimes(response.body()!!)
+                    }
+                }
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            } finally {
+                scheduleNewAlarms()
             }
         }
         Result.success()
+    }
+
+    private suspend fun scheduleNewAlarms() {
+        val fajrTime = rocket.readString(FAJR_KEY)
+        val dhuhrTime = rocket.readString(DHUHR_KEY)
+        val asrTime = rocket.readString(ASR_KEY)
+        val maghribTime = rocket.readString(MAGHRIB_KEY)
+        val ishaTime = rocket.readString(ISHA_KEY)
+
+        val currentTIme = LocalTime()
+
+        if (currentTIme.isBefore(localTime(fajrTime!!))) {
+            scheduleAlarmForPrayer(
+                rocket.readBoolean(NOTIFY_USER_FOR_FAJR),
+                fajrTime,
+                PENDING_INTENT_FIRE_NOTIFICATION_FAJR
+            )
+        }
+        if (currentTIme.isBefore(localTime(dhuhrTime!!))) {
+            scheduleAlarmForPrayer(
+                rocket.readBoolean(NOTIFY_USER_FOR_DHUHR),
+                dhuhrTime,
+                PENDING_INTENT_FIRE_NOTIFICATION_DHUHR
+            )
+        }
+        if (currentTIme.isBefore(localTime(asrTime!!))) {
+            scheduleAlarmForPrayer(
+                rocket.readBoolean(NOTIFY_USER_FOR_ASR),
+                asrTime,
+                PENDING_INTENT_FIRE_NOTIFICATION_ASR
+            )
+        }
+        if (currentTIme.isBefore(localTime(maghribTime!!))) {
+            scheduleAlarmForPrayer(
+                rocket.readBoolean(NOTIFY_USER_FOR_MAGHRIB),
+                maghribTime,
+                PENDING_INTENT_FIRE_NOTIFICATION_MAGHRIB
+            )
+        }
+        if (currentTIme.isBefore(localTime(ishaTime!!))) {
+            scheduleAlarmForPrayer(
+                rocket.readBoolean(NOTIFY_USER_FOR_ISHA),
+                ishaTime,
+                PENDING_INTENT_FIRE_NOTIFICATION_ISHA
+            )
+        }
+    }
+
+    private suspend fun updatePrayerTimes(prayerTimeResponse: PrayerTimeResponse) {
+        prayerTimeResponse.let {
+            rocket.writeString(FAJR_KEY, it.data.timings.fajr)
+            rocket.writeString(FAJR_KEY, it.data.timings.dhuhr)
+            rocket.writeString(FAJR_KEY, it.data.timings.asr)
+            rocket.writeString(FAJR_KEY, it.data.timings.magrib)
+            rocket.writeString(FAJR_KEY, it.data.timings.isha)
+        }
     }
 
     private fun scheduleAlarmForPrayer(
@@ -171,5 +204,6 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
     private fun instantiateDependencies() {
         val application = CoreApplication.getCoreComponent()
         rocket = application.rocket
+        treasureApi = application.treasureApi
     }
 }

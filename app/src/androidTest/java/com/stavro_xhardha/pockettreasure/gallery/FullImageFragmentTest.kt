@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.stavro_xhardha.pockettreasure.ui.gallery.full_image.FullImageFragment
+import com.sxhardha.gallery_module.image.FullImageFragment
 import com.sxhardha.smoothie.Smoothie
 import org.junit.After
 import org.junit.Before
@@ -16,7 +16,7 @@ import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
 class FullImageFragmentTest {
-    private lateinit var fullImageFragmentScenario: FragmentScenario<FullImageFragment>
+    private lateinit var fullImageFragmentScenario: FragmentScenario<com.sxhardha.gallery_module.image.FullImageFragment>
     private lateinit var mockNavController: NavController
 
     @Before

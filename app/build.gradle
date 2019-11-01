@@ -1,15 +1,9 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: "androidx.navigation.safeargs.kotlin"
-
 apply plugin: 'kotlin-kapt'
-
-apply plugin: "io.fabric"
-
+apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -21,16 +15,8 @@ android {
         versionCode 33
         versionName "2.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
-                        "room.incremental"     : "true",
-                        "room.expandProjection": "true"]
-            }
-        }
     }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -38,96 +24,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(':tasbeeh_module')
     implementation project(':core_module')
-    implementation project(':compass_module')
+    implementation project(':home_module')
     implementation project(':names_module')
+    implementation project(':quran_module')
+    implementation project(':tasbeeh_module')
+    implementation project(':gallery_module')
+    implementation project(':compass_module')
     implementation project(':setup_module')
-
-    implementation libraries.cardView
-    implementation libraries.kotlin
-    implementation libraries.androidXLegacySupport
-    implementation libraries.androidXAppCompat
-    implementation libraries.coreKtx
-    implementation libraries.lifecycleExtension
-    implementation libraries.viewModelKtx
-    implementation libraries.constraintLayout
-    implementation libraries.fragmentNavigation
-    implementation libraries.fragmentNavigationKtx
-    implementation libraries.retrofit
-    implementation libraries.loggingInterceptor
-    implementation libraries.dagger
-    implementation libraries.coroutinesCore
-    implementation libraries.livedataKtx
-    implementation libraries.picasso
-    implementation libraries.materialDialogCore
-    implementation libraries.materialDialogInputs
-    implementation libraries.room
-    implementation libraries.roomKtx
-    implementation libraries.jodaTime
-    implementation libraries.rocket
-    implementation libraries.paging
-    implementation libraries.fragment
-    implementation libraries.fragmentKtx
-    implementation libraries.workManager
-    implementation libraries.viewModelSavedState
-    implementation libraries.retrofitMoshiConverter
-    implementation libraries.moshiCore
-    implementation libraries.moshiKotlin
-    implementation libraries.smoothie
-    implementation libraries.airBnBLottie
-    implementation libraries.firebase
-    implementation libraries.crashLytics
-    implementation libraries.locationService
-
-    compileOnly libraries.assistedInject
-
-    kapt annotationProcessors.daggerKapt
-    kapt annotationProcessors.assistedInjectKapt
-    kapt annotationProcessors.roomKapt
-    kapt annotationProcessors.moshiKapt
-
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.28.2'
-    testImplementation 'joda-time:joda-time:2.10.2'
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
-    testImplementation 'org.mockito:mockito-inline:2.13.0'
-    testImplementation "android.arch.core:core-testing:1.1.1"
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:4.1.0'
-
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
-    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    debugImplementation("androidx.fragment:fragment-testing:1.2.0-rc01", {
-        exclude group: 'androidx.test', module: 'core'
-    })
-    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
-    androidTestImplementation "androidx.work:work-testing:2.2.0"
+    implementation project(':settings_module')
 }

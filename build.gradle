@@ -52,7 +52,37 @@ ext {
             roomKapt          : 'androidx.room:room-compiler:2.2.1'
     ]
 
+    testImplementations = [
+            coroutinesTest        : 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2',
+            jUnit                 : 'junit:junit:4.12',
+            mockitoCore           : 'org.mockito:mockito-core:2.28.2',
+            jodaTimeTest          : 'joda-time:joda-time:2.10.2',
+            mockitoKotlin         : 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0',
+            mockitoInline         : 'org.mockito:mockito-inline:2.13.0',
+            androidArchCoreTesting: 'android.arch.core:core-testing:1.1.1',
+            coroutinesTesting     : 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2',
+            mockWebServer         : 'com.squareup.okhttp3:mockwebserver:4.1.0'
+    ]
 
+    androidTestImplementations = [
+            espressoCore            : 'androidx.test.espresso:espresso-core:3.2.0',
+            espressoContrib         : 'androidx.test.espresso:espresso-contrib:3.2.0',
+            espressoIntents         : 'androidx.test.espresso:espresso-intents:3.2.0',
+            espressoAccessibility   : 'androidx.test.espresso:espresso-accessibility:3.2.0',
+            espressoWeb             : 'androidx.test.espresso:espresso-web:3.2.0',
+            espressoIdlingConcurrent: 'androidx.test.espresso.idling:idling-concurrent:3.2.0',
+            testRunner              : 'androidx.test:runner:1.2.0',
+            testRules               : 'androidx.test:rules:1.2.0',
+            androidJUnit            : 'androidx.test.ext:junit:1.1.1',
+            fragmentTesting         : 'androidx.fragment:fragment-testing:1.2.0-rc01',
+            mockitoAndroid          : 'org.mockito:mockito-android:2.24.5',
+            workerTest              : 'androidx.work:work-testing:2.2.0'
+    ]
+
+    roomIncrementalAnnotationProcessor = [
+            "room.schemaLocation"  : "$projectDir/schemas".toString(),
+            "room.incremental"     : "true",
+            "room.expandProjection": "true"]
 }
 
 buildscript {

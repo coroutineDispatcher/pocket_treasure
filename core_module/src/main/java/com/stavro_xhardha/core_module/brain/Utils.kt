@@ -9,11 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
-import com.stavro_xhardha.core_module.model.Aya
-import com.stavro_xhardha.core_module.model.Name
-import com.stavro_xhardha.core_module.model.Surah
-import com.sxhardha.smoothie.BuildConfig
-import com.sxhardha.smoothie.Smoothie
+import com.stavro_xhardha.core_module.model.*
 
 inline fun <reified T : ViewModel> Fragment.viewModel(
     crossinline provider: () -> T
@@ -71,6 +67,25 @@ val DIFF_UTIL_AYA = object : DiffUtil.ItemCallback<Aya>() {
                 && oldItem.id == newItem.id
 
 }
+
+val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
+    override fun areItemsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
+        oldItem.name == newItem.name
+
+    override fun areContentsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
+        oldItem.name == newItem.name && oldItem.time == newItem.time
+}
+
+val DIFF_UTIL_GALLERY = object : DiffUtil.ItemCallback<UnsplashResult>() {
+    override fun areItemsTheSame(oldItem: UnsplashResult, newItem: UnsplashResult): Boolean =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: UnsplashResult, newItem: UnsplashResult): Boolean =
+        oldItem.id == newItem.id && oldItem.description == newItem.description
+                && oldItem.altDescription == newItem.description
+                && oldItem.photoUrls == newItem.photoUrls
+}
+
 
 fun buildPagedList() = PagedList.Config.Builder()
     .setPageSize(INITIAL_PAGE_SIZE)

@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     private fun checkToolbar() {
         if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Dark)
+
         } else {
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Light)
         }

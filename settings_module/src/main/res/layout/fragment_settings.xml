@@ -1,214 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sxhardha.settings_module.SettingsFragment">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.sxhardha.settings_module.SettingsFragment">
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/global_unit_bigger"
+        android:weightSum="100">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:orientation="vertical">
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fajr"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
-                    android:textStyle="bold" />
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wake_up_fajr"
-                    android:textSize="@dimen/text_global_unit_normal" />
-        </LinearLayout>
-
-        <Switch
-                android:id="@+id/swFajr"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="70"
-                android:gravity="center" />
-    </LinearLayout>
-
-    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100">
+            android:layout_weight="30"
+            android:orientation="vertical">
 
-        <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:orientation="vertical">
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dhuhr"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
-                    android:textStyle="bold" />
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wake_up_dhuhr"
-                    android:textSize="@dimen/text_global_unit_normal" />
-        </LinearLayout>
-
-        <Switch
-                android:id="@+id/swDhuhr"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="70"
-                android:gravity="center" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100">
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:orientation="vertical">
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/asr"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
-                    android:textStyle="bold" />
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wake_up_asr"
-                    android:textSize="@dimen/text_global_unit_normal" />
-        </LinearLayout>
-
-        <Switch
-                android:id="@+id/swAsr"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="70"
-                android:gravity="center" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100">
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:orientation="vertical">
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/maghrib"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
-                    android:textStyle="bold" />
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wake_up_maghrib"
-                    android:textSize="@dimen/text_global_unit_normal" />
-        </LinearLayout>
-
-        <Switch
-                android:id="@+id/swMaghrib"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="70"
-                android:gravity="center" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100">
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:orientation="vertical">
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/isha"
-                    android:textSize="@dimen/text_global_unit_bigger_x"
-                    android:textStyle="bold" />
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wake_up_isha"
-                    android:textSize="@dimen/text_global_unit_normal" />
-        </LinearLayout>
-
-        <Switch
-                android:id="@+id/swIsha"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="70"
-                android:gravity="center" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:id="@+id/llLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:padding="@dimen/global_unit_bigger"
-            android:weightSum="100">
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/location"
+                android:text="@string/fajr"
                 android:textSize="@dimen/text_global_unit_bigger_x"
                 android:textStyle="bold" />
 
-        <TextView
-                android:id="@+id/tvCountryAndCapital"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/click_to_change_location"
+                android:text="@string/wake_up_fajr"
                 android:textSize="@dimen/text_global_unit_normal" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swFajr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="70"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/global_unit_bigger"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dhuhr"
+                android:textSize="@dimen/text_global_unit_bigger_x"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wake_up_dhuhr"
+                android:textSize="@dimen/text_global_unit_normal" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swDhuhr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="70"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/global_unit_bigger"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/asr"
+                android:textSize="@dimen/text_global_unit_bigger_x"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wake_up_asr"
+                android:textSize="@dimen/text_global_unit_normal" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swAsr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="70"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/global_unit_bigger"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/maghrib"
+                android:textSize="@dimen/text_global_unit_bigger_x"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wake_up_maghrib"
+                android:textSize="@dimen/text_global_unit_normal" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swMaghrib"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="70"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/global_unit_bigger"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/isha"
+                android:textSize="@dimen/text_global_unit_bigger_x"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wake_up_isha"
+                android:textSize="@dimen/text_global_unit_normal" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/swIsha"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="70"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="@dimen/global_unit_bigger"
+        android:weightSum="100">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/location"
+            android:textSize="@dimen/text_global_unit_bigger_x"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCountryAndCapital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/click_to_change_location"
+            android:textSize="@dimen/text_global_unit_normal" />
     </LinearLayout>
 
 </LinearLayout>

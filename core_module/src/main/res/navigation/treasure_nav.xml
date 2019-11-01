@@ -7,7 +7,7 @@
         app:startDestination="@id/homeFragment">
     <fragment
             android:id="@+id/homeFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.home.HomeFragment"
+            android:name="com.sxhardha.home_module.HomeFragment"
             android:label="Home"
             tools:layout="@layout/fragment_home">
         <action
@@ -42,7 +42,7 @@
             tools:layout="@layout/fragment_tasbeeh" />
     <fragment
             android:id="@+id/galleryFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.gallery.GalleryFragment"
+            android:name="com.sxhardha.gallery_module.gallery.GalleryFragment"
             android:label="Gallery"
             tools:layout="@layout/fragment_gallery">
         <action
@@ -66,7 +66,7 @@
             tools:layout="@layout/fragment_setup"/>
     <fragment
             android:id="@+id/fullImageFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.gallery.full_image.FullImageFragment"
+            android:name="com.sxhardha.gallery_module.image.FullImageFragment"
             android:label="Image Details"
             tools:layout="@layout/fragment_full_image">
         <argument

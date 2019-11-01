@@ -18,7 +18,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.ui.gallery.GalleryFragment
+import com.sxhardha.gallery_module.GalleryFragment
 import com.stavro_xhardha.pockettreasure.ui.gallery.GalleryFragmentDirections
 import com.sxhardha.smoothie.Smoothie
 import org.hamcrest.CoreMatchers.not
@@ -31,7 +31,7 @@ import org.mockito.Mockito.verify
 
 @RunWith(AndroidJUnit4::class)
 class GalleryFragmentTest {
-    private lateinit var galleryFragmentScenario: FragmentScenario<GalleryFragment>
+    private lateinit var galleryFragmentScenario: FragmentScenario<com.sxhardha.gallery_module.GalleryFragment>
     private lateinit var mockNavController: NavController
     private lateinit var context: Context
 
