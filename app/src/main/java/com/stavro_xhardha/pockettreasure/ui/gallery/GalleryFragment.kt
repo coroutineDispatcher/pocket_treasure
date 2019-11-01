@@ -1,9 +1,11 @@
 package com.stavro_xhardha.pockettreasure.ui.gallery
 
+//import kotlinx.android.synthetic.main.error_layout.*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,10 +16,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.pockettreasure.brain.Status
-import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
 class GalleryFragment : BaseFragment(), GalleryContract {
+    private lateinit var btnRetry: Button
+
     private val picasso by lazy {
         applicationComponent.picasso
     }
@@ -37,6 +40,7 @@ class GalleryFragment : BaseFragment(), GalleryContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        btnRetry = view.findViewById(R.id.btnRetry)
         requireActivity().onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {

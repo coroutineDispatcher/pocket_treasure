@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.stavro_xhardha.core_module.PrayerTimeNotificationReceiver
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import com.stavro_xhardha.rocket.Rocket

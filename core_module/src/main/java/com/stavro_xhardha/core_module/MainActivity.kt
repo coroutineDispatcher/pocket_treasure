@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure
+package com.stavro_xhardha.core_module
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -27,7 +27,6 @@ import com.google.android.material.navigation.NavigationView
 import com.stavro_xhardha.core_module.brain.REQUEST_CHECK_LOCATION_SETTINGS
 import com.stavro_xhardha.core_module.brain.REQUEST_LOCATION_PERMISSION
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
-import com.stavro_xhardha.core_module.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListener {

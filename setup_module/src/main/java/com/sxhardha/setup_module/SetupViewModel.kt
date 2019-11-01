@@ -3,7 +3,6 @@ package com.sxhardha.setup_module
 import android.location.Geocoder
 import android.view.View
 import androidx.lifecycle.*
-import com.squareup.inject.assisted.AssistedInject
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -14,11 +13,6 @@ class SetupViewModel @Inject constructor(
     private val appCoroutineDispatchers: AppCoroutineDispatchers,
     private val setupRepository: SetupRepository
 ) : ViewModel() {
-
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(savedStateHandle: SavedStateHandle): SetupViewModel
-    }
 
     val pbVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorVisibility: MutableLiveData<Int> = MutableLiveData()

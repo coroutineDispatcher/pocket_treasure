@@ -79,8 +79,6 @@
         جُنَاحٌ أَلَّا تَكْتُبُوهَا ۗ وَأَشْهِدُوا إِذَا تَبَايَعْتُمْ ۚ وَلَا يُضَارَّ كَاتِبٌ وَلَا شَهِيدٌ ۚ وَإِنْ
         تَفْعَلُوا فَإِنَّهُ فُسُوقٌ بِكُمْ ۗ وَاتَّقُوا اللَّهَ ۖ وَيُعَلِّمُكُمُ ا
     </string>
-    <string name="retry_connection">Retry</string>
-    <string name="error_retry">An error occurred, please retry</string>
     <string name="refresh">Refresh</string>
     <string name="playing">Playing</string>
     <string name="stoped">Stoped</string>
@@ -94,8 +92,6 @@
     <string name="settings_saved">Setttings saved</string>
     <string name="location">Location</string>
     <string name="click_to_change_location">Click here if you want to change location of your device</string>
-    <string name="values_cannot_be_updated">Location cannot be updated, please check permissions or location settings</string>
-    <string name="location_updated_successfully">Location Updated Successfully</string>
     <string name="compass">Qibla Compass</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>

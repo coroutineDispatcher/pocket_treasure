@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure
+package com.stavro_xhardha.core_module
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData

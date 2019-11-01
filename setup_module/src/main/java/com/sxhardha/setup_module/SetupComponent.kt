@@ -8,6 +8,8 @@ import dagger.Component
 @FragmentScoped
 interface SetupComponent {
 
+    val setupViewModel: SetupViewModel
+
     @Component.Factory
     interface SetupFactory {
         fun create(coreComponent: CoreComponent): SetupComponent

@@ -1,26 +1,20 @@
-package com.stavro_xhardha.pockettreasure.ui.settings
+package com.sxhardha.settings_module
 
 import android.location.Geocoder
-import androidx.lifecycle.*
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
-import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
-import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import javax.inject.Inject
 
-class SettingsViewModel @AssistedInject constructor(
+class SettingsViewModel @Inject constructor(
     private val appCoroutineDispatchers: AppCoroutineDispatchers,
-    private val settingsRepository: SettingsRepository,
-    @Assisted val savedStateHandle: SavedStateHandle
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
-
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(savedStateHandle: SavedStateHandle): SettingsViewModel
-    }
 
     private val _fajrCheck: MutableLiveData<Boolean> = MutableLiveData()
     private val _dhuhrCheck: MutableLiveData<Boolean> = MutableLiveData()
@@ -54,7 +48,6 @@ class SettingsViewModel @AssistedInject constructor(
     }
 
     private fun listenToRepository() {
-        incrementIdlingResource()
         viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.let {
                 fajrCheckHelper = it.getFajrChecked()
@@ -71,52 +64,41 @@ class SettingsViewModel @AssistedInject constructor(
                 this@SettingsViewModel._ishaCheck.value = ishaCheckCheckHelper
                 this@SettingsViewModel._countryAndCapital.value =
                     settingsRepository.readCountryAndCapital()
-                decrementIdlingResource()
             }
         }
     }
 
     fun onSwFajrClick(checked: Boolean) {
-        incrementIdlingResource()
         viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putFajrNotification(checked)
-            decrementIdlingResource()
             _fajrCheck.postValue(settingsRepository.getFajrChecked())
         }
     }
 
     fun onSwDhuhrClick(checked: Boolean) {
-        incrementIdlingResource()
         viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putDhuhrNotification(checked)
-            decrementIdlingResource()
             _dhuhrCheck.postValue(settingsRepository.getDhuhrChecked())
         }
     }
 
     fun onSwAsrClick(checked: Boolean) {
-        incrementIdlingResource()
         viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putAsrNotification(checked)
-            decrementIdlingResource()
             _asrCheck.postValue(settingsRepository.getAsrChecked())
         }
     }
 
     fun onSwMaghribClick(checked: Boolean) {
-        incrementIdlingResource()
         viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putMaghribNotification(checked)
-            decrementIdlingResource()
             _maghribCheck.postValue(settingsRepository.getMaghribChecked())
         }
     }
 
     fun onSwIshaClick(checked: Boolean) {
-        incrementIdlingResource()
         viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
             settingsRepository.putIshaNotification(checked)
-            decrementIdlingResource()
             _ishaCheck.postValue(settingsRepository.getIshaChecked())
         }
     }

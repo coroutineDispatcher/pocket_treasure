@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    <Todo-->
-<!--        Add context-->
-<!--        />-->
-
     <include
         android:id="@+id/pbNames"
         layout="@layout/single_item_progress"

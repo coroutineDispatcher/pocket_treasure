@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import com.stavro_xhardha.core_module.model.Name
+import com.sxhardha.smoothie.BuildConfig
+import com.sxhardha.smoothie.Smoothie
 
 inline fun <reified T : ViewModel> Fragment.viewModel(
     crossinline provider: () -> T
@@ -22,7 +24,11 @@ inline fun <reified T : ViewModel> Fragment.savedStateViewModel(
     crossinline provider: (SavedStateHandle) -> T
 ) = viewModels<T> {
     object : AbstractSavedStateViewModelFactory(this, Bundle()) {
-        override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T =
+        override fun <T : ViewModel?> create(
+            key: String,
+            modelClass: Class<T>,
+            handle: SavedStateHandle
+        ): T =
             provider(handle) as T
     }
 }

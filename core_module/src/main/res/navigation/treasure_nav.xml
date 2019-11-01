@@ -56,7 +56,7 @@
 
     <fragment
             android:id="@+id/settingsFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.settings.SettingsFragment"
+            android:name="com.sxhardha.settings_module.SettingsFragment"
             android:label="Settings"
             tools:layout="@layout/fragment_settings" />
     <fragment

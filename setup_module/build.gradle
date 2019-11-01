@@ -52,8 +52,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation libraries.fragmentNavigation
     implementation libraries.fragmentNavigationKtx
-    compileOnly libraries.assistedInject
-    kapt annotationProcessors.assistedInjectKapt
     implementation libraries.dagger
     kapt annotationProcessors.daggerKapt
     implementation libraries.retrofit

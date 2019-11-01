@@ -1,5 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui.settings
-
+package com.sxhardha.settings_module
 
 import android.location.Geocoder
 import android.os.Bundle
@@ -8,19 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.android.gms.location.LocationResult
-import com.stavro_xhardha.core_module.brain.BaseFragment
-import com.stavro_xhardha.pockettreasure.R
+import com.stavro_xhardha.core_module.SharedViewModel
 import com.stavro_xhardha.core_module.background.PrayerTimeWorkManager
+import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.brain.LocationTracker
 import com.stavro_xhardha.core_module.brain.LocationTrackerListener
-import com.stavro_xhardha.core_module.SharedViewModel
+import com.stavro_xhardha.core_module.brain.viewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -28,7 +26,9 @@ import java.util.concurrent.TimeUnit
 class SettingsFragment : BaseFragment(),
     LocationTrackerListener {
 
-    private val settingsViewModel by viewModels<SettingsViewModel>()
+    private val settingsViewModel by viewModel {
+        DaggerSettingsComponent.factory().create(applicationComponent).settingsViewModel
+    }
 
     private lateinit var sharedViewModel: SharedViewModel
 

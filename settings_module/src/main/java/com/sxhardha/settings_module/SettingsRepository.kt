@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui.settings
+package com.sxhardha.settings_module
 
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.rocket.Rocket
