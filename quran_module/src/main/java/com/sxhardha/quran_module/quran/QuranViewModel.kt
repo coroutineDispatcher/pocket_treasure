@@ -1,27 +1,21 @@
-package com.stavro_xhardha.pockettreasure.ui.quran
+package com.sxhardha.quran_module.quran
 
 import android.view.View
-import androidx.lifecycle.*
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
-import com.stavro_xhardha.pockettreasure.brain.decrementIdlingResource
-import com.stavro_xhardha.pockettreasure.brain.incrementIdlingResource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
-import com.stavro_xhardha.core_module.model.Surah
 import com.stavro_xhardha.core_module.core_dependencies.SurahsDao
+import com.stavro_xhardha.core_module.model.Surah
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class QuranViewModel @AssistedInject constructor(
+class QuranViewModel @Inject constructor(
     private val appCoroutineDispatchers: AppCoroutineDispatchers,
-    private val surahsDao: SurahsDao,
-    @Assisted val savedStateHandle: SavedStateHandle
+    private val surahsDao: SurahsDao
 ) : ViewModel() {
-
-    @AssistedInject.Factory
-    interface Factory {
-        fun create(savedStateHandle: SavedStateHandle): QuranViewModel
-    }
 
     private val coroutineExceptionHandler: CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
@@ -45,9 +39,7 @@ class QuranViewModel @AssistedInject constructor(
 
     fun startQuranDatabaseCall() {
         viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
-            incrementIdlingResource()
             makeLocalDatabaseCall()
-            decrementIdlingResource()
         }
     }
 

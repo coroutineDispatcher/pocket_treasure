@@ -1,19 +1,17 @@
-package com.stavro_xhardha.compass_module
+package com.sxhardha.quran_module.aya
 
 import com.stavro_xhardha.core_module.dependency_injection.CoreComponent
 import com.stavro_xhardha.core_module.dependency_injection.FragmentScoped
 import dagger.Component
 
+@Component(dependencies = [CoreComponent::class])
 @FragmentScoped
-@Component(
-    dependencies = [CoreComponent::class]
-)
-interface CompassComponent {
+interface AyaComponent {
 
-    val compassViewModel: CompassViewModel
+    val ayaViewModel: AyaViewModel
 
     @Component.Factory
     interface Factory {
-        fun create(coreComponent: CoreComponent): CompassComponent
+        fun create(coreComponent: CoreComponent): AyaComponent
     }
 }

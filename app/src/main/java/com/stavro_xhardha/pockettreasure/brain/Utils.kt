@@ -20,16 +20,6 @@ fun buildPagedList() = PagedList.Config.Builder()
     .setEnablePlaceholders(false)
     .build()
 
-val DIFF_UTIL_AYA = object : DiffUtil.ItemCallback<Aya>() {
-    override fun areItemsTheSame(oldItem: Aya, newItem: Aya): Boolean = oldItem.id == newItem.id
-
-    override fun areContentsTheSame(oldItem: Aya, newItem: Aya): Boolean =
-        oldItem.ayatText == newItem.ayatText
-                && oldItem.audioUrl == newItem.audioUrl
-                && oldItem.id == newItem.id
-
-}
-
 val DIFF_UTIL_GALLERY = object : DiffUtil.ItemCallback<UnsplashResult>() {
     override fun areItemsTheSame(oldItem: UnsplashResult, newItem: UnsplashResult): Boolean =
         oldItem.id == newItem.id
@@ -46,19 +36,6 @@ val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
 
     override fun areContentsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
         oldItem.name == newItem.name && oldItem.time == newItem.time
-}
-
-val DIFF_UTIL_QURAN = object : DiffUtil.ItemCallback<Surah>() {
-    override fun areItemsTheSame(oldItem: Surah, newItem: Surah): Boolean =
-        oldItem.surahNumber == newItem.surahNumber
-
-    override fun areContentsTheSame(oldItem: Surah, newItem: Surah): Boolean =
-        oldItem.englishName == newItem.englishName
-                && oldItem.englishTranslation == newItem.englishTranslation
-                && oldItem.surahArabicName == newItem.surahArabicName
-                && oldItem.revelationType == newItem.revelationType
-                && oldItem.surahNumber == newItem.surahNumber
-
 }
 
 fun <T> LiveData<T>.observeOnce(onChangeHandler: (T) -> Unit) {

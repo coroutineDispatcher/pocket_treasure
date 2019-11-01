@@ -5,7 +5,7 @@ import com.stavro_xhardha.core_module.dependency_injection.FragmentScoped
 import dagger.Component
 
 @FragmentScoped
-@Component(dependencies = [CoreComponent::class], modules = [SettingsModule::class])
+@Component(dependencies = [CoreComponent::class])
 interface SettingsComponent {
 
     val settingsViewModel: SettingsViewModel

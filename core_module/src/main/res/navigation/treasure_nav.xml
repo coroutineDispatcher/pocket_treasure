@@ -24,7 +24,7 @@
             tools:layout="@layout/fragment_names" />
     <fragment
             android:id="@+id/quranFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.quran.QuranFragment"
+            android:name="com.sxhardha.quran_module.quran.QuranFragment"
             android:label="Quran"
             tools:layout="@layout/fragment_quran">
         <action
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
             android:id="@+id/ayaFragment"
-            android:name="com.stavro_xhardha.pockettreasure.ui.quran.aya.AyaFragment"
+            android:name="com.sxhardha.quran_module.aya.AyaFragment"
             android:label="بسم الله الرحمن الرحيم"
             tools:layout="@layout/fragment_aya">
         <argument

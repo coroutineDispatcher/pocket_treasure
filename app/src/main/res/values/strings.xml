@@ -80,15 +80,12 @@
         تَفْعَلُوا فَإِنَّهُ فُسُوقٌ بِكُمْ ۗ وَاتَّقُوا اللَّهَ ۖ وَيُعَلِّمُكُمُ ا
     </string>
     <string name="refresh">Refresh</string>
-    <string name="playing">Playing</string>
-    <string name="stoped">Stoped</string>
     <string name="failed_loading_more">Failed Loading</string>
     <string name="thanking_news_api_message">This menu is brought to you thanks to newsapi.org</string>
     <string name="dismiss">Dismiss</string>
     <string name="default_country_and_capital">Tirana, Albania</string>
     <string name="share">Share</string>
     <string name="share_app">Share App</string>
-    <string name="cannot_play_sound_check_connection">Cannot play sound, please check your connection</string>
     <string name="settings_saved">Setttings saved</string>
     <string name="location">Location</string>
     <string name="click_to_change_location">Click here if you want to change location of your device</string>

@@ -4,10 +4,7 @@ import android.app.Application
 import android.app.WallpaperManager
 import android.media.MediaPlayer
 import com.squareup.picasso.Picasso
-import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
-import com.stavro_xhardha.core_module.core_dependencies.NamesDao
-import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
-import com.stavro_xhardha.core_module.core_dependencies.TreasureDatabase
+import com.stavro_xhardha.core_module.core_dependencies.*
 import com.stavro_xhardha.core_module.dependency_injection.modules.*
 import com.stavro_xhardha.rocket.Rocket
 import dagger.BindsInstance
@@ -32,6 +29,10 @@ interface CoreComponent {
     val treasureDatabase: TreasureDatabase
 
     val namesDao: NamesDao
+
+    val surahsDao: SurahsDao
+
+    val ayasDao: AyasDao
 
     @Component.Factory
     interface Factory {

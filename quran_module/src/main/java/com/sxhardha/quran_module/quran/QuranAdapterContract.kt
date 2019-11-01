@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui.quran
+package com.sxhardha.quran_module.quran
 
 interface QuranAdapterContract {
     fun onSurahClicked(surahsNumber: Int)

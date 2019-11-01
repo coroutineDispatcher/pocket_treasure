@@ -1,5 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui.quran
-
+package com.sxhardha.quran_module.quran
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,15 +15,18 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.stavro_xhardha.core_module.brain.BaseFragment
-import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.background.QuranWorker
-//import kotlinx.android.synthetic.main.error_layout.*
+import com.stavro_xhardha.core_module.brain.viewModel
+import com.sxhardha.quran_module.QuranWorker
+import com.sxhardha.quran_module.R
 import kotlinx.android.synthetic.main.fragment_quran.*
 
 class QuranFragment : BaseFragment(), QuranAdapterContract {
     private lateinit var btnRetry: Button
 
-    private val quranViewModel by viewModels<QuranViewModel>()
+    private val quranViewModel by viewModel{
+        DaggerQuranComponent.factory().create(applicationComponent).quranViewModel
+    }
+
     private lateinit var compressionWork: WorkRequest
 
     private val quranAdapter by lazy {
@@ -96,7 +98,10 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
     }
 
     override fun onSurahClicked(surahsNumber: Int) {
-        val action = QuranFragmentDirections.actionQuranFragmentToAyaFragment(surahsNumber)
+        val action =
+            QuranFragmentDirections.actionQuranFragmentToAyaFragment(
+                surahsNumber
+            )
         findNavController().navigate(action)
     }
 

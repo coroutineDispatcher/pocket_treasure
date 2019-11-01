@@ -1,20 +1,19 @@
-package com.stavro_xhardha.pockettreasure.ui.quran.aya
-
+package com.sxhardha.quran_module.aya
 
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import com.stavro_xhardha.core_module.brain.BaseFragment
-import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
-import com.stavro_xhardha.pockettreasure.R
 import com.stavro_xhardha.core_module.SharedViewModel
+import com.stavro_xhardha.core_module.brain.BaseFragment
+import com.stavro_xhardha.core_module.brain.viewModel
+import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
+import com.sxhardha.quran_module.R
 import kotlinx.android.synthetic.main.fragment_aya.*
 
 class AyaFragment : BaseFragment(), AyaContract {
@@ -23,7 +22,9 @@ class AyaFragment : BaseFragment(), AyaContract {
         CoreApplication.getCoreComponent().mediaPlayer
     }
 
-    private val ayaViewModel by viewModels<AyaViewModel>()
+    private val ayaViewModel by viewModel {
+        DaggerAyaComponent.factory().create(applicationComponent).ayaViewModel
+    }
 
     private val ayasAdapter by lazy {
         AyasAdapter(mediaPlayer, this)

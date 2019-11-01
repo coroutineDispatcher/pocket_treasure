@@ -1,1 +1,1 @@
-include ':app', ':tasbeeh_module', ':compass_module', ':core_module', ':names_module', ':setup_module', ':settings_module'
+include ':app', ':tasbeeh_module', ':compass_module', ':core_module', ':names_module', ':setup_module', ':settings_module', ':quran_module', ':home_module'

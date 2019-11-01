@@ -5,7 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.work.ListenableWorker
 import androidx.work.testing.TestListenableWorkerBuilder
-import com.stavro_xhardha.pockettreasure.background.QuranWorker
+import com.sxhardha.quran_module.QuranWorker
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
@@ -26,7 +26,7 @@ class WorkerTests {
 
     @Test
     fun testWorkerCall() {
-        val quranWorker = TestListenableWorkerBuilder<QuranWorker>(context).build()
+        val quranWorker = TestListenableWorkerBuilder<com.sxhardha.quran_module.QuranWorker>(context).build()
         runBlocking {
             val result = quranWorker.doWork()
             assertThat(result, `is`(ListenableWorker.Result.success()))

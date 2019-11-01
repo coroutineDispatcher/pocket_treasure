@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.ui.quran.aya
+package com.sxhardha.quran_module.aya
 
 interface AyaContract {
     fun onMediaPlayerError()

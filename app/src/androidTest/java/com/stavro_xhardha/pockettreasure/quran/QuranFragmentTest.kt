@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.ui.quran.QuranFragment
+import com.sxhardha.quran_module.QuranFragment
 import com.sxhardha.smoothie.Smoothie
 import org.junit.After
 import org.junit.Before
@@ -23,7 +23,7 @@ import org.mockito.Mockito
 @RunWith(AndroidJUnit4::class)
 class QuranFragmentTest {
     private lateinit var mockNavController: NavController
-    private lateinit var quranFragmentScenario: FragmentScenario<QuranFragment>
+    private lateinit var quranFragmentScenario: FragmentScenario<com.sxhardha.quran_module.QuranFragment>
 
     @Before
     fun setUp() {
