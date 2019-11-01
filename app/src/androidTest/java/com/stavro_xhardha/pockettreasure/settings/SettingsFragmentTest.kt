@@ -12,7 +12,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.stavro_xhardha.pockettreasure.R
-import com.stavro_xhardha.pockettreasure.ui.settings.SettingsFragment
+import com.sxhardha.settings_module.SettingsFragment
 import com.sxhardha.smoothie.Smoothie
 import org.junit.After
 import org.junit.Before
@@ -24,7 +24,7 @@ import org.mockito.Mockito.verify
 @RunWith(AndroidJUnit4::class)
 class SettingsFragmentTest {
 
-    private lateinit var settingsFragmentScenario: FragmentScenario<SettingsFragment>
+    private lateinit var settingsFragmentScenario: FragmentScenario<com.sxhardha.settings_module.SettingsFragment>
     private lateinit var mockNavController: NavController
 
     @Before

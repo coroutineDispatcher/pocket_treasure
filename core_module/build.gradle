@@ -1,13 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-android {
-    compileSdkVersion 29
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
+android {
+    compileSdkVersion compileSDKVersionValue
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion minSDKVersionValue
+        targetSdkVersion targetSDKVersionValue
         versionCode 1
         versionName "1.0"
 
@@ -22,15 +24,87 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
+    implementation libraries.cardView
+    implementation libraries.kotlin
+    implementation libraries.androidXLegacySupport
+    implementation libraries.androidXAppCompat
+    implementation libraries.coreKtx
+    implementation libraries.lifecycleExtension
+    implementation libraries.viewModelKtx
+    implementation libraries.constraintLayout
+    implementation libraries.fragmentNavigation
+    implementation libraries.fragmentNavigationKtx
+    implementation libraries.retrofit
+    implementation libraries.loggingInterceptor
+    implementation libraries.dagger
+    implementation libraries.coroutinesCore
+    implementation libraries.livedataKtx
+    implementation libraries.picasso
+    implementation libraries.materialDialogCore
+    implementation libraries.materialDialogInputs
+    implementation libraries.room
+    implementation libraries.roomKtx
+    implementation libraries.jodaTime
+    implementation libraries.rocket
+    implementation libraries.paging
+    implementation libraries.fragment
+    implementation libraries.fragmentKtx
+    implementation libraries.workManager
+    implementation libraries.viewModelSavedState
+    implementation libraries.retrofitMoshiConverter
+    implementation libraries.moshiCore
+    implementation libraries.moshiKotlin
+    implementation libraries.smoothie
+    implementation libraries.airBnBLottie
+    implementation libraries.firebase
+    implementation libraries.crashLytics
+    implementation libraries.locationService
+
+    compileOnly libraries.assistedInject
+
+    kapt annotationProcessors.daggerKapt
+    kapt annotationProcessors.assistedInjectKapt
+    kapt annotationProcessors.roomKapt
+    kapt annotationProcessors.moshiKapt
+
+    testImplementation testImplementations.coroutinesTest
+    testImplementation testImplementations.jUnit
+    testImplementation testImplementations.mockitoCore
+    testImplementation testImplementations.jodaTimeTest
+    testImplementation testImplementations.mockitoKotlin
+    testImplementation testImplementations.mockitoInline
+    testImplementation testImplementations.androidArchCoreTesting
+    testImplementation testImplementations.coroutinesTesting
+    testImplementation testImplementations.mockWebServer
+
+    androidTestImplementation androidTestImplementations.espressoCore
+    androidTestImplementation androidTestImplementations.espressoContrib
+    androidTestImplementation androidTestImplementations.espressoIntents
+    androidTestImplementation androidTestImplementations.espressoAccessibility
+    androidTestImplementation androidTestImplementations.espressoWeb
+    androidTestImplementation androidTestImplementations.espressoIdlingConcurrent
+    androidTestImplementation androidTestImplementations.testRunner
+    androidTestImplementation androidTestImplementations.testRules
+    androidTestImplementation androidTestImplementations.androidJUnit
+    androidTestImplementation androidTestImplementations.mockitoAndroid
+    androidTestImplementation androidTestImplementations.mockitoAndroid
+
+    debugImplementation("androidx.fragment:fragment-testing:1.2.0-rc01", {
+        exclude group: 'androidx.test', module: 'core'
+    })
+
 }

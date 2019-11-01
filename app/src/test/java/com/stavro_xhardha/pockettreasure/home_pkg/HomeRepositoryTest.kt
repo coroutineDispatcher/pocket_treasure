@@ -2,8 +2,8 @@ package com.stavro_xhardha.pockettreasure.home_pkg
 
 import com.nhaarman.mockitokotlin2.mock
 import com.stavro_xhardha.core_module.brain.*
-import com.stavro_xhardha.pockettreasure.network.TreasureApi
-import com.stavro_xhardha.pockettreasure.ui.home.HomeRepository
+import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
+import HomeRepository
 import com.stavro_xhardha.rocket.Rocket
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking

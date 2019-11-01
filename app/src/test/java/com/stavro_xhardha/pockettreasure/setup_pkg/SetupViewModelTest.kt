@@ -4,9 +4,8 @@ import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.nhaarman.mockitokotlin2.mock
-import com.stavro_xhardha.pockettreasure.brain.observeOnce
-import com.stavro_xhardha.pockettreasure.ui.setup.SetupRepository
-import com.stavro_xhardha.pockettreasure.ui.setup.SetupViewModel
+import com.sxhardha.setup_module.SetupRepository
+import com.sxhardha.setup_module.SetupViewModel
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,8 +24,8 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class SetupViewModelTest {
 
-    private lateinit var setupViewModel: SetupViewModel
-    private lateinit var setupRepository: SetupRepository
+    private lateinit var setupViewModel: com.sxhardha.setup_module.SetupViewModel
+    private lateinit var setupRepository: com.sxhardha.setup_module.SetupRepository
     @ObsoleteCoroutinesApi
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
@@ -39,7 +38,7 @@ class SetupViewModelTest {
     fun setUp() {
         setupRepository = mock()
         val savedStateHandle = mock<SavedStateHandle>()
-        setupViewModel = SetupViewModel(setupRepository, savedStateHandle)
+        setupViewModel = com.sxhardha.setup_module.SetupViewModel(setupRepository, savedStateHandle)
 
         Dispatchers.setMain(mainThreadSurrogate)
     }

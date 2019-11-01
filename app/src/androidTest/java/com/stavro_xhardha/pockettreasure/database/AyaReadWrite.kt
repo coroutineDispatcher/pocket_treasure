@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.stavro_xhardha.pockettreasure.model.Aya
-import com.stavro_xhardha.pockettreasure.model.Surah
-import com.stavro_xhardha.pockettreasure.room_db.AyasDao
-import com.stavro_xhardha.pockettreasure.room_db.SurahsDao
-import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase
+import com.stavro_xhardha.core_module.model.Aya
+import com.stavro_xhardha.core_module.model.Surah
+import com.stavro_xhardha.core_module.core_dependencies.AyasDao
+import com.stavro_xhardha.core_module.core_dependencies.SurahsDao
+import com.stavro_xhardha.core_module.core_dependencies.TreasureDatabase
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -22,8 +22,10 @@ class AyaReadWrite {
     private lateinit var ayasDao: AyasDao
     private lateinit var treasureDatabase: TreasureDatabase
     private lateinit var surahsDao: SurahsDao
-    private val aya = Aya(1, "empty", "no need for that", 2, 1, 5)
-    private val surah = Surah(5, "Abc", "Def", "Ghi", "Jkl", listOf())
+    private val aya =
+        Aya(1, "empty", "no need for that", 2, 1, 5)
+    private val surah =
+        Surah(5, "Abc", "Def", "Ghi", "Jkl", listOf())
 
     @Before
     fun setUp() {

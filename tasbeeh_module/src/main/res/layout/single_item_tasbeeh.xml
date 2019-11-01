@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/mtrl_card_spacing"
+    android:layout_marginTop="@dimen/mtrl_card_spacing"
+    android:layout_marginRight="@dimen/mtrl_card_spacing">
+
+    <LinearLayout
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/mtrl_card_spacing"
-        android:layout_marginTop="@dimen/mtrl_card_spacing"
-        android:layout_marginRight="@dimen/mtrl_card_spacing">
+        android:orientation="vertical"
+        android:paddingStart="@dimen/global_unit_smaller"
+        android:paddingTop="@dimen/global_unit_smaller"
+        android:paddingEnd="@dimen/global_unit_smaller"
+        android:paddingBottom="@dimen/global_unit_smaller">
 
-    <LinearLayout
-            style="@style/Widget.MaterialComponents.CardView"
+        <TextView
+            android:id="@+id/tvArabic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/global_unit_smaller"
-            android:paddingTop="@dimen/global_unit_smaller"
-            android:paddingEnd="@dimen/global_unit_smaller"
-            android:paddingBottom="@dimen/global_unit_smaller">
+            android:maxLines="3"
+            android:padding="@dimen/global_unit_smaller"
+            android:text="@string/longestSurah"
+            android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
+            android:textStyle="bold" />
 
         <TextView
-                android:id="@+id/tvArabic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="3"
-                android:padding="@dimen/global_unit_smaller"
-                android:text="@string/longestSurah"
-                android:textSize="@dimen/text_global_unit_bigger_xxxxxx"
-                android:textStyle="bold" />
+            android:id="@+id/tvTransliteration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:padding="@dimen/global_unit_smaller"
+            android:text="@string/some_description" />
 
         <TextView
-                android:id="@+id/tvTransliteration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="3"
-                android:padding="@dimen/global_unit_smaller"
-                android:text="@string/some_description" />
-
-        <TextView
-                android:id="@+id/tvTranslation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="3"
-                android:padding="@dimen/global_unit_smaller"
-                android:text="@string/some_description" />
+            android:id="@+id/tvTranslation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:padding="@dimen/global_unit_smaller"
+            android:text="@string/some_description" />
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/global_unit_smaller"
-                android:weightSum="100">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/global_unit_smaller"
+            android:weightSum="100">
 
             <TextView
-                    android:id="@+id/tvTasbeehNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="98"
-                    android:gravity="bottom"
-                    android:text="@string/some_number"
-                    android:textSize="@dimen/text_global_unit_bigger"
-                    android:textStyle="bold" />
+                android:id="@+id/tvTasbeehNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="98"
+                android:gravity="bottom"
+                android:text="@string/some_number"
+                android:textSize="@dimen/text_global_unit_bigger"
+                android:textStyle="bold" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabIncrement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:src="@drawable/ic_heart_white"
-                    app:elevation="0dp"
-                    app:fabSize="auto" />
+                android:id="@+id/fabIncrement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:src="@drawable/ic_favorite_white_24dp"
+                app:elevation="0dp"
+                app:fabSize="auto" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 android {
-    compileSdkVersion 29
-
+    compileSdkVersion compileSDKVersionValue
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion minSDKVersionValue
+        targetSdkVersion targetSDKVersionValue
         versionCode 1
         versionName "1.0"
 
@@ -47,10 +47,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.navigation:navigation-fragment-ktx:2.2.0-rc01"
-    implementation "androidx.navigation:navigation-ui-ktx:2.2.0-rc01"
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    implementation libraries.fragmentNavigation
+    implementation libraries.fragmentNavigationKtx
+    implementation libraries.viewModelKtx
     implementation 'com.github.arbelkilani:Compass-View:v1.1.1'
-    implementation 'javax.inject:javax.inject:1'
-    implementation 'com.github.stavro96:Rocket:1.2.0'
+    implementation libraries.rocket
+    implementation libraries.dagger
+    kapt annotationProcessors.daggerKapt
 }

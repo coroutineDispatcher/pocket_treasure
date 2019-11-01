@@ -4,11 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.stavro_xhardha.pockettreasure.model.Surah
-import com.stavro_xhardha.pockettreasure.room_db.SurahsDao
-import com.stavro_xhardha.pockettreasure.room_db.TreasureDatabase
+import com.stavro_xhardha.core_module.model.Surah
+import com.stavro_xhardha.core_module.core_dependencies.SurahsDao
+import com.stavro_xhardha.core_module.core_dependencies.TreasureDatabase
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -20,7 +19,8 @@ class SurahReadWriteTest {
 
     private lateinit var surahsDao: SurahsDao
     private lateinit var treasureDatabase: TreasureDatabase
-    private val surah = Surah(1, "Abc", "Def", "Ghi", "Jkl", listOf())
+    private val surah =
+        Surah(1, "Abc", "Def", "Ghi", "Jkl", listOf())
 
     @Before
     fun setUp() {

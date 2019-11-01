@@ -4,8 +4,8 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.stavro_xhardha.core_module.brain.*
-import com.stavro_xhardha.pockettreasure.network.TreasureApi
-import com.stavro_xhardha.pockettreasure.ui.setup.SetupRepository
+import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
+import com.sxhardha.setup_module.SetupRepository
 import com.stavro_xhardha.rocket.Rocket
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -18,7 +18,7 @@ import org.mockito.Mockito.`when`
 
 @RunWith(JUnit4::class)
 class SetupRepositoryTest {
-    private lateinit var setupRepository: SetupRepository
+    private lateinit var setupRepository: com.sxhardha.setup_module.SetupRepository
     private lateinit var rocket: Rocket
     private lateinit var treasureApi: TreasureApi
 
@@ -26,7 +26,7 @@ class SetupRepositoryTest {
     fun setUp() {
         rocket = mock()
         treasureApi = mock()
-        setupRepository = SetupRepository(rocket)
+        setupRepository = com.sxhardha.setup_module.SetupRepository(rocket)
     }
 
     @After

@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sxhardha.gallery_module" >
+
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+</manifest>

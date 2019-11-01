@@ -1,0 +1,7 @@
+<resources>
+    <string name="failed_loading_more">Failed Loading</string>
+    <string name="error_saving_image">Error saving image</string>
+    <string name="can_not_save_image_need_permission">Can\'t save image, need permission</string>
+    <string name="wallpaper_saved">Wallpaper saved</string>
+    <string name="image_saved">Image Saved</string>
+</resources>

@@ -7,20 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import com.stavro_xhardha.core_module.brain.BaseFragment
+import com.stavro_xhardha.core_module.brain.viewModel
+import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import edu.arbelkilani.compass.CompassListener
 import kotlinx.android.synthetic.main.fragment_compass.*
-import javax.inject.Inject
 
-class CompassFragment : Fragment(), CompassListener {
+class CompassFragment : BaseFragment(), CompassListener {
 
-    @Inject
-    lateinit var compassViewModelFactory: ViewModelProvider.Factory
-
-    private val compassViewModel by viewModels<CompassViewModel> { compassViewModelFactory }
+    private val compassViewModel by viewModel {
+        val coreComponent = CoreApplication.getCoreComponent()
+        DaggerCompassComponent.factory().create(coreComponent).compassViewModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,21 +28,11 @@ class CompassFragment : Fragment(), CompassListener {
         return inflater.inflate(R.layout.fragment_compass, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initializeComponents()
-        observeTheLiveData()
-    }
-
-    private fun initializeComponents() {
+    override fun initializeComponents() {
         qibla_compass.setListener(this)
     }
 
-    private fun observeTheLiveData() {
+    override fun observeTheLiveData() {
         compassViewModel.rotateAnimation.observe(viewLifecycleOwner, Observer {
             qibla_compass.startAnimation(it)
         })
