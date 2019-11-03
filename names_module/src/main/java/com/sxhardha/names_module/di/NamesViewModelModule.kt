@@ -1,4 +1,4 @@
-package com.sxhardha.names_module
+package com.sxhardha.names_module.di
 
 import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Module

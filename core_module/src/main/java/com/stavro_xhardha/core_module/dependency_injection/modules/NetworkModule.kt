@@ -16,15 +16,15 @@ object NetworkModule {
     @JvmStatic
     @Provides
     @Singleton
-    fun provideTreasureApi(retrofit: Retrofit): TreasureApi =
-        retrofit.create(TreasureApi::class.java)
-
-    @JvmStatic
-    @Provides
-    @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl(PRAYER_API_BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
         .client(client)
         .build()
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideTreasureApi(retrofit: Retrofit): TreasureApi =
+        retrofit.create(TreasureApi::class.java)
 }

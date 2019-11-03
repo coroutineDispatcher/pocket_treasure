@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.stavro_xhardha.core_module.model.Name
-import com.stavro_xhardha.core_module.core_dependencies.NamesDao
+import com.sxhardha.names_module.model.Name
+import com.sxhardha.names_module.db.NamesDao
 import com.stavro_xhardha.core_module.core_dependencies.TreasureDatabase
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking

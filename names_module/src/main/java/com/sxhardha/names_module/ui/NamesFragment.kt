@@ -1,4 +1,4 @@
-package com.sxhardha.names_module
+package com.sxhardha.names_module.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.Button
 import androidx.lifecycle.Observer
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.brain.savedStateViewModel
+import com.stavro_xhardha.core_module.dependency_injection.DaggerCoreComponent
+import com.sxhardha.names_module.R
 //import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.android.synthetic.main.fragment_names.*
 
@@ -15,8 +17,7 @@ class NamesFragment : BaseFragment() {
     private lateinit var btnRetry: Button
 
     private val namesViewModel by savedStateViewModel {
-        DaggerNameComponent.factory().create(applicationComponent)
-            .namesViewModelFactory.create(it)
+
     }
 
     private val namesAdapter by lazy {

@@ -28,8 +28,6 @@ interface CoreComponent {
 
     val treasureDatabase: TreasureDatabase
 
-    val namesDao: NamesDao
-
     val surahsDao: SurahsDao
 
     val ayasDao: AyasDao

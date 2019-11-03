@@ -54,12 +54,20 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation libraries.fragmentNavigation
     implementation libraries.fragmentNavigationKtx
-    compileOnly libraries.assistedInject
-    kapt annotationProcessors.assistedInjectKapt
-    implementation libraries.dagger
-    kapt annotationProcessors.daggerKapt
     implementation libraries.retrofit
     implementation libraries.kotlin
     implementation libraries.androidXLegacySupport
     implementation libraries.coreKtx
+    implementation libraries.room
+    implementation libraries.roomKtx
+    kapt annotationProcessors.roomKapt
+    implementation libraries.moshiCore
+    implementation libraries.moshiKotlin
+    kapt annotationProcessors.moshiKapt
+    implementation libraries.retrofitMoshiConverter
+    implementation libraries.loggingInterceptor
+    compileOnly libraries.assistedInject
+    kapt annotationProcessors.assistedInjectKapt
+    implementation libraries.dagger
+    kapt annotationProcessors.daggerKapt
 }

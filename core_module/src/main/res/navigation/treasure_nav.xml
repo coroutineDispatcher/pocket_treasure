@@ -19,7 +19,7 @@
     </fragment>
     <fragment
             android:id="@+id/namesFragment"
-            android:name="com.sxhardha.names_module.NamesFragment"
+            android:name="com.sxhardha.names_module.ui.NamesFragment"
             android:label="Names of Allah"
             tools:layout="@layout/fragment_names" />
     <fragment

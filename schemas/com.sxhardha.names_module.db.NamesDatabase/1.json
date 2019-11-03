@@ -1,0 +1,52 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "95e2bd44da234d12ca0570b2dbd4d1ff",
+    "entities": [
+      {
+        "tableName": "names_of_creator",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`arabic_name` TEXT NOT NULL, `transliteration` TEXT NOT NULL, `id` INTEGER NOT NULL, `name_meaning` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "arabicName",
+            "columnName": "arabic_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "transliteration",
+            "columnName": "transliteration",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "number",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "meaning",
+            "columnName": "name_meaning",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '95e2bd44da234d12ca0570b2dbd4d1ff')"
+    ]
+  }
+}

@@ -1,11 +1,12 @@
-package com.sxhardha.names_module
+package com.sxhardha.names_module.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.stavro_xhardha.core_module.brain.DIFF_UTIL_NAMES
-import com.stavro_xhardha.core_module.model.Name
+import com.sxhardha.names_module.R
+import com.sxhardha.names_module.model.Name
+import com.sxhardha.names_module.utils.DIFF_UTIL_NAMES
 import kotlinx.android.synthetic.main.single_item_name.view.*
 
 class NamesAdapter :

@@ -32,18 +32,6 @@ inline fun <reified T : ViewModel> Fragment.savedStateViewModel(
     }
 }
 
-val DIFF_UTIL_NAMES = object : DiffUtil.ItemCallback<Name>() {
-    override fun areItemsTheSame(oldItem: Name, newItem: Name): Boolean =
-        oldItem.arabicName == newItem.arabicName
-
-    override fun areContentsTheSame(oldItem: Name, newItem: Name): Boolean {
-        return oldItem.arabicName == newItem.arabicName
-                && oldItem.englishNameMeaning == newItem.englishNameMeaning
-                && oldItem.number == newItem.number
-                && oldItem.transliteration == newItem.transliteration
-    }
-}
-
 
 val DIFF_UTIL_QURAN = object : DiffUtil.ItemCallback<Surah>() {
     override fun areItemsTheSame(oldItem: Surah, newItem: Surah): Boolean =

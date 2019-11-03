@@ -1,9 +1,9 @@
-package com.stavro_xhardha.core_module.core_dependencies
+package com.sxhardha.names_module.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.stavro_xhardha.core_module.model.Name
+import com.sxhardha.names_module.model.Name
 
 @Dao
 interface NamesDao {

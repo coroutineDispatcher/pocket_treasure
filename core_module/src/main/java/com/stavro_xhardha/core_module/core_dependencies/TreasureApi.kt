@@ -1,6 +1,5 @@
 package com.stavro_xhardha.core_module.core_dependencies
 
-import com.stavro_xhardha.core_module.model.NameResponse
 import com.stavro_xhardha.core_module.model.PrayerTimeResponse
 import com.stavro_xhardha.core_module.model.QuranResponse
 import com.stavro_xhardha.core_module.model.UnsplashResponse
@@ -10,9 +9,6 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface TreasureApi {
-
-    @GET("asmaAlHusna")
-    suspend fun getNintyNineNamesAsync(): Response<NameResponse>
 
     @GET("timingsByCity")
     suspend fun getPrayerTimesTodayAsync(
