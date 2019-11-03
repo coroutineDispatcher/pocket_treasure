@@ -3,14 +3,14 @@ package com.sxhardha.names_module.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sxhardha.names_module.R
 import com.sxhardha.names_module.model.Name
 import com.sxhardha.names_module.utils.DIFF_UTIL_NAMES
 import kotlinx.android.synthetic.main.single_item_name.view.*
 
-class NamesAdapter :
-    androidx.recyclerview.widget.ListAdapter<Name, NamesAdapter.NamesViewHolder>(DIFF_UTIL_NAMES) {
+class NamesAdapter : ListAdapter<Name, NamesAdapter.NamesViewHolder>(DIFF_UTIL_NAMES) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NamesViewHolder =
         NamesViewHolder(

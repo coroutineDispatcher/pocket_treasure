@@ -8,16 +8,21 @@ import android.widget.Button
 import androidx.lifecycle.Observer
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.brain.savedStateViewModel
-import com.stavro_xhardha.core_module.dependency_injection.DaggerCoreComponent
 import com.sxhardha.names_module.R
-//import kotlinx.android.synthetic.main.error_layout.*
+import com.sxhardha.names_module.di.DaggerNameComponent
+import com.sxhardha.names_module.di.NamesDatabaseModule
+import com.sxhardha.names_module.di.NamesNetworkModule
 import kotlinx.android.synthetic.main.fragment_names.*
+import javax.inject.Inject
 
 class NamesFragment : BaseFragment() {
+    @Inject
+    lateinit var namesViewModelFactory: NamesViewModel.Factory
+
     private lateinit var btnRetry: Button
 
     private val namesViewModel by savedStateViewModel {
-
+        namesViewModelFactory.create(it)
     }
 
     private val namesAdapter by lazy {
@@ -45,9 +50,17 @@ class NamesFragment : BaseFragment() {
     }
 
     override fun initializeComponents() {
+        provideDI()
         btnRetry.setOnClickListener {
             namesViewModel.retryConnection()
         }
+    }
+
+    private fun provideDI() {
+        DaggerNameComponent.builder().coreComponent(applicationComponent)
+            .namesNetworkModule(NamesNetworkModule(applicationComponent.retrofit))
+            .namesDatabaseModule(NamesDatabaseModule(applicationComponent.application))
+            .build().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -9,19 +9,17 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-object NamesDatabaseModule {
+class NamesDatabaseModule(private val application: Application) {
 
-    @JvmStatic
     @FragmentScoped
     @Provides
-    fun provideNamesDataBas(application: Application): NamesDatabase =
+    fun provideNamesDataBas(): NamesDatabase =
         Room.databaseBuilder(
             application,
             NamesDatabase::class.java,
             "names_db"
         ).fallbackToDestructiveMigration().build()
 
-    @JvmStatic
     @FragmentScoped
     @Provides
     fun provideNamesDao(namesDatabase: NamesDatabase): NamesDao = namesDatabase.namesDao()

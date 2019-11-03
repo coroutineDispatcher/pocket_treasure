@@ -9,12 +9,15 @@ import com.stavro_xhardha.core_module.dependency_injection.modules.*
 import com.stavro_xhardha.rocket.Rocket
 import dagger.BindsInstance
 import dagger.Component
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [DatabaseModule::class, NetworkModule::class, PreferencesModule::class, MediaModule::class, DispatchersModule::class, ViewModelModule::class])
 interface CoreComponent {
     val treasureApi: TreasureApi
+
+    val application: Application
 
     val rocket: Rocket
 
@@ -31,6 +34,8 @@ interface CoreComponent {
     val surahsDao: SurahsDao
 
     val ayasDao: AyasDao
+
+    val retrofit: Retrofit
 
     @Component.Factory
     interface Factory {
