@@ -66,12 +66,5 @@ class NamesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnRetry = view.findViewById(R.id.btnRetry)
-//        requireActivity().onBackPressedDispatcher.addCallback(
-//            this,
-//            object : OnBackPressedCallback(true) {
-//                override fun handleOnBackPressed() {
-//                    view.findNavController().popBackStack(R.id.homeFragment, false)
-//                }
-//            })
     }
 }

@@ -1,4 +1,4 @@
-package com.sxhardha.quran_module.quran
+package com.sxhardha.quran_module.ui.quran
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.stavro_xhardha.core_module.brain.DIFF_UTIL_QURAN
-import com.stavro_xhardha.core_module.model.Surah
 import com.sxhardha.quran_module.R
+import com.sxhardha.quran_module.model.Surah
+import com.sxhardha.quran_module.utils.DIFF_UTIL_QURAN
 import kotlinx.android.synthetic.main.single_item_surah.view.*
 
 class QuranAdapter(private val quranAdapterContract: QuranAdapterContract) :
@@ -38,7 +38,11 @@ class QuranAdapter(private val quranAdapterContract: QuranAdapterContract) :
                 tvarabicSurahName.text = "${surah?.surahArabicName}"
 
                 cvSurah.setOnClickListener {
-                    surah?.surahNumber?.let { clickedSurah -> quranAdapterContract.onSurahClicked(clickedSurah) }
+                    surah?.surahNumber?.let { clickedSurah ->
+                        quranAdapterContract.onSurahClicked(
+                            clickedSurah
+                        )
+                    }
                 }
             }
         }

@@ -1,0 +1,129 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "8c17d5aa173a7084593f33b7726fa803",
+    "entities": [
+      {
+        "tableName": "surahs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`surah_number` INTEGER NOT NULL, `surah_arabic_name` TEXT NOT NULL, `surah_english_name` TEXT NOT NULL, `surah_english_translation` TEXT NOT NULL, `surah_relevation_type` TEXT NOT NULL, PRIMARY KEY(`surah_number`))",
+        "fields": [
+          {
+            "fieldPath": "surahNumber",
+            "columnName": "surah_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "surahArabicName",
+            "columnName": "surah_arabic_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "englishName",
+            "columnName": "surah_english_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "englishTranslation",
+            "columnName": "surah_english_translation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revelationType",
+            "columnName": "surah_relevation_type",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "surah_number"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ayas",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`aya_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `audio_url` TEXT NOT NULL, `ayat_text` TEXT NOT NULL, `ayat_number` INTEGER NOT NULL, `juz_number` INTEGER NOT NULL, `surahs_number` INTEGER NOT NULL, FOREIGN KEY(`surahs_number`) REFERENCES `surahs`(`surah_number`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "aya_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "audioUrl",
+            "columnName": "audio_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ayatText",
+            "columnName": "ayat_text",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ayatNumber",
+            "columnName": "ayat_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "juz",
+            "columnName": "juz_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "surahNumber",
+            "columnName": "surahs_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "aya_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_ayas_surahs_number",
+            "unique": false,
+            "columnNames": [
+              "surahs_number"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ayas_surahs_number` ON `${TABLE_NAME}` (`surahs_number`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "surahs",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "surahs_number"
+            ],
+            "referencedColumns": [
+              "surah_number"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8c17d5aa173a7084593f33b7726fa803')"
+    ]
+  }
+}

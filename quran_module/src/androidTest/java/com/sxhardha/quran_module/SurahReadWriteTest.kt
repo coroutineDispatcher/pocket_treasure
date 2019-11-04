@@ -1,12 +1,12 @@
-package com.stavro_xhardha.pockettreasure.database
+package com.sxhardha.quran_module
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.stavro_xhardha.core_module.model.Surah
-import com.stavro_xhardha.core_module.core_dependencies.SurahsDao
-import com.stavro_xhardha.core_module.core_dependencies.TreasureDatabase
+import com.sxhardha.quran_module.database.QuranDatabase
+import com.sxhardha.quran_module.database.SurahsDao
+import com.sxhardha.quran_module.model.Surah
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 class SurahReadWriteTest {
 
     private lateinit var surahsDao: SurahsDao
-    private lateinit var treasureDatabase: TreasureDatabase
+    private lateinit var treasureDatabase: QuranDatabase
     private val surah =
         Surah(1, "Abc", "Def", "Ghi", "Jkl", listOf())
 
@@ -26,7 +26,7 @@ class SurahReadWriteTest {
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         treasureDatabase =
-            Room.inMemoryDatabaseBuilder(context, TreasureDatabase::class.java).build()
+            Room.inMemoryDatabaseBuilder(context, QuranDatabase::class.java).build()
         surahsDao = treasureDatabase.surahsDao()
     }
 

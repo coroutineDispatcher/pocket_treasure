@@ -13,7 +13,7 @@ import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [DatabaseModule::class, NetworkModule::class, PreferencesModule::class, MediaModule::class, DispatchersModule::class, ViewModelModule::class])
+@Component(modules = [NetworkModule::class, PreferencesModule::class, MediaModule::class, DispatchersModule::class, ViewModelModule::class])
 interface CoreComponent {
     val treasureApi: TreasureApi
 
@@ -28,12 +28,6 @@ interface CoreComponent {
     val mediaPlayer: MediaPlayer
 
     val appCoroutineDispatchers: AppCoroutineDispatchers
-
-    val treasureDatabase: TreasureDatabase
-
-    val surahsDao: SurahsDao
-
-    val ayasDao: AyasDao
 
     val retrofit: Retrofit
 

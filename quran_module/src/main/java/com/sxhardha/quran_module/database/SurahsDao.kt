@@ -1,9 +1,9 @@
-package com.stavro_xhardha.core_module.core_dependencies
+package com.sxhardha.quran_module.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.stavro_xhardha.core_module.model.Surah
+import com.sxhardha.quran_module.model.Surah
 
 @Dao
 interface SurahsDao {
