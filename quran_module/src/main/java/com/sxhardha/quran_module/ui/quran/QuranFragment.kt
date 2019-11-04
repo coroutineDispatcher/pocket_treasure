@@ -1,4 +1,4 @@
-package com.sxhardha.quran_module.quran
+package com.sxhardha.quran_module.ui.quran
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,28 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.brain.viewModel
-import com.sxhardha.quran_module.QuranWorker
 import com.sxhardha.quran_module.R
+import com.sxhardha.quran_module.di.DaggerQuranComponent
+import com.sxhardha.quran_module.di.QuranApiModule
+import com.sxhardha.quran_module.di.QuranComponent
+import com.sxhardha.quran_module.di.QuranDatabaseModule
 import kotlinx.android.synthetic.main.fragment_quran.*
 
 class QuranFragment : BaseFragment(), QuranAdapterContract {
     private lateinit var btnRetry: Button
+    private lateinit var quranComponent: QuranComponent
 
-    private val quranViewModel by viewModel{
-        DaggerQuranComponent.factory().create(applicationComponent).quranViewModel
+    private val quranViewModel by viewModel {
+        quranComponent.quranViewModel
     }
-
-    private lateinit var compressionWork: WorkRequest
 
     private val quranAdapter by lazy {
         QuranAdapter(this)
@@ -53,30 +50,14 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
     }
 
     override fun initializeComponents() {
-        startQuranWorker()
+        quranComponent = DaggerQuranComponent.builder().coreComponent(applicationComponent)
+            .quranDatabaseModule(QuranDatabaseModule(applicationComponent.application))
+            .quranApiModule(QuranApiModule(applicationComponent.retrofit))
+            .build()
         rvSuras.adapter = quranAdapter
         btnRetry.setOnClickListener {
-            startQuranWorker()
+            quranViewModel.remakeQuranCall()
         }
-    }
-
-    private fun startQuranWorker() {
-        quranViewModel.showProgress()
-
-        compressionWork = OneTimeWorkRequestBuilder<QuranWorker>().build()
-
-        WorkManager.getInstance(requireActivity()).enqueue(compressionWork)
-
-        WorkManager.getInstance(requireActivity()).getWorkInfoByIdLiveData(compressionWork.id)
-            .observe(viewLifecycleOwner, Observer {
-                if (it != null && it.state == WorkInfo.State.SUCCEEDED) {
-                    quranViewModel.startQuranDatabaseCall()
-                } else {
-                    if (it != null && it.state == WorkInfo.State.FAILED) {
-                        quranViewModel.showError()
-                    }
-                }
-            })
     }
 
     override fun observeTheLiveData() {
@@ -103,10 +84,5 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
                 surahsNumber
             )
         findNavController().navigate(action)
-    }
-
-    override fun onDestroy() {
-        WorkManager.getInstance(requireActivity()).cancelWorkById(compressionWork.id)
-        super.onDestroy()
     }
 }

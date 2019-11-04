@@ -1,4 +1,4 @@
-package com.sxhardha.quran_module.aya
+package com.sxhardha.quran_module.ui.aya
 
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -14,16 +14,21 @@ import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.brain.viewModel
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import com.sxhardha.quran_module.R
+import com.sxhardha.quran_module.di.DaggerQuranComponent
+import com.sxhardha.quran_module.di.QuranApiModule
+import com.sxhardha.quran_module.di.QuranComponent
+import com.sxhardha.quran_module.di.QuranDatabaseModule
 import kotlinx.android.synthetic.main.fragment_aya.*
 
 class AyaFragment : BaseFragment(), AyaContract {
+    private lateinit var component: QuranComponent
 
     private val mediaPlayer: MediaPlayer by lazy {
         CoreApplication.getCoreComponent().mediaPlayer
     }
 
     private val ayaViewModel by viewModel {
-        DaggerAyaComponent.factory().create(applicationComponent).ayaViewModel
+        component.ayaViewModel
     }
 
     private val ayasAdapter by lazy {
@@ -60,6 +65,10 @@ class AyaFragment : BaseFragment(), AyaContract {
     }
 
     override fun initializeComponents() {
+        component = DaggerQuranComponent.builder().coreComponent(applicationComponent)
+            .quranApiModule(QuranApiModule(applicationComponent.retrofit))
+            .quranDatabaseModule(QuranDatabaseModule(applicationComponent.application))
+            .build()
         val surahsNumber = args.surahsNumber
         ayaViewModel.startSuraDataBaseCall(surahsNumber)
         rvAya.adapter = ayasAdapter

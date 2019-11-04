@@ -1,4 +1,4 @@
-package com.sxhardha.quran_module.aya
+package com.sxhardha.quran_module.ui.aya
 
 import android.media.MediaPlayer
 import android.view.LayoutInflater
@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.stavro_xhardha.core_module.brain.DIFF_UTIL_AYA
 import com.stavro_xhardha.core_module.brain.FIRST_SURAH_SENTENCE
-import com.stavro_xhardha.core_module.model.Aya
 import com.sxhardha.quran_module.R
+import com.sxhardha.quran_module.model.Aya
+import com.sxhardha.quran_module.utils.DIFF_UTIL_AYA
 import kotlinx.android.synthetic.main.single_item_aya.view.*
 
 class AyasAdapter(private val mediaPlayer: MediaPlayer, private val ayaContract: AyaContract) :
@@ -35,7 +35,8 @@ class AyasAdapter(private val mediaPlayer: MediaPlayer, private val ayaContract:
             ayaContract: AyaContract
         ) = with(itemView) {
             if (aya?.ayatText!!.contains(FIRST_SURAH_SENTENCE) && aya.surahNumber != 1) {
-                val newAya = aya.ayatText.substring(FIRST_SURAH_SENTENCE.length, aya.ayatText.length)
+                val newAya =
+                    aya.ayatText.substring(FIRST_SURAH_SENTENCE.length, aya.ayatText.length)
                 tvAyaText.text = newAya
             } else
                 tvAyaText.text = aya.ayatText

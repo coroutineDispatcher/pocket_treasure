@@ -2,4 +2,5 @@
     <string name="cannot_play_sound_check_connection">Cannot play sound, please check your connection</string>
     <string name="playing">Playing</string>
     <string name="stoped">Stoped</string>
+    <string name="error_occured">Error occurred</string>
 </resources>

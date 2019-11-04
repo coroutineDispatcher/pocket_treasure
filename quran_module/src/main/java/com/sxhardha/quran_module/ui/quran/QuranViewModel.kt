@@ -1,4 +1,4 @@
-package com.sxhardha.quran_module.quran
+package com.sxhardha.quran_module.ui.quran
 
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -6,15 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
-import com.stavro_xhardha.core_module.core_dependencies.SurahsDao
-import com.stavro_xhardha.core_module.model.Surah
+import com.sxhardha.quran_module.model.Surah
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class QuranViewModel @Inject constructor(
-    private val appCoroutineDispatchers: AppCoroutineDispatchers,
-    private val surahsDao: SurahsDao
+    appCoroutineDispatchers: AppCoroutineDispatchers,
+    private val repository: QuranRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler: CoroutineExceptionHandler =
@@ -34,22 +33,38 @@ class QuranViewModel @Inject constructor(
     val progressVisibility: LiveData<Int> = _progressVisibility
 
     init {
-        showProgress()
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
+            startQuranCall()
+        }
     }
 
-    fun startQuranDatabaseCall() {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
+    private suspend fun startQuranCall() {
+        showProgress()
+        val surahsInDatabase = repository.getAllSurahs()
+        val ayasInDatabase = repository.getAllAyas()
+
+        if (surahsInDatabase.isEmpty() || ayasInDatabase.isEmpty() || surahsInDatabase.size != 114) {
+            repository.deleteAllSurahs()
+            repository.deleteAllAyas()
+            val quranApiCall = repository.getQuranDataFromNetwork()
+            if (quranApiCall.isSuccessful) {
+                repository.insertData(quranApiCall.body())
+                makeLocalDatabaseCall()
+            } else {
+                showError()
+            }
+        } else {
             makeLocalDatabaseCall()
         }
     }
 
-    fun showProgress() {
+    private fun showProgress() {
         _progressVisibility.postValue(View.VISIBLE)
         _errorVisibility.postValue(View.GONE)
         _listVisibility.postValue(View.GONE)
     }
 
-    fun showError() {
+    private fun showError() {
         _progressVisibility.postValue(View.GONE)
         _errorVisibility.postValue(View.VISIBLE)
         _listVisibility.postValue(View.GONE)
@@ -62,8 +77,14 @@ class QuranViewModel @Inject constructor(
     }
 
     private suspend fun makeLocalDatabaseCall() {
-        val surahs = surahsDao.getAllSuras()
+        val surahs = repository.getAllSurahs()
         _surahs.postValue(surahs)
         showData()
+    }
+
+    fun remakeQuranCall() {
+        viewModelScope.launch {
+            startQuranCall()
+        }
     }
 }

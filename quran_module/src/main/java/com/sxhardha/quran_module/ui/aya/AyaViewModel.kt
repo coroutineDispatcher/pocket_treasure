@@ -1,12 +1,12 @@
-package com.sxhardha.quran_module.aya
+package com.sxhardha.quran_module.ui.aya
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.stavro_xhardha.core_module.brain.buildPagedList
-import com.stavro_xhardha.core_module.core_dependencies.AyasDao
-import com.stavro_xhardha.core_module.model.Aya
+import com.sxhardha.quran_module.database.AyasDao
+import com.sxhardha.quran_module.model.Aya
 import javax.inject.Inject
 
 class AyaViewModel @Inject constructor(

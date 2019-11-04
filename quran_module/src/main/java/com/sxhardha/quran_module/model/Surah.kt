@@ -1,4 +1,4 @@
-package com.stavro_xhardha.core_module.model
+package com.sxhardha.quran_module.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

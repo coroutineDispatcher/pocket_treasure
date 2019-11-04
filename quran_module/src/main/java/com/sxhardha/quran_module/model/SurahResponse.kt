@@ -1,4 +1,4 @@
-package com.stavro_xhardha.core_module.model
+package com.sxhardha.quran_module.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
