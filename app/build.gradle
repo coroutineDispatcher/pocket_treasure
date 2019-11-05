@@ -30,7 +30,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':core_module')
-    implementation project(':home_module')
     implementation project(':names_module')
     implementation project(':quran_module')
     implementation project(':tasbeeh_module')

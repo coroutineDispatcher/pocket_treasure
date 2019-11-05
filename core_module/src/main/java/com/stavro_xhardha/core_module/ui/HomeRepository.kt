@@ -1,5 +1,6 @@
-package com.sxhardha.home_module
+package com.stavro_xhardha.core_module.ui
 
+import com.stavro_xhardha.core_module.R
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
 import com.stavro_xhardha.core_module.model.HomePrayerTime

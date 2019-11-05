@@ -7,7 +7,6 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.stavro_xhardha.core_module.model.EnglishNameMeaning
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 

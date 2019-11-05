@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.core_module.core_dependencies.*
 import com.stavro_xhardha.core_module.dependency_injection.modules.*
+import com.stavro_xhardha.core_module.ui.HomeViewModel
 import com.stavro_xhardha.rocket.Rocket
 import dagger.BindsInstance
 import dagger.Component
@@ -30,6 +31,8 @@ interface CoreComponent {
     val appCoroutineDispatchers: AppCoroutineDispatchers
 
     val retrofit: Retrofit
+
+    val homeViewModelFactory: HomeViewModel.Factory
 
     @Component.Factory
     interface Factory {

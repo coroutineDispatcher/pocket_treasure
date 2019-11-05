@@ -1,4 +1,4 @@
-package com.sxhardha.home_module
+package com.stavro_xhardha.core_module.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
+import com.stavro_xhardha.core_module.R
 import com.stavro_xhardha.core_module.brain.APPLICATION_TAG
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.brain.PLAY_STORE_URL
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment() {
 
     private val homeViewModel by savedStateViewModel {
-        DaggerHomeComponent.factory().create(applicationComponent).homeViewModelFactory.create(it)
+        //DaggerHomeComponent.factory().create(applicationComponent).homeViewModelFactory.create(it)
     }
     private val picasso = applicationComponent.picasso
     private var homeAdapter: HomeAdapter =

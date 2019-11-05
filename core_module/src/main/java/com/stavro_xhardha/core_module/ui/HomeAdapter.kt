@@ -1,4 +1,4 @@
-package com.sxhardha.home_module
+package com.stavro_xhardha.core_module.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.stavro_xhardha.core_module.R
 import com.stavro_xhardha.core_module.brain.DIFF_UTIL_HOME
 import com.stavro_xhardha.core_module.model.HomePrayerTime
 import kotlinx.android.synthetic.main.single_item_prayer_time.view.*

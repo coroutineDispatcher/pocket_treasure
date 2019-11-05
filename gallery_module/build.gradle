@@ -62,4 +62,8 @@ dependencies {
     implementation libraries.paging
     implementation libraries.picasso
     implementation libraries.jodaTime
+    implementation libraries.moshiCore
+    implementation libraries.moshiKotlin
+    kapt annotationProcessors.moshiKapt
+    implementation libraries.retrofitMoshiConverter
 }

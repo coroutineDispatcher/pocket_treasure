@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
-import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
-import com.stavro_xhardha.core_module.model.UnsplashResponse
-import com.stavro_xhardha.core_module.model.UnsplashResult
-import com.sxhardha.gallery_module.NetworkState
+import com.sxhardha.gallery_module.model.UnsplashResponse
+import com.sxhardha.gallery_module.model.UnsplashResult
+import com.sxhardha.gallery_module.network.GalleryApi
+import com.sxhardha.gallery_module.utils.NetworkState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class GalleryDataSource @Inject constructor(
-    private val treasureApi: TreasureApi,
+    private val galleryApi: GalleryApi,
     private val appCoroutineDispatchers: AppCoroutineDispatchers
 ) :
     PageKeyedDataSource<Int, UnsplashResult>() {
@@ -98,7 +98,7 @@ class GalleryDataSource @Inject constructor(
     }
 
     private suspend fun getPhotosFromUsplashAPI(pageNumber: Int): Response<UnsplashResponse> =
-        treasureApi.getUnsplashImagesAsync(
+        galleryApi.getUnsplashImagesAsync(
             UNSPLASH_BASE_URL,
             UNPLASH_QUERY_VALUE, pageNumber,
             INITIAL_PAGE_SIZE,

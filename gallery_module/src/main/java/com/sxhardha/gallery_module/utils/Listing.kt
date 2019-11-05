@@ -1,4 +1,4 @@
-package com.sxhardha.gallery_module
+package com.sxhardha.gallery_module.utils
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList

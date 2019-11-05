@@ -7,7 +7,7 @@
         app:startDestination="@id/homeFragment">
     <fragment
             android:id="@+id/homeFragment"
-            android:name="com.sxhardha.home_module.HomeFragment"
+            android:name="com.stavro_xhardha.core_module.ui.HomeFragment"
             android:label="Home"
             tools:layout="@layout/fragment_home">
         <action

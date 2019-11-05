@@ -1,4 +1,4 @@
-package com.sxhardha.home_module
+package com.stavro_xhardha.core_module.ui
 
 import android.view.View
 import androidx.lifecycle.*
@@ -78,17 +78,19 @@ class HomeViewModel @AssistedInject constructor(
         if (currentTime.isBefore(localTime(homePrayerData[0].time)) ||
             currentTime.isAfter(localTime(homePrayerData[4].time))
         ) {
-            homePrayerData[0].backgroundColor = R.color.card_view_selector
+            homePrayerData[0].backgroundColor =
+                com.stavro_xhardha.core_module.R.color.card_view_selector
             checkOtherColors(homePrayerData)
         } else {
             var currentColorFound = false
             for (i in 0 until homePrayerData.size) {
                 if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
-                    homePrayerData[i].backgroundColor = R.color.card_view_selector
+                    homePrayerData[i].backgroundColor =
+                        com.stavro_xhardha.core_module.R.color.card_view_selector
                     currentColorFound = true
                 } else {
                     homePrayerData[i].backgroundColor =
-                        R.color.card_view_default
+                        com.stavro_xhardha.core_module.R.color.card_view_default
                 }
             }
         }
@@ -98,7 +100,8 @@ class HomeViewModel @AssistedInject constructor(
 
     private fun checkOtherColors(homePrayerData: ArrayList<HomePrayerTime>) {
         for (i in 1 until homePrayerData.size) {
-            homePrayerData[i].backgroundColor = R.color.card_view_default
+            homePrayerData[i].backgroundColor =
+                com.stavro_xhardha.core_module.R.color.card_view_default
         }
     }
 

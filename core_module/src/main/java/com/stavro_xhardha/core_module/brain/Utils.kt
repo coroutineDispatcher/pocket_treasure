@@ -39,19 +39,3 @@ val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
     override fun areContentsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
         oldItem.name == newItem.name && oldItem.time == newItem.time
 }
-
-val DIFF_UTIL_GALLERY = object : DiffUtil.ItemCallback<UnsplashResult>() {
-    override fun areItemsTheSame(oldItem: UnsplashResult, newItem: UnsplashResult): Boolean =
-        oldItem.id == newItem.id
-
-    override fun areContentsTheSame(oldItem: UnsplashResult, newItem: UnsplashResult): Boolean =
-        oldItem.id == newItem.id && oldItem.description == newItem.description
-                && oldItem.altDescription == newItem.description
-                && oldItem.photoUrls == newItem.photoUrls
-}
-
-
-fun buildPagedList() = PagedList.Config.Builder()
-    .setPageSize(INITIAL_PAGE_SIZE)
-    .setEnablePlaceholders(false)
-    .build()
