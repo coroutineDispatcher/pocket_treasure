@@ -1,30 +1,36 @@
-package com.stavro_xhardha.pockettreasure.gallery
+package com.stavro_xhardha.core_module.home
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sxhardha.gallery_module.image.FullImageFragment
+import com.stavro_xhardha.core_module.R
+import com.stavro_xhardha.core_module.ui.HomeFragment
 import com.sxhardha.smoothie.Smoothie
+import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
+import org.mockito.Mockito.mock
 
 @RunWith(AndroidJUnit4::class)
-class FullImageFragmentTest {
-    private lateinit var fullImageFragmentScenario: FragmentScenario<com.sxhardha.gallery_module.image.FullImageFragment>
+class HomeFragmentTest {
     private lateinit var mockNavController: NavController
+    private lateinit var homeFragmentScenario: FragmentScenario<HomeFragment>
 
     @Before
     fun setUp() {
         IdlingRegistry.getInstance().register(Smoothie.countingIdlingResource)
-        mockNavController = Mockito.mock(NavController::class.java)
-        fullImageFragmentScenario = launchFragmentInContainer()
-        fullImageFragmentScenario.onFragment {
+        mockNavController = mock(NavController::class.java)
+        homeFragmentScenario = launchFragmentInContainer()
+        homeFragmentScenario.onFragment {
             Navigation.setViewNavController(it.requireView(), mockNavController)
         }
     }
@@ -32,11 +38,10 @@ class FullImageFragmentTest {
     @After
     fun tearDown() {
         IdlingRegistry.getInstance().unregister(Smoothie.countingIdlingResource)
-        print("TESTING FINISHED")
     }
 
     @Test
-    fun whenSucessfulImageLoaded_menuItemsShouldBeDisplayed() {
-
+    fun whenInternetConnected_ProgressBarShouldBeVisible() {
+        onView(withId(R.id.pbHome)).check(matches(not(isDisplayed())))
     }
 }

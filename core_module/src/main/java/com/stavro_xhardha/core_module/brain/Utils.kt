@@ -3,10 +3,7 @@ package com.stavro_xhardha.core_module.brain
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.DiffUtil
 import com.stavro_xhardha.core_module.model.HomePrayerTime
 
@@ -37,4 +34,24 @@ val DIFF_UTIL_HOME = object : DiffUtil.ItemCallback<HomePrayerTime>() {
 
     override fun areContentsTheSame(oldItem: HomePrayerTime, newItem: HomePrayerTime): Boolean =
         oldItem.name == newItem.name && oldItem.time == newItem.time
+}
+
+fun <T> LiveData<T>.observeOnce(onChangeHandler: (T) -> Unit) {
+    val observer = OneTimeObserver(handler = onChangeHandler)
+    observe(observer, observer)
+}
+
+class OneTimeObserver<T>(private val handler: (T) -> Unit) : Observer<T>, LifecycleOwner {
+    private val lifecycle = LifecycleRegistry(this)
+
+    init {
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    }
+
+    override fun getLifecycle(): Lifecycle = lifecycle
+
+    override fun onChanged(t: T) {
+        handler(t)
+        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    }
 }

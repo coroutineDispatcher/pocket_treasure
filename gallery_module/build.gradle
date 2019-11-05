@@ -42,8 +42,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation project(':core_module')
     implementation libraries.fragmentNavigation
@@ -66,4 +64,31 @@ dependencies {
     implementation libraries.moshiKotlin
     kapt annotationProcessors.moshiKapt
     implementation libraries.retrofitMoshiConverter
+    implementation libraries.smoothie
+
+    testImplementation testImplementations.coroutinesTest
+    testImplementation testImplementations.jUnit
+    testImplementation testImplementations.mockitoCore
+    testImplementation testImplementations.jodaTimeTest
+    testImplementation testImplementations.mockitoKotlin
+    testImplementation testImplementations.mockitoInline
+    testImplementation testImplementations.androidArchCoreTesting
+    testImplementation testImplementations.coroutinesTesting
+    testImplementation testImplementations.mockWebServer
+
+    androidTestImplementation androidTestImplementations.espressoCore
+    androidTestImplementation androidTestImplementations.espressoContrib
+    androidTestImplementation androidTestImplementations.espressoIntents
+    androidTestImplementation androidTestImplementations.espressoAccessibility
+    androidTestImplementation androidTestImplementations.espressoWeb
+    androidTestImplementation androidTestImplementations.espressoIdlingConcurrent
+    androidTestImplementation androidTestImplementations.testRunner
+    androidTestImplementation androidTestImplementations.testRules
+    androidTestImplementation androidTestImplementations.androidJUnit
+    androidTestImplementation androidTestImplementations.mockitoAndroid
+    androidTestImplementation androidTestImplementations.mockitoAndroid
+
+    debugImplementation("androidx.fragment:fragment-testing:1.2.0-rc01", {
+        exclude group: 'androidx.test', module: 'core'
+    })
 }

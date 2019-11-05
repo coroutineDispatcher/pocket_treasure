@@ -73,6 +73,8 @@ dependencies {
     compileOnly libraries.assistedInject
     kapt annotationProcessors.assistedInjectKapt
 
+    implementation libraries.smoothie
+
     testImplementation testImplementations.coroutinesTest
     testImplementation testImplementations.jUnit
     testImplementation testImplementations.mockitoCore

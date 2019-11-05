@@ -1,4 +1,4 @@
-package com.stavro_xhardha.pockettreasure.home_pkg
+package com.stavro_xhardha.core_module.home_pkg
 
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4

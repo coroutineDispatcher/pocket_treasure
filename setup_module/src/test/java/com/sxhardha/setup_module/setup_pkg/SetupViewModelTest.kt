@@ -1,11 +1,10 @@
-package com.stavro_xhardha.pockettreasure.setup_pkg
+package com.sxhardha.setup_module.setup_pkg
 
 import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.SavedStateHandle
 import com.nhaarman.mockitokotlin2.mock
-import com.sxhardha.setup_module.SetupRepository
-import com.sxhardha.setup_module.SetupViewModel
+import com.stavro_xhardha.core_module.brain.observeOnce
+import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,8 +36,9 @@ class SetupViewModelTest {
     @Before
     fun setUp() {
         setupRepository = mock()
-        val savedStateHandle = mock<SavedStateHandle>()
-        setupViewModel = com.sxhardha.setup_module.SetupViewModel(setupRepository, savedStateHandle)
+        val appCoroutineDispatchers = mock<AppCoroutineDispatchers>()
+        setupViewModel =
+            com.sxhardha.setup_module.SetupViewModel(appCoroutineDispatchers, setupRepository)
 
         Dispatchers.setMain(mainThreadSurrogate)
     }

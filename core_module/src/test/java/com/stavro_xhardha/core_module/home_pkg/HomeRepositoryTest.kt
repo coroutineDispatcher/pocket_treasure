@@ -1,9 +1,9 @@
-package com.stavro_xhardha.pockettreasure.home_pkg
+package com.stavro_xhardha.core_module.home_pkg
 
 import com.nhaarman.mockitokotlin2.mock
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
-import HomeRepository
+import com.stavro_xhardha.core_module.ui.HomeRepository
 import com.stavro_xhardha.rocket.Rocket
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -18,15 +18,13 @@ import org.mockito.Mockito.*
 class HomeRepositoryTest {
     private lateinit var homeRepository: HomeRepository
     private lateinit var treasureApi: TreasureApi
-    private lateinit var prayerTimesDao: PrayerTimesDao
     private lateinit var rocket: Rocket
 
     @Before
     fun setUp() {
         treasureApi = mock()
         rocket = mock()
-        prayerTimesDao = mock()
-        homeRepository = HomeRepository(treasureApi, rocket, prayerTimesDao)
+        homeRepository = HomeRepository(treasureApi, rocket)
     }
 
     @After

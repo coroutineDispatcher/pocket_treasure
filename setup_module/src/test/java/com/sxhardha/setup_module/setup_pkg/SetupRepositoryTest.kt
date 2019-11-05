@@ -1,11 +1,10 @@
-package com.stavro_xhardha.pockettreasure.setup_pkg
+package com.sxhardha.setup_module.setup_pkg
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
-import com.sxhardha.setup_module.SetupRepository
 import com.stavro_xhardha.rocket.Rocket
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
