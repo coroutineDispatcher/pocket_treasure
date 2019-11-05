@@ -7,9 +7,8 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.DiffUtil
-import com.stavro_xhardha.core_module.model.*
+import com.stavro_xhardha.core_module.model.HomePrayerTime
 
 inline fun <reified T : ViewModel> Fragment.viewModel(
     crossinline provider: () -> T

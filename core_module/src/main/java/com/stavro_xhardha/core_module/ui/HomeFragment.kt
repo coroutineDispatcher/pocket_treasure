@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment() {
 
     private val homeViewModel by savedStateViewModel {
-        //DaggerHomeComponent.factory().create(applicationComponent).homeViewModelFactory.create(it)
+        applicationComponent.homeViewModelFactory.create(it)
     }
     private val picasso = applicationComponent.picasso
     private var homeAdapter: HomeAdapter =

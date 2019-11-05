@@ -5,5 +5,5 @@ import dagger.Module
 
 
 @AssistedModule
-@Module(includes = [AssistedInject_HomeViewModelModule::class])
+@Module(includes = [AssistedInject_ViewModelModule::class])
 abstract class ViewModelModule

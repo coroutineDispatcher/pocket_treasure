@@ -54,13 +54,10 @@ dependencies {
     implementation libraries.coroutinesCore
     implementation libraries.livedataKtx
     implementation libraries.picasso
-    implementation libraries.materialDialogCore
-    implementation libraries.materialDialogInputs
     implementation libraries.room
     implementation libraries.roomKtx
     implementation libraries.jodaTime
     implementation libraries.rocket
-    implementation libraries.paging
     implementation libraries.fragment
     implementation libraries.fragmentKtx
     implementation libraries.workManager
@@ -73,9 +70,7 @@ dependencies {
     implementation libraries.firebase
     implementation libraries.crashLytics
     implementation libraries.locationService
-
     compileOnly libraries.assistedInject
-
     kapt annotationProcessors.daggerKapt
     kapt annotationProcessors.assistedInjectKapt
     kapt annotationProcessors.roomKapt
