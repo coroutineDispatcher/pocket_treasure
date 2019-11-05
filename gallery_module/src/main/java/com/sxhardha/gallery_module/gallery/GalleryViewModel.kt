@@ -5,10 +5,10 @@ import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.stavro_xhardha.core_module.brain.buildPagedList
-import com.stavro_xhardha.core_module.model.UnsplashResult
-import com.sxhardha.gallery_module.Listing
-import com.sxhardha.gallery_module.NetworkState
+import com.stavro_xhardha.core_module.brain.INITIAL_PAGE_SIZE
+import com.sxhardha.gallery_module.model.UnsplashResult
+import com.sxhardha.gallery_module.utils.Listing
+import com.sxhardha.gallery_module.utils.NetworkState
 import javax.inject.Inject
 
 class GalleryViewModel @Inject constructor(
@@ -22,7 +22,10 @@ class GalleryViewModel @Inject constructor(
 
     init {
 
-        val config = buildPagedList()
+        val config = PagedList.Config.Builder()
+            .setPageSize(INITIAL_PAGE_SIZE)
+            .setEnablePlaceholders(false)
+            .build()
 
         val livePagedListBuilder =
             LivePagedListBuilder(galleryDataSourceFactory, config).build()

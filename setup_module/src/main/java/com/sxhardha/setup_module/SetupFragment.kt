@@ -53,7 +53,7 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
                 it.dismiss()
             }.onDismiss {
                 val compressionWork =
-                    PeriodicWorkRequestBuilder<PrayerTimeWorkManager>(6, TimeUnit.HOURS)
+                    PeriodicWorkRequestBuilder<PrayerTimeWorkManager>(1, TimeUnit.HOURS)
                         .setInitialDelay(1, TimeUnit.MINUTES)
                         .build()
                 WorkManager.getInstance(requireActivity()).enqueue(compressionWork)

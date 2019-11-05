@@ -13,12 +13,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.brain.viewModel
-import com.sxhardha.gallery_module.DaggerGalleryComponent
 import com.sxhardha.gallery_module.R
-import com.sxhardha.gallery_module.Status
+import com.sxhardha.gallery_module.di.DaggerGalleryComponent
+import com.sxhardha.gallery_module.di.GalleryComponent
+import com.sxhardha.gallery_module.di.GalleryNetworkModule
+import com.sxhardha.gallery_module.utils.Status
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
 class GalleryFragment : BaseFragment(), GalleryContract {
+
+    private lateinit var galleryComponent: GalleryComponent
     private lateinit var btnRetry: Button
 
     private val picasso by lazy {
@@ -30,7 +34,7 @@ class GalleryFragment : BaseFragment(), GalleryContract {
     }
 
     private val galleryViewModel by viewModel {
-        DaggerGalleryComponent.factory().create(applicationComponent).galleryViewModel
+        galleryComponent.galleryViewModel
     }
 
     override fun onCreateView(
@@ -53,6 +57,9 @@ class GalleryFragment : BaseFragment(), GalleryContract {
     }
 
     override fun initializeComponents() {
+        galleryComponent = DaggerGalleryComponent.builder().coreComponent(applicationComponent)
+            .galleryNetworkModule(GalleryNetworkModule(applicationComponent.retrofit))
+            .build()
         rvGallery.layoutManager = GridLayoutManager(activity, 3)
         rvGallery.adapter = galleryAdapter
         btnRetry.setOnClickListener {
@@ -66,8 +73,10 @@ class GalleryFragment : BaseFragment(), GalleryContract {
         })
         galleryViewModel.getCurrentState().observe(viewLifecycleOwner, Observer {
             if (it.status == Status.FAILED)
-                Snackbar.make(rlGallery,
-                    R.string.failed_loading_more, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(
+                    rlGallery,
+                    R.string.failed_loading_more, Snackbar.LENGTH_LONG
+                ).show()
         })
         galleryViewModel.getInitialState().observe(viewLifecycleOwner, Observer {
             when (it.status) {

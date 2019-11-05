@@ -96,10 +96,10 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
     private suspend fun updatePrayerTimes(prayerTimeResponse: PrayerTimeResponse) {
         prayerTimeResponse.let {
             rocket.writeString(FAJR_KEY, it.data.timings.fajr)
-            rocket.writeString(FAJR_KEY, it.data.timings.dhuhr)
-            rocket.writeString(FAJR_KEY, it.data.timings.asr)
-            rocket.writeString(FAJR_KEY, it.data.timings.magrib)
-            rocket.writeString(FAJR_KEY, it.data.timings.isha)
+            rocket.writeString(DHUHR_KEY, it.data.timings.dhuhr)
+            rocket.writeString(ASR_KEY, it.data.timings.asr)
+            rocket.writeString(MAGHRIB_KEY, it.data.timings.magrib)
+            rocket.writeString(ISHA_KEY, it.data.timings.isha)
         }
     }
 

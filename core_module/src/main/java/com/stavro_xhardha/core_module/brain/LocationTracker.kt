@@ -11,7 +11,7 @@ import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 
 class LocationTracker(
-    val activity: FragmentActivity,
+    private val activity: FragmentActivity,
     val locationTrackerListener: LocationTrackerListener
 ) {
 

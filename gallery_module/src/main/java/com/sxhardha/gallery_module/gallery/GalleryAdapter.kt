@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import com.stavro_xhardha.core_module.brain.DIFF_UTIL_GALLERY
-import com.stavro_xhardha.core_module.model.UnsplashResult
+import com.sxhardha.gallery_module.model.UnsplashResult
 import com.sxhardha.gallery_module.R
+import com.sxhardha.gallery_module.utils.DIFF_UTIL_GALLERY
 import kotlinx.android.synthetic.main.single_item_image.view.*
 
 class GalleryAdapter(

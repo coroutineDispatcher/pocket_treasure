@@ -139,7 +139,7 @@ class SettingsFragment : BaseFragment(),
         WorkManager.getInstance(requireActivity()).cancelAllWork()
 
         val compressionWork =
-            PeriodicWorkRequestBuilder<PrayerTimeWorkManager>(6, TimeUnit.HOURS)
+            PeriodicWorkRequestBuilder<PrayerTimeWorkManager>(1, TimeUnit.HOURS)
                 .build()
         WorkManager.getInstance(requireActivity()).enqueue(compressionWork)
     }
