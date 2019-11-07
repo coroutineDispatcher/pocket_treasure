@@ -1,4 +1,4 @@
-package com.stavro_xhardha.core_module
+package com.stavro_xhardha.core_module.background
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,6 +12,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import com.squareup.picasso.Picasso
+import com.stavro_xhardha.core_module.MainActivity
+import com.stavro_xhardha.core_module.R
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
 import com.stavro_xhardha.rocket.Rocket
@@ -74,7 +76,9 @@ class PrayerTimeNotificationReceiver : BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context, channelId)
             .setContentIntent(resultPendingIntent)
             .setColorized(true)
-            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setColor(ContextCompat.getColor(context,
+                R.color.colorPrimary
+            ))
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setAutoCancel(true)
             .setContentTitle(title)

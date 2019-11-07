@@ -7,7 +7,6 @@ import android.content.Intent
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.stavro_xhardha.core_module.PrayerTimeNotificationReceiver
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
@@ -26,7 +25,25 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
 
     override suspend fun doWork(): Result = coroutineScope {
         instantiateDependencies()
-        scheduleNewAlarms()
+        launch {
+            val capital = rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)
+            val country = rocket.readString(COUNTRY_SHARED_PREFERENCE_KEY)
+
+            try {
+                val response = treasureApi.getPrayerTimesTodayAsync(
+                    capital, country
+                )
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        updatePrayerTimes(response.body()!!)
+                    }
+                }
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            } finally {
+                scheduleNewAlarms()
+            }
+        }
         Result.success()
     }
 
@@ -159,6 +176,7 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
 
         val alarmManager = mContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        Log.d("WorkerTest", time.millis.toString())
         alarmManager.setExact(AlarmManager.RTC, time.millis, pendingIntent)
     }
 

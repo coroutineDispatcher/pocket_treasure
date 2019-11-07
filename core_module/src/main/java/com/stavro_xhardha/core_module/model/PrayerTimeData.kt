@@ -5,9 +5,9 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class PrayerTimeData(
-    @Json(name ="timings")
+    @Json(name = "timings")
     val timings: PrayerTiming,
 
-    @Json(name ="date")
+    @Json(name = "date")
     val date: PrayerDate
 )
