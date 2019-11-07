@@ -97,6 +97,7 @@ dependencies {
     androidTestImplementation androidTestImplementations.androidJUnit
     androidTestImplementation androidTestImplementations.mockitoAndroid
     androidTestImplementation androidTestImplementations.mockitoAndroid
+    androidTestImplementation androidTestImplementations.workerTest
 
     debugImplementation("androidx.fragment:fragment-testing:1.2.0-rc01", {
         exclude group: 'androidx.test', module: 'core'

@@ -4,9 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.stavro_xhardha.core_module.PrayerTimeNotificationReceiver
 import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.core_dependencies.TreasureApi
 import com.stavro_xhardha.core_module.dependency_injection.CoreApplication
@@ -26,10 +26,10 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
     override suspend fun doWork(): Result = coroutineScope {
         instantiateDependencies()
         launch {
-            try {
-                val capital = rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)
-                val country = rocket.readString(COUNTRY_SHARED_PREFERENCE_KEY)
+            val capital = rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)
+            val country = rocket.readString(COUNTRY_SHARED_PREFERENCE_KEY)
 
+            try {
                 val response = treasureApi.getPrayerTimesTodayAsync(
                     capital, country
                 )
@@ -56,35 +56,35 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
 
         val currentTIme = LocalTime()
 
-        if (currentTIme.isBefore(localTime(fajrTime!!))) {
+        if (currentTIme.isBefore(localTime(fajrTime))) {
             scheduleAlarmForPrayer(
                 rocket.readBoolean(NOTIFY_USER_FOR_FAJR),
                 fajrTime,
                 PENDING_INTENT_FIRE_NOTIFICATION_FAJR
             )
         }
-        if (currentTIme.isBefore(localTime(dhuhrTime!!))) {
+        if (currentTIme.isBefore(localTime(dhuhrTime))) {
             scheduleAlarmForPrayer(
                 rocket.readBoolean(NOTIFY_USER_FOR_DHUHR),
                 dhuhrTime,
                 PENDING_INTENT_FIRE_NOTIFICATION_DHUHR
             )
         }
-        if (currentTIme.isBefore(localTime(asrTime!!))) {
+        if (currentTIme.isBefore(localTime(asrTime))) {
             scheduleAlarmForPrayer(
                 rocket.readBoolean(NOTIFY_USER_FOR_ASR),
                 asrTime,
                 PENDING_INTENT_FIRE_NOTIFICATION_ASR
             )
         }
-        if (currentTIme.isBefore(localTime(maghribTime!!))) {
+        if (currentTIme.isBefore(localTime(maghribTime))) {
             scheduleAlarmForPrayer(
                 rocket.readBoolean(NOTIFY_USER_FOR_MAGHRIB),
                 maghribTime,
                 PENDING_INTENT_FIRE_NOTIFICATION_MAGHRIB
             )
         }
-        if (currentTIme.isBefore(localTime(ishaTime!!))) {
+        if (currentTIme.isBefore(localTime(ishaTime))) {
             scheduleAlarmForPrayer(
                 rocket.readBoolean(NOTIFY_USER_FOR_ISHA),
                 ishaTime,
@@ -176,6 +176,7 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
 
         val alarmManager = mContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        Log.d("WorkerTest", time.millis.toString())
         alarmManager.setExact(AlarmManager.RTC, time.millis, pendingIntent)
     }
 
