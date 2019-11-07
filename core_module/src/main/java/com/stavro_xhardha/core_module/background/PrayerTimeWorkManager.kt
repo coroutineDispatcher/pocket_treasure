@@ -26,25 +26,7 @@ class PrayerTimeWorkManager(val context: Context, parameters: WorkerParameters) 
 
     override suspend fun doWork(): Result = coroutineScope {
         instantiateDependencies()
-        launch {
-            try {
-                val capital = rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)
-                val country = rocket.readString(COUNTRY_SHARED_PREFERENCE_KEY)
-
-                val response = treasureApi.getPrayerTimesTodayAsync(
-                    capital, country
-                )
-                if (response.isSuccessful) {
-                    if (response.body() != null) {
-                        updatePrayerTimes(response.body()!!)
-                    }
-                }
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            } finally {
-                scheduleNewAlarms()
-            }
-        }
+        scheduleNewAlarms()
         Result.success()
     }
 
