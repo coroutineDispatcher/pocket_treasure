@@ -150,9 +150,11 @@ class SettingsFragment : BaseFragment(),
     }
 
     override fun onLocationResult(locationResult: LocationResult) {
-        for (location in locationResult.locations) {
-            val geocoder = Geocoder(requireActivity(), Locale.getDefault())
-            settingsViewModel.convertToAdress(geocoder, location.latitude, location.longitude)
+        if (activity != null) {
+            for (location in locationResult.locations) {
+                val geocoder = Geocoder(requireActivity(), Locale.getDefault())
+                settingsViewModel.convertToAdress(geocoder, location.latitude, location.longitude)
+            }
         }
     }
 

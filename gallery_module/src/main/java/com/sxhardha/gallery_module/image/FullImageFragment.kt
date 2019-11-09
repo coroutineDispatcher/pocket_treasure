@@ -118,8 +118,12 @@ class FullImageFragment : Fragment() {
     }
 
     private fun onSuccessFulImageLoad() {
-        pbFullImage.visibility = View.GONE
-        setHasOptionsMenu(true)
+        if (pbFullImage != null) {
+            pbFullImage.visibility = View.GONE
+            setHasOptionsMenu(true)
+        }else{
+            loadErrorImage()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
