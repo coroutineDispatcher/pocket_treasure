@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_aya.*
 
 class AyaFragment : BaseFragment(), AyaContract {
     private lateinit var component: QuranComponent
+    private lateinit var pbAya: View
 
     private val mediaPlayer: MediaPlayer by lazy {
         CoreApplication.getCoreComponent().mediaPlayer
@@ -52,7 +53,7 @@ class AyaFragment : BaseFragment(), AyaContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        pbAya = view.findViewById(R.id.pbAya)
         if (args.surahsNumber == 9) {
             sharedViewModel.removeToolbarTitle()
         }

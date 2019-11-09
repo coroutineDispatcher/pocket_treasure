@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.stavro_xhardha.core_module.brain.BaseFragment
 import com.stavro_xhardha.core_module.brain.viewModel
@@ -21,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_quran.*
 class QuranFragment : BaseFragment(), QuranAdapterContract {
     private lateinit var btnRetry: Button
     private lateinit var quranComponent: QuranComponent
-
+    private lateinit var pbQuran: View
     private val quranViewModel by viewModel {
         quranComponent.quranViewModel
     }
@@ -40,13 +38,7 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnRetry = view.findViewById(R.id.btnRetry)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    view.findNavController().popBackStack(R.id.homeFragment, false)
-                }
-            })
+        pbQuran = view.findViewById(R.id.pbQuran)
     }
 
     override fun initializeComponents() {

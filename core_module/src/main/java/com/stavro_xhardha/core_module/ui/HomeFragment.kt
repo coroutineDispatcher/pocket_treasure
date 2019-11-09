@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import com.stavro_xhardha.core_module.R
 import com.stavro_xhardha.core_module.brain.APPLICATION_TAG
@@ -18,6 +17,7 @@ class HomeFragment : BaseFragment() {
     private val homeViewModel by savedStateViewModel {
         applicationComponent.homeViewModelFactory.create(it)
     }
+    private lateinit var pbHome: View
     private val picasso = applicationComponent.picasso
     private var homeAdapter: HomeAdapter =
         HomeAdapter(picasso)
@@ -31,13 +31,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    activity?.finish()
-                }
-            })
+        pbHome = view.findViewById(R.id.pbHome)
         setHasOptionsMenu(true)
     }
 

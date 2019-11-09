@@ -20,6 +20,7 @@ class NamesFragment : BaseFragment() {
     lateinit var namesViewModelFactory: NamesViewModel.Factory
 
     private lateinit var btnRetry: Button
+    private lateinit var pbNames: View
 
     private val namesViewModel by savedStateViewModel {
         namesViewModelFactory.create(it)
@@ -66,5 +67,6 @@ class NamesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnRetry = view.findViewById(R.id.btnRetry)
+        pbNames = view.findViewById(R.id.pbNames)
     }
 }

@@ -39,11 +39,12 @@ class FullImageFragment : Fragment() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO + completableJob)
     private lateinit var picasso: Picasso
     private lateinit var wallpaperManager: WallpaperManager
+    private lateinit var progressBar: View
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
         Snackbar.make(rlFullImageHolder, R.string.error_saving_image, Snackbar.LENGTH_LONG).show()
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +63,7 @@ class FullImageFragment : Fragment() {
 
         picasso = CoreApplication.getCoreComponent().picasso
         wallpaperManager = CoreApplication.getCoreComponent().wallpaperManager
+        progressBar = view.findViewById(R.id.pbFullImage)
 
         if (savedInstanceState == null) {
             expetedUrl = args.imageUrl
@@ -113,17 +115,13 @@ class FullImageFragment : Fragment() {
     }
 
     private fun loadErrorImage() {
-        pbFullImage.visibility = View.GONE
+        progressBar.visibility = View.GONE
         picasso.load(R.drawable.ic_error_in_connection).into(ivFullImage)
     }
 
     private fun onSuccessFulImageLoad() {
-        if (pbFullImage != null) {
-            pbFullImage.visibility = View.GONE
-            setHasOptionsMenu(true)
-        }else{
-            loadErrorImage()
-        }
+        progressBar.visibility = View.GONE
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -156,13 +154,13 @@ class FullImageFragment : Fragment() {
     private fun setWallPaper(index: Int) {
         coroutineScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             withContext(Dispatchers.Main) {
-                pbFullImage.visibility = View.VISIBLE
+                progressBar.visibility = View.VISIBLE
             }
 
             initWallPaperSetting(index)
 
             withContext(Dispatchers.Main) {
-                pbFullImage.visibility = View.GONE
+                progressBar.visibility = View.GONE
                 Snackbar.make(rlFullImageHolder, R.string.wallpaper_saved, Snackbar.LENGTH_LONG)
                     .show()
             }
@@ -213,13 +211,13 @@ class FullImageFragment : Fragment() {
     private fun writeImageToFile() {
         coroutineScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
-                pbFullImage.visibility = View.VISIBLE
+                progressBar.visibility = View.VISIBLE
             }
 
             initImageSaving()
 
             withContext(Dispatchers.Main) {
-                pbFullImage.visibility = View.GONE
+                progressBar.visibility = View.GONE
                 Snackbar.make(rlFullImageHolder, R.string.image_saved, Snackbar.LENGTH_LONG).show()
             }
         }

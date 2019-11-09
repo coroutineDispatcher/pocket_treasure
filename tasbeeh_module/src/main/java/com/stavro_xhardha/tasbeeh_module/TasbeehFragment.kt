@@ -25,15 +25,14 @@ class TasbeehFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initializeComponents()
         observeTheLiveData()
-        //todo refactor when breaking the monolith
     }
 
-    fun initializeComponents() {
+    private fun initializeComponents() {
         adapter = TasbeehAdapter()
         rvTasbeeh.adapter = adapter
     }
 
-    fun observeTheLiveData() {
+    private fun observeTheLiveData() {
         tasbeehViewModel.tasbeehList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
