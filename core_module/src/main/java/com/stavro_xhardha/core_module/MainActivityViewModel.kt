@@ -6,24 +6,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stavro_xhardha.core_module.brain.*
+import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import com.stavro_xhardha.rocket.Rocket
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainActivityViewModel(val rocket: Rocket) : ViewModel() {
+class MainActivityViewModel(
+    val rocket: Rocket,
+    private val appCoroutineDispatchers: AppCoroutineDispatchers
+) : ViewModel() {
 
     private val _launchSetupVisibility = MutableLiveData<Boolean>()
     val launchSetupVisibility: LiveData<Boolean> = _launchSetupVisibility
 
+    private val coroutineExceptionHandler =
+        CoroutineExceptionHandler { _, throwable -> throwable.printStackTrace() }
+
     fun checkSavedTheme() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
             val currentTheme =
                 rocket.readInt(
                     NIGHT_MODE_KEY
                 )
             if (currentTheme != 0) {
-                withContext(Dispatchers.Main) {
+                withContext(appCoroutineDispatchers.mainDispatcher) {
                     AppCompatDelegate.setDefaultNightMode(currentTheme)
                 }
             }
@@ -37,7 +44,7 @@ class MainActivityViewModel(val rocket: Rocket) : ViewModel() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
             val themeToSave = AppCompatDelegate.getDefaultNightMode()
             rocket.writeInt(
                 NIGHT_MODE_KEY, themeToSave
@@ -46,17 +53,17 @@ class MainActivityViewModel(val rocket: Rocket) : ViewModel() {
     }
 
     fun checkConfigurationState() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
             val isSetupDone =
                 rocket.readFloat(LATITUDE_KEY) != 0.toFloat() && rocket.readFloat(
                     LONGITUDE_KEY
                 ) != 0.toFloat()
                         && rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)!!.isNotEmpty() && rocket.readString(
                     COUNTRY_SHARED_PREFERENCE_KEY
-                )!!.isNotEmpty()
+                ).isNotEmpty()
 
             if (!isSetupDone) {
-                withContext(Dispatchers.Main) {
+                withContext(appCoroutineDispatchers.mainDispatcher) {
                     _launchSetupVisibility.value = true
                     _launchSetupVisibility.value = false
                 }

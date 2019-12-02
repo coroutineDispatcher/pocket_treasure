@@ -38,7 +38,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:itemIconTint="@color/colorAccentDark"
-        app:itemTextColor="@color/md_black_1000"
+        app:itemTextColor="@color/text_color_items"
         app:menu="@menu/activity_main_drawer">
 
         <LinearLayout
