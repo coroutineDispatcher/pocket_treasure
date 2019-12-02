@@ -2,7 +2,6 @@ package com.stavro_xhardha.core_module
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.*
@@ -41,12 +39,9 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
         initMainViewModel()
 
-        if (savedInstanceState != null) {
-            checkToolbar()
-            checkNavView()
-        } else {
-            mainActivityViewModel.checkSavedTheme()
-        }
+        mainActivityViewModel.checkSavedTheme()
+
+        checkToolbar()
 
         ivDarkMode.setOnClickListener {
             mainActivityViewModel.changeCurrentTheme()
@@ -74,47 +69,18 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
     private fun initMainViewModel() {
         val rocket = CoreApplication.getCoreComponent().rocket
+        val appCoroutineDispatchers = CoreApplication.getCoreComponent().appCoroutineDispatchers
         mainActivityViewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-                MainActivityViewModel(rocket) as T
+                MainActivityViewModel(rocket, appCoroutineDispatchers) as T
         }).get(MainActivityViewModel::class.java)
     }
 
     private fun checkToolbar() {
         if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Dark)
-
         } else {
             toolbar.context.setTheme(R.style.ThemeOverlay_MaterialComponents_Light)
-        }
-    }
-
-    private fun checkNavView() {
-        val colorListItems = ColorStateList(
-            arrayOf(
-                intArrayOf(-android.R.attr.state_enabled),
-                intArrayOf(android.R.attr.state_enabled)
-            ),
-            intArrayOf(
-                ContextCompat.getColor(this, R.color.md_black_1000),
-                ContextCompat.getColor(this, R.color.colorAccentDark)
-            )
-        )
-
-        val colorListText = ColorStateList(
-            arrayOf(
-                intArrayOf(-android.R.attr.state_enabled),
-                intArrayOf(android.R.attr.state_enabled)
-            ),
-            intArrayOf(
-                ContextCompat.getColor(this, R.color.md_black_1000),
-                ContextCompat.getColor(this, R.color.md_white_1000)
-            )
-        )
-
-        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
-            nav_view.itemTextColor = colorListText
-            nav_view.itemIconTintList = colorListItems
         }
     }
 

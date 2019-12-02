@@ -83,7 +83,7 @@ class PrayerTimeNotificationReceiver : BroadcastReceiver() {
             .setAutoCancel(true)
             .setContentTitle(title)
             .setContentText(notificationDescription)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Prayer time notifications"
