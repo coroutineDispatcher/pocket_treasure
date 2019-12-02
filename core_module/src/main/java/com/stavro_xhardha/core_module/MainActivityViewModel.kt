@@ -17,8 +17,8 @@ class MainActivityViewModel(
     private val appCoroutineDispatchers: AppCoroutineDispatchers
 ) : ViewModel() {
 
-    private val _launchSetupVisibility = MutableLiveData<Boolean>()
-    val launchSetupVisibility: LiveData<Boolean> = _launchSetupVisibility
+    private val _launchSetupVisibility = MutableLiveData<Event<String>>()
+    val launchSetupVisibility: LiveData<Event<String>> = _launchSetupVisibility
 
     private val coroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable -> throwable.printStackTrace() }
@@ -58,14 +58,13 @@ class MainActivityViewModel(
                 rocket.readFloat(LATITUDE_KEY) != 0.toFloat() && rocket.readFloat(
                     LONGITUDE_KEY
                 ) != 0.toFloat()
-                        && rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)!!.isNotEmpty() && rocket.readString(
+                        && rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY).isNotEmpty() && rocket.readString(
                     COUNTRY_SHARED_PREFERENCE_KEY
                 ).isNotEmpty()
 
             if (!isSetupDone) {
                 withContext(appCoroutineDispatchers.mainDispatcher) {
-                    _launchSetupVisibility.value = true
-                    _launchSetupVisibility.value = false
+                    _launchSetupVisibility.value = Event("ShowSetupEvent")
                 }
             }
         }

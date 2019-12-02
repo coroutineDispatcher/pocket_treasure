@@ -13,7 +13,10 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -63,7 +66,9 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
         setupNavControllerListener(navController)
 
         sharedViewModel.onToolbarTitleRemoveRequested.observe(this, Observer {
-            toolbar.title = ""
+            it.getContentIfNotHandled()?.let {
+                toolbar.title = ""
+            }
         })
     }
 
@@ -144,10 +149,8 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
                 drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 if (destination.id == R.id.homeFragment) {
                     mainActivityViewModel.checkConfigurationState()
-                    val setupVisibilityObserver: LiveData<Boolean> =
-                        mainActivityViewModel.launchSetupVisibility
-                    setupVisibilityObserver.observe(this, Observer {
-                        if (it) {
+                    mainActivityViewModel.launchSetupVisibility.observe(this, Observer {
+                        it.getContentIfNotHandled()?.let {
                             findNavController(R.id.nav_host_fragment).navigate(R.id.setupFragment)
                         }
                     })

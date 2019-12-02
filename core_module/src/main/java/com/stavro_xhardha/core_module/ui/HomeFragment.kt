@@ -73,8 +73,10 @@ class HomeFragment : BaseFragment() {
         homeViewModel.contentVisibility.observe(viewLifecycleOwner, Observer {
             rvHomePrayerTimes.visibility = it
         })
-        homeViewModel.showErrorToast.observe(viewLifecycleOwner, Observer {
-            if (it) Toast.makeText(activity!!, R.string.error_occured, Toast.LENGTH_LONG).show()
+        homeViewModel.showErrorToast.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                Toast.makeText(activity!!, event.peekContent(), Toast.LENGTH_LONG).show()
+            }
         })
 
         homeViewModel.progressBarVisibility.observe(viewLifecycleOwner, Observer {

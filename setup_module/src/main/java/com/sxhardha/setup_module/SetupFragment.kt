@@ -74,30 +74,40 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
 
     override fun observeTheLiveData() {
         setupViewModel.locationRequestTurnOff.observe(viewLifecycleOwner, Observer {
-            if (it) locationTracker?.removeLocationRequest()
+            it.getContentIfNotHandled()?.let {
+                locationTracker?.removeLocationRequest()
+            }
         })
-        setupViewModel.locationErrorVisibility.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                Toast.makeText(requireActivity(), R.string.invalid_coorinates, Toast.LENGTH_LONG)
+        setupViewModel.locationErrorToast.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                Toast.makeText(requireActivity(), event.peekContent(), Toast.LENGTH_LONG)
                     .show()
                 requireActivity().finish()
             }
         })
-        setupViewModel.serviceNotAvailableVisibility.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                Toast.makeText(requireActivity(), R.string.service_not_available, Toast.LENGTH_LONG)
+        setupViewModel.serviceNotAvailableVisibility.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled().let {
+                Toast.makeText(requireActivity(), event.peekContent(), Toast.LENGTH_LONG)
                     .show()
                 requireActivity().finish()
             }
         })
-        setupViewModel.prayerNotificationDialogViaibility.observe(viewLifecycleOwner, Observer {
-            if (it) askForNotifyingUser()
-        })
+        setupViewModel.prayerNotificationDialogViaibility.observe(
+            viewLifecycleOwner,
+            Observer { event ->
+                event.getContentIfNotHandled()?.let {
+                    askForNotifyingUser()
+                }
+            })
         sharedViewModel.onGpsOpened.observe(viewLifecycleOwner, Observer {
-            if (it) locationTracker?.updateLocation()
+            it.getContentIfNotHandled()?.let {
+                locationTracker?.updateLocation()
+            }
         })
         sharedViewModel.onLocationPermissiongranted.observe(viewLifecycleOwner, Observer {
-            if (it) locationTracker?.getUserLocation()
+            it.getContentIfNotHandled()?.let {
+                locationTracker?.getUserLocation()
+            }
         })
     }
 

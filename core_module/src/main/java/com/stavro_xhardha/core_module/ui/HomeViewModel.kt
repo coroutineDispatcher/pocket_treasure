@@ -4,6 +4,8 @@ import android.view.View
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import com.stavro_xhardha.core_module.Event
+import com.stavro_xhardha.core_module.R
 import com.stavro_xhardha.core_module.brain.HOME_DATA_LIST
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import com.stavro_xhardha.core_module.model.HomePrayerTime
@@ -32,11 +34,11 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private val _progressBarVisibility = MutableLiveData<Int>()
-    private val _showErrorToast = MutableLiveData<Boolean>()
+    private val _showErrorToast = MutableLiveData<Event<Int>>()
     private val _contentVisibility = MutableLiveData<Int>()
 
     val progressBarVisibility: LiveData<Int> = _progressBarVisibility
-    val showErrorToast: LiveData<Boolean> = _showErrorToast
+    val showErrorToast: LiveData<Event<Int>> = _showErrorToast
     val contentVisibility: LiveData<Int> = _contentVisibility
     val homeData: LiveData<ArrayList<HomePrayerTime>> = savedStateHandle.getLiveData(HOME_DATA_LIST)
 
@@ -79,18 +81,18 @@ class HomeViewModel @AssistedInject constructor(
             currentTime.isAfter(localTime(homePrayerData[4].time))
         ) {
             homePrayerData[0].backgroundColor =
-                com.stavro_xhardha.core_module.R.color.card_view_selector
+                R.color.card_view_selector
             checkOtherColors(homePrayerData)
         } else {
             var currentColorFound = false
             for (i in 0 until homePrayerData.size) {
                 if (currentTime.isBefore(localTime(homePrayerData[i].time)) && !currentColorFound) {
                     homePrayerData[i].backgroundColor =
-                        com.stavro_xhardha.core_module.R.color.card_view_selector
+                        R.color.card_view_selector
                     currentColorFound = true
                 } else {
                     homePrayerData[i].backgroundColor =
-                        com.stavro_xhardha.core_module.R.color.card_view_default
+                        R.color.card_view_default
                 }
             }
         }
@@ -101,7 +103,7 @@ class HomeViewModel @AssistedInject constructor(
     private fun checkOtherColors(homePrayerData: ArrayList<HomePrayerTime>) {
         for (i in 1 until homePrayerData.size) {
             homePrayerData[i].backgroundColor =
-                com.stavro_xhardha.core_module.R.color.card_view_default
+                R.color.card_view_default
         }
     }
 
@@ -148,7 +150,7 @@ class HomeViewModel @AssistedInject constructor(
     }
 
     private fun showError() {
-        _showErrorToast.value = true
+        _showErrorToast.value = Event(R.string.error_occured_please_retry)
         _progressBarVisibility.value = View.GONE
         _contentVisibility.value = View.VISIBLE
     }
@@ -156,12 +158,10 @@ class HomeViewModel @AssistedInject constructor(
     private fun switchProgressBarOn() {
         _progressBarVisibility.value = View.VISIBLE
         _contentVisibility.value = View.GONE
-        _showErrorToast.value = false
     }
 
     private fun switchProgressBarOff() {
         _progressBarVisibility.value = View.GONE
         _contentVisibility.value = View.VISIBLE
-        _showErrorToast.value = false
     }
 }

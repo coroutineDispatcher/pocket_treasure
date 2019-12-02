@@ -37,8 +37,10 @@ class CompassFragment : BaseFragment(), CompassListener {
             qibla_compass.startAnimation(it)
         })
 
-        compassViewModel.qiblaFound.observe(viewLifecycleOwner, Observer {
-            if (it) Toast.makeText(requireActivity(), R.string.found, Toast.LENGTH_LONG).show()
+        compassViewModel.qiblaFound.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                Toast.makeText(requireActivity(), event.peekContent(), Toast.LENGTH_LONG).show()
+            }
         })
     }
 

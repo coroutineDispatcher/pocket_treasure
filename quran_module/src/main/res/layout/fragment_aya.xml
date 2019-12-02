@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/global_unit_smaller"
-                android:text="@string/error_occured"
+                android:text="@string/error_occured_please_retry"
                 android:textAlignment="center"
                 android:textColor="@color/md_grey_600"
                 android:textSize="@dimen/text_global_unit_normal"

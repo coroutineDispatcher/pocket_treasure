@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.stavro_xhardha.core_module.Event
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,13 +23,13 @@ class SettingsViewModel @Inject constructor(
     private val _maghribCheck: MutableLiveData<Boolean> = MutableLiveData()
     private val _ishaCheck: MutableLiveData<Boolean> = MutableLiveData()
     private val _countryAndCapital: MutableLiveData<String> = MutableLiveData()
-    private val _locationRequestTurnOff = MutableLiveData<Boolean>()
-    private val _serviceNotAvailableVisibility = MutableLiveData<Boolean>()
-    private val _locationErrorVisibility = MutableLiveData<Boolean>()
+    private val _locationRequestTurnOff = MutableLiveData<Event<Int>>()
+    private val _serviceNotAvailableVisibility = MutableLiveData<Event<Int>>()
+    private val _locationErrorVisibility = MutableLiveData<Event<Int>>()
 
-    val locationRequestTurnOff: LiveData<Boolean> = _locationRequestTurnOff
-    val serviceNotAvailableVisibility: LiveData<Boolean> = _serviceNotAvailableVisibility
-    val locationerrorVisibility: LiveData<Boolean> = _locationErrorVisibility
+    val locationRequestTurnOff: LiveData<Event<Int>> = _locationRequestTurnOff
+    val serviceNotAvailableVisibility: LiveData<Event<Int>> = _serviceNotAvailableVisibility
+    val locationerrorVisibility: LiveData<Event<Int>> = _locationErrorVisibility
     val fajrCheck: LiveData<Boolean> = _fajrCheck
     val dhuhrCheck: LiveData<Boolean> = _dhuhrCheck
     val asrCheck: LiveData<Boolean> = _asrCheck
@@ -123,12 +124,12 @@ class SettingsViewModel @Inject constructor(
                 }
             } catch (exception: IOException) {
                 exception.printStackTrace()
-                _serviceNotAvailableVisibility.postValue(true)
+                _serviceNotAvailableVisibility.postValue(Event(R.string.service_not_available))
             } catch (illegalArgumentException: IllegalArgumentException) {
                 illegalArgumentException.printStackTrace()
-                _locationErrorVisibility.postValue(true)
+                _locationErrorVisibility.postValue(Event(R.string.invalid_coorinates))
             } finally {
-                _locationRequestTurnOff.postValue(true)
+                _locationRequestTurnOff.postValue(Event(R.string.location_updated_successfully))
                 _countryAndCapital.postValue(settingsRepository.readCountryAndCapital())
             }
         }

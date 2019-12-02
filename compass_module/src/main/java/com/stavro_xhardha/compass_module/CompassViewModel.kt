@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.stavro_xhardha.core_module.Event
 import com.stavro_xhardha.core_module.brain.LATITUDE_KEY
 import com.stavro_xhardha.core_module.brain.LONGITUDE_KEY
 import com.stavro_xhardha.core_module.brain.MAKKAH_LATITUDE
@@ -27,10 +28,10 @@ class CompassViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _rotateAnimation = MutableLiveData<RotateAnimation>()
-    private val _qiblaFound = MutableLiveData<Boolean>()
+    private val _qiblaFound = MutableLiveData<Event<Int>>()
 
     val rotateAnimation: LiveData<RotateAnimation> = _rotateAnimation
-    val qiblaFound: LiveData<Boolean> = _qiblaFound
+    val qiblaFound: LiveData<Event<Int>> = _qiblaFound
 
     private var degreesRotation = 0.0
 
@@ -83,7 +84,7 @@ class CompassViewModel @Inject constructor(
 
     fun observeValues(sensorEvent: SensorEvent?) {
         if (((degreesRotation - 1) < sensorEvent!!.values[0]) && (sensorEvent.values[0] < (degreesRotation + 1))) {
-            _qiblaFound.value = true
+            _qiblaFound.value = Event(R.string.found)
         }
     }
 }

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class QuranViewModel @Inject constructor(
-    appCoroutineDispatchers: AppCoroutineDispatchers,
+    private val appCoroutineDispatchers: AppCoroutineDispatchers,
     private val repository: QuranRepository
 ) : ViewModel() {
 
@@ -83,7 +83,7 @@ class QuranViewModel @Inject constructor(
     }
 
     fun remakeQuranCall() {
-        viewModelScope.launch {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
             startQuranCall()
         }
     }

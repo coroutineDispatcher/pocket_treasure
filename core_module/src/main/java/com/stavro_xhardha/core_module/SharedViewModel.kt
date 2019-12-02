@@ -6,23 +6,23 @@ import androidx.lifecycle.ViewModel
 
 
 class SharedViewModel : ViewModel() {
-    private val _onGpsOpened = MutableLiveData<Boolean>()
-    private val _onLocationPermissionGranted = MutableLiveData<Boolean>()
-    private val _onToolbarTitleRemoveRequested = MutableLiveData<Boolean>()
+    private val _onGpsOpened = MutableLiveData<Event<String>>()
+    private val _onLocationPermissionGranted = MutableLiveData<Event<String>>()
+    private val _onToolbarTitleRemoveRequested = MutableLiveData<Event<String>>()
 
-    val onGpsOpened: LiveData<Boolean> = _onGpsOpened
-    val onLocationPermissiongranted: LiveData<Boolean> = _onLocationPermissionGranted
-    val onToolbarTitleRemoveRequested = _onToolbarTitleRemoveRequested
+    val onGpsOpened: LiveData<Event<String>> = _onGpsOpened
+    val onLocationPermissiongranted: LiveData<Event<String>> = _onLocationPermissionGranted
+    val onToolbarTitleRemoveRequested: LiveData<Event<String>> = _onToolbarTitleRemoveRequested
 
     fun onGpsOpened() {
-        _onGpsOpened.value = true
+        _onGpsOpened.value = Event("OnGPSOpened")
     }
 
     fun onLocationPermissionGranted() {
-        _onLocationPermissionGranted.value = true
+        _onLocationPermissionGranted.value = Event("OnLocationPermissionGranted")
     }
 
     fun removeToolbarTitle() {
-        _onToolbarTitleRemoveRequested.value = true
+        _onToolbarTitleRemoveRequested.value = Event("OnToolbarTitleRemoveRequested")
     }
 }
