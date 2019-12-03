@@ -65,6 +65,11 @@ class AyaFragment : BaseFragment(), AyaContract {
         mediaPlayer.reset()
     }
 
+    override fun onDestroyView() {
+        rvAya.adapter = null
+        super.onDestroyView()
+    }
+
     override fun initializeComponents() {
         component = DaggerQuranComponent.builder().coreComponent(applicationComponent)
             .quranApiModule(QuranApiModule(applicationComponent.retrofit))

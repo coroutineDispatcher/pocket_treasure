@@ -69,4 +69,9 @@ class NamesFragment : BaseFragment() {
         btnRetry = view.findViewById(R.id.btnRetry)
         pbNames = view.findViewById(R.id.pbNames)
     }
+
+    override fun onDestroyView() {
+        rvNames.adapter = null
+        super.onDestroyView()
+    }
 }

@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.Task
 
 class LocationTracker(
     private val activity: FragmentActivity,
-    val locationTrackerListener: LocationTrackerListener
+    var locationTrackerListener: LocationTrackerListener?
 ) {
 
     private var fusedLocationClient: FusedLocationProviderClient =
@@ -108,9 +108,9 @@ class LocationTracker(
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
                     if (locationResult == null) {
-                        locationTrackerListener.onLocationError()
+                        locationTrackerListener?.onLocationError()
                     } else {
-                        locationTrackerListener.onLocationResult(locationResult)
+                        locationTrackerListener?.onLocationResult(locationResult)
                     }
                 }
             }
@@ -122,5 +122,6 @@ class LocationTracker(
 
     fun removeLocationRequest() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
+        locationTrackerListener = null
     }
 }

@@ -3,6 +3,7 @@ package com.stavro_xhardha.core_module.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.stavro_xhardha.core_module.R
@@ -17,7 +18,7 @@ class HomeFragment : BaseFragment() {
     private val homeViewModel by savedStateViewModel {
         applicationComponent.homeViewModelFactory.create(it)
     }
-    private lateinit var pbHome: View
+    private var pbHome: RelativeLayout? = null
     private val picasso = applicationComponent.picasso
     private var homeAdapter: HomeAdapter =
         HomeAdapter(picasso)
@@ -31,7 +32,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pbHome = view.findViewById(R.id.pbHome)
+        pbHome = view.findViewById(R.id.single_item_progress)
         setHasOptionsMenu(true)
     }
 
@@ -80,7 +81,13 @@ class HomeFragment : BaseFragment() {
         })
 
         homeViewModel.progressBarVisibility.observe(viewLifecycleOwner, Observer {
-            pbHome.visibility = it
+            pbHome?.visibility = it
         })
+    }
+
+    override fun onDestroyView() {
+        pbHome = null
+        rvHomePrayerTimes.adapter = null
+        super.onDestroyView()
     }
 }
