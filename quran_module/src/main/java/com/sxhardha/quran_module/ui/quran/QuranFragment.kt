@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.stavro_xhardha.core_module.brain.BaseFragment
@@ -17,9 +18,9 @@ import com.sxhardha.quran_module.di.QuranDatabaseModule
 import kotlinx.android.synthetic.main.fragment_quran.*
 
 class QuranFragment : BaseFragment(), QuranAdapterContract {
-    private lateinit var btnRetry: Button
+    private var btnRetry: Button? = null
     private lateinit var quranComponent: QuranComponent
-    private lateinit var pbQuran: View
+    private var pbQuran: RelativeLayout? = null
     private val quranViewModel by viewModel {
         quranComponent.quranViewModel
     }
@@ -47,7 +48,7 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
             .quranApiModule(QuranApiModule(applicationComponent.retrofit))
             .build()
         rvSuras.adapter = quranAdapter
-        btnRetry.setOnClickListener {
+        btnRetry?.setOnClickListener {
             quranViewModel.remakeQuranCall()
         }
     }
@@ -62,7 +63,7 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
         })
 
         quranViewModel.progressVisibility.observe(viewLifecycleOwner, Observer {
-            pbQuran.visibility = it
+            pbQuran?.visibility = it
         })
 
         quranViewModel.listVisibility.observe(viewLifecycleOwner, Observer {
@@ -76,5 +77,12 @@ class QuranFragment : BaseFragment(), QuranAdapterContract {
                 surahsNumber
             )
         findNavController().navigate(action)
+    }
+
+    override fun onDestroyView() {
+        rvSuras.adapter = null
+        btnRetry = null
+        pbQuran = null
+        super.onDestroyView()
     }
 }

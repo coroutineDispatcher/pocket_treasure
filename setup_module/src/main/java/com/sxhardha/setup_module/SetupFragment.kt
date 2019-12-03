@@ -121,4 +121,9 @@ class SetupFragment : BaseFragment(), LocationTrackerListener {
             setupViewModel.convertToAdress(geocoder, location.latitude, location.longitude)
         }
     }
+
+    override fun onDestroyView() {
+        locationTracker = null
+        super.onDestroyView()
+    }
 }

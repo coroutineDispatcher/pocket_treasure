@@ -7,12 +7,18 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stavro_xhardha.core_module.brain.FIRST_SURAH_SENTENCE
+import com.stavro_xhardha.core_module.dependency_injection.FragmentScoped
 import com.sxhardha.quran_module.R
 import com.sxhardha.quran_module.model.Aya
 import com.sxhardha.quran_module.utils.DIFF_UTIL_AYA
 import kotlinx.android.synthetic.main.single_item_aya.view.*
+import javax.inject.Inject
 
-class AyasAdapter(private val mediaPlayer: MediaPlayer, private val ayaContract: AyaContract) :
+@FragmentScoped
+class AyasAdapter @Inject constructor(
+    private val mediaPlayer: MediaPlayer,
+    private val ayaContract: AyaContract
+) :
     PagedListAdapter<Aya, AyasAdapter.AyasViewHolder>(DIFF_UTIL_AYA) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AyasViewHolder =

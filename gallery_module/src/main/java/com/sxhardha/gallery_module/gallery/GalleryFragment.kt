@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,7 +22,8 @@ import kotlinx.android.synthetic.main.fragment_gallery.*
 class GalleryFragment : BaseFragment(), GalleryContract {
 
     private lateinit var galleryComponent: GalleryComponent
-    private lateinit var btnRetry: Button
+    private var btnRetry: Button? = null
+    private var pbGallery: RelativeLayout? = null
 
     private val picasso by lazy {
         applicationComponent.picasso
@@ -45,6 +47,7 @@ class GalleryFragment : BaseFragment(), GalleryContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnRetry = view.findViewById(R.id.btnRetry)
+        pbGallery = view.findViewById(R.id.pbGallery)
     }
 
     override fun initializeComponents() {
@@ -53,7 +56,7 @@ class GalleryFragment : BaseFragment(), GalleryContract {
             .build()
         rvGallery.layoutManager = GridLayoutManager(activity, 3)
         rvGallery.adapter = galleryAdapter
-        btnRetry.setOnClickListener {
+        btnRetry?.setOnClickListener {
             galleryViewModel.retry()
         }
     }
@@ -72,17 +75,17 @@ class GalleryFragment : BaseFragment(), GalleryContract {
         galleryViewModel.getInitialState().observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.FAILED -> {
-                    pbGallery.visibility = View.GONE
+                    pbGallery?.visibility = View.GONE
                     llError.visibility = View.VISIBLE
                     rvGallery.visibility = View.GONE
                 }
                 Status.RUNNING -> {
-                    pbGallery.visibility = View.VISIBLE
+                    pbGallery?.visibility = View.VISIBLE
                     llError.visibility = View.GONE
                     rvGallery.visibility = View.GONE
                 }
                 Status.SUCCESS -> {
-                    pbGallery.visibility = View.GONE
+                    pbGallery?.visibility = View.GONE
                     llError.visibility = View.GONE
                     rvGallery.visibility = View.VISIBLE
                 }
@@ -98,5 +101,12 @@ class GalleryFragment : BaseFragment(), GalleryContract {
                 )
             findNavController().navigate(action)
         }
+    }
+
+    override fun onDestroyView() {
+        btnRetry = null
+        rvGallery.adapter = null
+        pbGallery = null
+        super.onDestroyView()
     }
 }
