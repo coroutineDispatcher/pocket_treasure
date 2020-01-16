@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/crimson_text_regular</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_regular</item>
         <item name="android:statusBarColor">@color/status_bar_transparent</item>
     </style>
 

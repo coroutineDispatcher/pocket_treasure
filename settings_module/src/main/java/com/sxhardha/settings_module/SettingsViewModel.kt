@@ -6,15 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stavro_xhardha.core_module.Event
+import com.stavro_xhardha.core_module.brain.*
 import com.stavro_xhardha.core_module.core_dependencies.AppCoroutineDispatchers
+import com.stavro_xhardha.rocket.Rocket
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
     private val appCoroutineDispatchers: AppCoroutineDispatchers,
-    private val settingsRepository: SettingsRepository
+    private val rocket: Rocket
 ) : ViewModel() {
 
     private val _fajrCheck: MutableLiveData<Boolean> = MutableLiveData()
@@ -37,71 +38,40 @@ class SettingsViewModel @Inject constructor(
     val ishaCheck: LiveData<Boolean> = _ishaCheck
     val countryAndCapital: LiveData<String> = _countryAndCapital
 
-    private var fajrCheckHelper: Boolean = false
-    private var dhuhrCheckHelper: Boolean = false
-    private var asrCheckCheckHelper: Boolean = false
-    private var mahgribCheckCheckHelper: Boolean = false
-    private var ishaCheckCheckHelper: Boolean = false
     private var locationTurnOfRequested: Boolean = false
 
     init {
-        listenToRepository()
-    }
-
-    private fun listenToRepository() {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
-            settingsRepository.let {
-                fajrCheckHelper = it.getFajrChecked()
-                dhuhrCheckHelper = it.getDhuhrChecked()
-                asrCheckCheckHelper = it.getAsrChecked()
-                mahgribCheckCheckHelper = it.getMaghribChecked()
-                ishaCheckCheckHelper = it.getIshaChecked()
-            }
-            withContext(appCoroutineDispatchers.mainDispatcher) {
-                this@SettingsViewModel._fajrCheck.value = fajrCheckHelper
-                this@SettingsViewModel._dhuhrCheck.value = dhuhrCheckHelper
-                this@SettingsViewModel._asrCheck.value = asrCheckCheckHelper
-                this@SettingsViewModel._maghribCheck.value = mahgribCheckCheckHelper
-                this@SettingsViewModel._ishaCheck.value = ishaCheckCheckHelper
-                this@SettingsViewModel._countryAndCapital.value =
-                    settingsRepository.readCountryAndCapital()
-            }
-        }
+        _fajrCheck.value = getFajrChecked()
+        _dhuhrCheck.value = getDhuhrChecked()
+        _asrCheck.value = getAsrChecked()
+        _maghribCheck.value = getMaghribChecked()
+        _ishaCheck.value = getIshaChecked()
+        _countryAndCapital.value = readCountryAndCapital()
     }
 
     fun onSwFajrClick(checked: Boolean) {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
-            settingsRepository.putFajrNotification(checked)
-            _fajrCheck.postValue(settingsRepository.getFajrChecked())
-        }
+        rocket.writeBoolean(NOTIFY_USER_FOR_FAJR, checked)
+        _fajrCheck.postValue(getFajrChecked())
     }
 
     fun onSwDhuhrClick(checked: Boolean) {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
-            settingsRepository.putDhuhrNotification(checked)
-            _dhuhrCheck.postValue(settingsRepository.getDhuhrChecked())
-        }
+        rocket.writeBoolean(NOTIFY_USER_FOR_DHUHR, checked)
+        _dhuhrCheck.postValue(getDhuhrChecked())
     }
 
     fun onSwAsrClick(checked: Boolean) {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
-            settingsRepository.putAsrNotification(checked)
-            _asrCheck.postValue(settingsRepository.getAsrChecked())
-        }
+        rocket.writeBoolean(NOTIFY_USER_FOR_ASR, checked)
+        _asrCheck.postValue(getAsrChecked())
     }
 
     fun onSwMaghribClick(checked: Boolean) {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
-            settingsRepository.putMaghribNotification(checked)
-            _maghribCheck.postValue(settingsRepository.getMaghribChecked())
-        }
+        rocket.writeBoolean(NOTIFY_USER_FOR_MAGHRIB, checked)
+        _maghribCheck.postValue(getMaghribChecked())
     }
 
     fun onSwIshaClick(checked: Boolean) {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher) {
-            settingsRepository.putIshaNotification(checked)
-            _ishaCheck.postValue(settingsRepository.getIshaChecked())
-        }
+        rocket.writeBoolean(NOTIFY_USER_FOR_ISHA, checked)
+        _ishaCheck.postValue(getIshaChecked())
     }
 
     fun convertToAdress(geocoder: Geocoder, latitude: Double, longitude: Double) {
@@ -112,12 +82,11 @@ class SettingsViewModel @Inject constructor(
                 if (adresses.size != 0) {
                     val cityName = adresses[0].adminArea
                     val country = adresses[0].countryName
-                    settingsRepository.updateCountryAndLocation(
-                        country,
-                        cityName,
-                        latitude,
-                        longitude
-                    )
+                    rocket.writeString(COUNTRY_SHARED_PREFERENCE_KEY, country)
+                    rocket.writeString(CAPITAL_SHARED_PREFERENCES_KEY, cityName)
+                    rocket.writeBoolean(COUNTRY_UPDATED, true)
+                    rocket.writeFloat(LATITUDE_KEY, latitude.toFloat())
+                    rocket.writeFloat(LONGITUDE_KEY, longitude.toFloat())
                     if (!locationTurnOfRequested) {
                         locationTurnOfRequested = true
                     }
@@ -130,8 +99,23 @@ class SettingsViewModel @Inject constructor(
                 _locationErrorVisibility.postValue(Event(R.string.invalid_coorinates))
             } finally {
                 _locationRequestTurnOff.postValue(Event(R.string.location_updated_successfully))
-                _countryAndCapital.postValue(settingsRepository.readCountryAndCapital())
+                _countryAndCapital.postValue(readCountryAndCapital())
             }
         }
     }
+
+    private fun getFajrChecked(): Boolean = rocket.readBoolean(NOTIFY_USER_FOR_FAJR)
+
+    private fun getDhuhrChecked(): Boolean = rocket.readBoolean(NOTIFY_USER_FOR_DHUHR)
+
+    private fun getAsrChecked(): Boolean = rocket.readBoolean(NOTIFY_USER_FOR_ASR)
+
+    private fun getMaghribChecked(): Boolean = rocket.readBoolean(NOTIFY_USER_FOR_MAGHRIB)
+
+    private fun getIshaChecked(): Boolean = rocket.readBoolean(NOTIFY_USER_FOR_ISHA)
+
+    private fun readCountryAndCapital(): String? =
+        "${rocket.readString(CAPITAL_SHARED_PREFERENCES_KEY)} , ${rocket.readString(
+            COUNTRY_SHARED_PREFERENCE_KEY
+        )}"
 }

@@ -16,7 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
             mainActivityViewModel.changeCurrentTheme()
         }
 
-        sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel::class.java)
+        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
     private fun initMainViewModel() {
         val rocket = CoreApplication.getCoreComponent().rocket
         val appCoroutineDispatchers = CoreApplication.getCoreComponent().appCoroutineDispatchers
-        mainActivityViewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+        mainActivityViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T =
                 MainActivityViewModel(rocket, appCoroutineDispatchers) as T
         }).get(MainActivityViewModel::class.java)

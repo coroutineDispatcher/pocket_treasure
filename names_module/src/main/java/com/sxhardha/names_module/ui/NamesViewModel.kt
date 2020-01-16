@@ -44,7 +44,8 @@ class NamesViewModel @AssistedInject constructor(
         viewModelScope.launch(appCoroutineDispatchers.mainDispatcher + coroutineExceptionHandler) {
             startProgressBar()
             withContext(appCoroutineDispatchers.ioDispatcher) {
-                val dataIsLocally = dataExistInDatabase()
+                val numberOfDataInDb = repository.countNamesInDatabase()
+                val dataIsLocally = numberOfDataInDb > 0
                 if (dataIsLocally) {
                     makeNamesDatabaseCall()
                 } else {
@@ -92,8 +93,6 @@ class NamesViewModel @AssistedInject constructor(
             )
         }
     }
-
-    private suspend fun dataExistInDatabase(): Boolean = repository.countNamesInDatabase() > 0
 
     private fun showError() {
         _errorLayoutVisibility.value = View.VISIBLE

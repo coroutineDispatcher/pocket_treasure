@@ -69,7 +69,7 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-    private suspend fun setValuesToLiveData() {
+    private fun setValuesToLiveData() {
         val homePrayerData = homeRepository.getHomeData()
         findCurrentTime(homePrayerData)
         switchProgressBarOff()
@@ -112,14 +112,14 @@ class HomeViewModel @AssistedInject constructor(
         (timeOfPrayer.substring(3, 5)).toInt()
     )
 
-    private suspend fun dateHasPassed(): Boolean {
+    private fun dateHasPassed(): Boolean {
         val date = DateTime()
         return !(date.dayOfMonth == homeRepository.getCurrentRegisteredDay() &&
                 date.monthOfYear == homeRepository.getCurrentRegisteredMonth() &&
                 date.year == homeRepository.getCurrentRegisteredYear())
     }
 
-    private suspend fun saveDataToShardPreferences(prayerTimeResponse: PrayerTimeResponse?) {
+    private fun saveDataToShardPreferences(prayerTimeResponse: PrayerTimeResponse?) {
         if (prayerTimeResponse != null) {
             try {
                 saveThePrayerTimeResponseToMemory(prayerTimeResponse)
@@ -129,7 +129,7 @@ class HomeViewModel @AssistedInject constructor(
         }
     }
 
-    private suspend fun saveThePrayerTimeResponseToMemory(prayerTimeResponse: PrayerTimeResponse) {
+    private fun saveThePrayerTimeResponseToMemory(prayerTimeResponse: PrayerTimeResponse) {
         prayerTimeResponse.let {
             homeRepository.saveFajrTime(it.data.timings.fajr)
             homeRepository.saveFinishFajrTime(it.data.timings.sunrise)

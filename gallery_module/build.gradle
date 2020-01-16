@@ -41,13 +41,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
-    testImplementation 'junit:junit:4.12'
-
+    testImplementation testImplementations.jUnit
     implementation project(':core_module')
     implementation libraries.fragmentNavigation
     implementation libraries.fragmentNavigationKtx
     implementation libraries.dagger
     kapt annotationProcessors.daggerKapt
+    implementation libraries.recyclerView
     implementation libraries.retrofit
     implementation libraries.materialDialogCore
     implementation libraries.materialDialogInputs
@@ -74,7 +74,6 @@ dependencies {
     testImplementation testImplementations.mockitoInline
     testImplementation testImplementations.androidArchCoreTesting
     testImplementation testImplementations.coroutinesTesting
-    testImplementation testImplementations.mockWebServer
 
     androidTestImplementation androidTestImplementations.espressoCore
     androidTestImplementation androidTestImplementations.espressoContrib
