@@ -33,28 +33,27 @@ class QuranViewModel @Inject constructor(
     val progressVisibility: LiveData<Int> = _progressVisibility
 
     init {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
-            startQuranCall()
-        }
+        startQuranCall()
     }
 
-    private suspend fun startQuranCall() {
-        showProgress()
-        val surahsInDatabase = repository.getAllSurahs()
-        val ayasInDatabase = repository.getAllAyas()
-
-        if (surahsInDatabase.isEmpty() || ayasInDatabase.isEmpty() || surahsInDatabase.size != 114) {
-            repository.deleteAllSurahs()
-            repository.deleteAllAyas()
-            val quranApiCall = repository.getQuranDataFromNetwork()
-            if (quranApiCall.isSuccessful) {
-                repository.insertData(quranApiCall.body())
-                makeLocalDatabaseCall()
+    private fun startQuranCall() {
+        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
+            showProgress()
+            val surahsInDatabase = repository.getAllSurahs()
+            val ayasInDatabase = repository.getAllAyas()
+            if (surahsInDatabase.isEmpty() || ayasInDatabase.isEmpty() || surahsInDatabase.size != 114) {
+                repository.deleteAllSurahs()
+                repository.deleteAllAyas()
+                val quranApiCall = repository.getQuranDataFromNetwork()
+                if (quranApiCall.isSuccessful) {
+                    repository.insertData(quranApiCall.body())
+                    makeLocalDatabaseCall()
+                } else {
+                    showError()
+                }
             } else {
-                showError()
+                makeLocalDatabaseCall()
             }
-        } else {
-            makeLocalDatabaseCall()
         }
     }
 
@@ -83,8 +82,6 @@ class QuranViewModel @Inject constructor(
     }
 
     fun remakeQuranCall() {
-        viewModelScope.launch(appCoroutineDispatchers.ioDispatcher + coroutineExceptionHandler) {
-            startQuranCall()
-        }
+        startQuranCall()
     }
 }
